@@ -6,10 +6,11 @@ class Finance extends Component{
     }
     change = ()=>{
         const newarr = [...this.state.arr];
-        newarr.length = 10;
+        newarr.push("100000");
         this.setState({
             arr:newarr
         })
+        console.log(this.state.arr)
     }
     render(){
         var classnames = "Finance-container container";

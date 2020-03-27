@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import Result from "./Result";
 import Keypad from "./keypad";
 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 class CalculatorSection extends Component {
   state = {
-    result: "0",
-    arr:[]
+    result: ["0"]
   };
 
   onClick = val => {
@@ -15,36 +15,61 @@ class CalculatorSection extends Component {
       this.reset();
     } else if (val === "backspace") {
       this.backspace();
-    } else {
-      const last_val = this.state.result.charAt(this.state.result.length - 1);
+    } else if (
+      val === "+" ||
+      val === "-" ||
+      val === "*" ||
+      val === "/" ||
+      val === "%"
+    ) {
+      let textArray = [...this.state.result];
+      const last_val = textArray[textArray.length - 1];
       if (
-        ( last_val === "+" ||
-          last_val === "-" ||
-          last_val === "*" ||
-          last_val === "/" ||
-          last_val === "%") &&
-        (val === "+" ||
-          val === "-" ||
-          val === "*" ||
-          val === "/" ||
-          val === "%")
+        last_val === "+" ||
+        last_val === "-" ||
+        last_val === "*" ||
+        last_val === "/" ||
+        last_val === "%"
       ) {
+        textArray.pop();
+        textArray.push(val);
         this.setState({
-          result: this.state.result.slice(0, -1) + val+" "
+          result: textArray
         });
-      } else{
-        if (val === ".") {
-          const k = this.state.result.split(/[+ - * /]/);
-          const last_value = k[k.length - 1];
-          if (last_value.indexOf(".") === -1) {
-            this.setState({
-              result: this.state.result + val
-            });
+      } else {
+        textArray.push(val);
+        this.setState({
+          result: textArray
+        });
+      }
+    } else {
+      let current;
+      let textArray = [...this.state.result];
+
+      if (textArray.length >= 1) {
+        current = textArray[textArray.length - 1];
+        const regexp = /\d|\.+/g;
+        if (regexp.test(current)) {
+          if (val === ".") {
+            if (current === "0") {
+              current = "0.";
+            } else if (current.indexOf(".") === -1) {
+              current += val;
+            }
+          } else if (current === "0") {
+            current = val;
+          } else {
+            current += val;
           }
-        }
-        if (val !== ".") {
+          textArray.pop();
+          textArray.push(current);
           this.setState({
-            result: this.state.result + val 
+            result: textArray
+          });
+        } else {
+          textArray.push(val);
+          this.setState({
+            result: textArray
           });
         }
       }
@@ -53,24 +78,10 @@ class CalculatorSection extends Component {
   calculate = () => {
     try {
       console.log(this.state.result);
-      const first_lt = this.state.result[0];
-      const op = this.state.result[1];
-      if (first_lt === "0" && (op === "%" || op === "*" || op === "/")) {
-        this.setState({
-          result: "0"
-        });
-      } else {
-        if (first_lt === "0") {
-          
-          this.setState({
-            result: eval(this.state.result.slice(1)) + ""
-          });
-        } else {
-          this.setState({
-            result: eval(this.state.result) + ""
-          });
-        }
-      }
+      const tocalculate = this.state.result.join(" ");
+      this.setState({
+        result: [String(eval(tocalculate))]
+      });
     } catch (e) {
       console.log(e);
     }
@@ -78,23 +89,32 @@ class CalculatorSection extends Component {
 
   reset = () => {
     this.setState({
-      result: "0"
+      result: ["0"]
     });
   };
 
   backspace = () => {
-    if (
-      this.state.result !== "0" &&
-      this.state.result !== "" &&
-      this.state.result.length > 1
-    ) {
-      this.setState({
-        result: this.state.result.slice(0, -1)
-      });
-    } else {
-      this.setState({
-        result: "0"
-      });
+    if (this.state.result.length >= 1) {
+      const last = this.state.result[this.state.result.length - 1];
+      if (last.length > 1) {
+        const newArr = [...this.state.result];
+        newArr.pop();
+        newArr.push(last.slice(0, -1));
+        this.setState({
+          result: newArr
+        });
+      } else if(this.state.result.length === 1 && last.length === 1){
+        this.setState({
+          result:["0"]
+        })
+      }
+      else{
+        const newArr = [...this.state.result];
+        newArr.pop();
+        this.setState({
+          result: newArr
+        });
+      }
     }
   };
   render() {
