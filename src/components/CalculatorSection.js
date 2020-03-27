@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Result from "./Result";
 import Keypad from "./keypad";
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
 class CalculatorSection extends Component {
   state = {
     result: ["0"]
@@ -45,7 +45,6 @@ class CalculatorSection extends Component {
     } else {
       let current;
       let textArray = [...this.state.result];
-
       if (textArray.length >= 1) {
         current = textArray[textArray.length - 1];
         const regexp = /\d|\.+/g;
@@ -77,11 +76,19 @@ class CalculatorSection extends Component {
   };
   calculate = () => {
     try {
-      console.log(this.state.result);
-      const tocalculate = this.state.result.join(" ");
-      this.setState({
-        result: [String(eval(tocalculate))]
-      });
+      const last = this.state.result[this.state.result.length - 1];
+      if (
+        last !== "+" &&
+        last !== "-" &&
+        last !== "*" &&
+        last !== "/" &&
+        last !== "%"
+      ) {
+        const tocalculate = this.state.result.join(" ");
+        this.setState({
+          result: [String(eval(tocalculate))]
+        });
+      }
     } catch (e) {
       console.log(e);
     }
@@ -103,12 +110,11 @@ class CalculatorSection extends Component {
         this.setState({
           result: newArr
         });
-      } else if(this.state.result.length === 1 && last.length === 1){
+      } else if (this.state.result.length === 1 && last.length === 1) {
         this.setState({
-          result:["0"]
-        })
-      }
-      else{
+          result: ["0"]
+        });
+      } else {
         const newArr = [...this.state.result];
         newArr.pop();
         this.setState({
@@ -122,6 +128,7 @@ class CalculatorSection extends Component {
       <div className="container">
         <Result result={this.state.result} />
         <Keypad onClick={this.onClick} />
+        
       </div>
     );
   }
