@@ -257,12 +257,19 @@ body {
   columns: 3;
   padding: 5px;
   position: relative;
+  overflow: hidden;
 }
+.test_cal{
+  overflow: hidden;
+  width: 80px;
+}
+
 .cal_date,
 .cal_month,
 .cal_year {
   height: 145px;
-  overflow-y: scroll;
+  width:90px;
+  overflow:auto;
   scroll-behavior: smooth;
 }
 
@@ -272,7 +279,19 @@ body {
 .container-dmy ul li {
   padding: 5px 0px;
 }
-
+.selector{
+  position: absolute;
+  top:90px;
+  left: 0;
+  height:20px;
+  padding: 5px 0px;
+  border-top:1px solid red;
+  border-bottom: 1px solid red;
+  width: 90%;
+  margin: 0 15px;
+  cursor: pointer;
+  z-index: -1;
+}
 .cal_bottom_btn {
   margin-top: 5px;
 }
