@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronLeft,
-  faBirthdayCake
-} from "@fortawesome/free-solid-svg-icons";
+import { faBirthdayCake } from "@fortawesome/free-solid-svg-icons";
+import HeaderWithBackBtn from "./Header_with_back_btn";
+import DatePickerCustom from "./DatePicker_Custom";
 
 class Age extends Component {
   state = {
@@ -18,7 +16,7 @@ class Age extends Component {
     TotalHours: 0,
     TotalMinutes: 0
   };
-  
+
   handleChange1 = date => {
     this.setState({
       startDate1: date
@@ -30,11 +28,11 @@ class Age extends Component {
     this.setState({
       startDate2: date
     });
+    console.log(date);
     this.calulate_Age();
   };
 
   calulate_Age = () => {
-    console.log(this.state.startDate1, this.state.startDate2);
     const diffTime = Math.abs(this.state.startDate2 - this.state.startDate1);
     const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
     const diffweeks = Math.round(diffTime / (1000 * 60 * 60 * 24 * 7));
@@ -46,7 +44,7 @@ class Age extends Component {
       12;
     months -= this.state.startDate1.getMonth();
     months += this.state.startDate2.getMonth();
-    console.log(diffDays, months, diffweeks);
+
     this.setState({
       TotalDays: diffDays - 1,
       TotalMonths: Math.abs(months),
@@ -59,31 +57,16 @@ class Age extends Component {
   render() {
     return (
       <div className="Current-box">
-        <div className="header">
-          <button className="back-btn" onClick={this.props.reset}>
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </button>
-          <p>Age</p>
-        </div>
+        <HeaderWithBackBtn reset={this.props.reset} name="Age" />
         <div className="content">
-          <div className="date">
-            <p>Date of Birth</p>
-            <DatePicker
-              dateFormat="dd/MM/yyyy"
-              selected={this.state.startDate1}
-              onSelect={this.handleChange1}
-              className="calender"
-            />
-          </div>
-          <div className="date">
-            <p>Today's date</p>
-            <DatePicker
-              dateFormat="dd/MM/yyyy"
-              selected={this.state.startDate2}
-              onSelect={this.handleChange2}
-              className="calender"
-            />
-          </div>
+          <DatePickerCustom
+            show_name="Date of Birth"
+            change={this.handleChange1}
+          />
+          <DatePickerCustom
+            show_name="Today's Date"
+            change={this.handleChange2}
+          />
           <div className="summary">
             <div className="summary-row1">
               <div className="summary-big-box">
