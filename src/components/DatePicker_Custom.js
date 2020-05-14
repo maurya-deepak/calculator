@@ -1,28 +1,36 @@
 import React, { Component } from "react";
-import DatePicker from "react-datepicker";
 
 class DatePickerCustom extends Component {
-  state = {
-    st_date: new Date()
-  };
-
-  handlechange = date => {
-    this.setState({
-      st_date: date
-    });
-  };
-
   render() {
+    const name = this.props.show_name;
+    const date = this.props.date;
+    const day =
+      String(date.getDate()).length > 1
+        ? String(date.getDate())
+        : "0" + String(date.getDate());
+    const month_arr = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const year = date.getFullYear();
     return (
       <div className="date">
-        <p>{this.props.show_name}</p>
-        <DatePicker
-          dateFormat="dd/MM/yyyy"
-          selected={this.state.st_date}
-          onSelect={this.handlechange}
-          onChange={this.props.change}
-          className="calender"
-        />
+        <p>{name}</p>
+        <div id="date_with_icon">
+          <p id="date_row" onClick={(e) => this.props.showCalendar(e, name)}>
+            {month_arr[date.getMonth()]} {day}, {year}
+          </p>
+        </div>
       </div>
     );
   }

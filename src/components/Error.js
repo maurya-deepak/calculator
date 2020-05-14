@@ -1,14 +1,11 @@
-import React,{Component} from 'react';
+import React from "react";
 
-class Error extends Component{
-    render(){
-        return(
-            <div className="error">
-                <input type="button" id="icon" value="close"/>
-                <p>please write valid expression.</p>
-            </div>
-        );
-    }
-}
+const Error = () => {
+  return (
+    <div className="error">
+      <p>Date of birth must be earlier than today's date</p>
+    </div>
+  );
+};
 
 export default Error;

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Calender from "./Calender";
+
 
 class Finance extends Component {
   render() {
-    return <Calender />;
+    return <h1>Finance Section</h1>;
   }
 }
 export default Finance;
