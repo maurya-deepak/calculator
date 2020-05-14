@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBirthdayCake } from "@fortawesome/free-solid-svg-icons";
@@ -35,133 +36,99 @@ class Age extends Component {
     this.calulate_Age();
   }
   calulate_Age = () => {
-    const startDate = this.state.startDate1;
-    const endDate = this.state.startDate2;
-    const summary = this.getSummary(startDate, endDate);
-    let next_birthday_date;
-    let nextBirthdayDetails;
-    console.log(endDate.getMonth() < startDate.getMonth());
-    if (endDate.getMonth() > startDate.getMonth()) {
-      next_birthday_date = new Date(
-        endDate.getFullYear() + 1,
-        startDate.getMonth(),
-        startDate.getDate()
-      );
-      console.log("birthday ho ke gya......");
-      console.log(next_birthday_date);
-      nextBirthdayDetails = this.getSummary(endDate, next_birthday_date);
-    } else if (endDate.getMonth() < startDate.getMonth()) {
-      next_birthday_date = new Date(
-        endDate.getFullYear(),
-        startDate.getMonth(),
-        startDate.getDate()
-      );
-      console.log("Birthday aane wala hai");
-      console.log(next_birthday_date);
-      nextBirthdayDetails = this.getSummary(endDate, next_birthday_date);
-    } else {
-      if (endDate.getDate() > startDate.getDate()) {
-        next_birthday_date = new Date(
-          endDate.getFullYear() + 1,
-          startDate.getMonth(),
-          startDate.getDate()
-        );
-        nextBirthdayDetails = this.getSummary(endDate, next_birthday_date);
-      } else {
-        next_birthday_date = new Date(
-          endDate.getFullYear(),
-          startDate.getMonth(),
-          startDate.getDate()
-        );
-        nextBirthdayDetails = this.getSummary(endDate, next_birthday_date);
-      }
-    }
-    console.log(nextBirthdayDetails);
-    if (summary) {
-      let nextBirthdayDays;
-      let nextBirthdayMonths;
-      if (nextBirthdayDetails) {
-        const avgNumberOfDaysInMonth = 30.436875;
-        const temp = nextBirthdayDetails.diffDays / 30.436875;
-        nextBirthdayMonths = Math.floor(temp);
-        nextBirthdayDays = Math.round((temp - nextBirthdayMonths) * 30.436875);
-      }
-      const days_arr = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ];
-      // get age in months and days
-      this.calulate_age_in_monthsDays(
-        this.state.startDate1,
-        this.state.startDate2,
-        summary.months,
-        summary.totalYears
-      );
-
-      this.setState({
-        TotalDays: summary.diffDays,
-        TotalMonths: summary.months,
-        TotalWeeks: summary.diffweeks,
-        TotalHours: summary.diffHours,
-        TotalMinutes: summary.diffMins,
-        TotalYears: summary.totalYears,
-        nextbirthday_months: nextBirthdayMonths ? nextBirthdayMonths : 0,
-        nextbirthday_days: nextBirthdayDays ? nextBirthdayDays : 0,
-        nextbirthday_day: days_arr[next_birthday_date.getDay()],
-      });
-    } else {
-      this.setState({
-        dob_notValid: true,
-      });
-      setTimeout(() => {
-        this.setState({
-          dob_notValid: false,
-        });
-      }, 1000);
-    }
-  };
-
-  getSummary = (st_date, en_date) => {
-    let utc1 = Date.UTC(
-      st_date.getFullYear(),
-      st_date.getMonth(),
-      st_date.getDate()
-    );
-    let utc2 = Date.UTC(
-      en_date.getFullYear(),
-      en_date.getMonth(),
-      en_date.getDate()
-    );
-    const one_hour = 1000 * 60 * 60;
-    let diffTime = utc2 - utc1;
-
-    if (diffTime >= 0) {
-      const diffDays = Math.round(diffTime / (one_hour * 24));
-      const diffweeks = Math.floor(diffTime / (one_hour * 24 * 7));
-      const diffHours = diffTime / one_hour;
-      const diffMins = Math.round(diffTime / (1000 * 60));
-      let months = (en_date.getFullYear() - st_date.getFullYear()) * 12;
-      months -= st_date.getMonth();
-      months += en_date.getMonth();
-      months = st_date.getDate() > en_date.getDate() ? months - 1: months;
-      const totalYears = Math.floor(months / 12);
-      return { diffDays, diffweeks, diffHours, diffMins, months, totalYears };
-    }
-    return null;
-  };
-  calulate_age_in_monthsDays = (s_Date, e_Date, totalmonths, totalyears) => {
-    const age_days = this.findDay(s_Date, e_Date);
-    const age_months = totalmonths - totalyears * 12;
-    console.log(age_months);
+    const org_startDate = this.state.startDate1;
+    const org_endDate = this.state.startDate2;
+    let m_startDate = moment(org_startDate); // date of birth
+    let m_endDate = moment(org_endDate); // today's date
+    // bottom summary
+    const bottom_summary = this.getSummary(m_startDate, m_endDate);
+  
     this.setState({
-      Age_days: age_days,
-      Age_months: age_months,
+      TotalYears: bottom_summary.TotalYears,
+      TotalMonths: bottom_summary.TotalMonths,
+      TotalWeeks: bottom_summary.TotalWeeks,
+      TotalDays: bottom_summary.TotalDays,
+      TotalHours: bottom_summary.TotalHours,
+      TotalMinutes: bottom_summary.TotalMinutes,
     });
+
+    // right side summary
+    let m_nextbirthday;
+    if (
+      org_startDate.getMonth() < org_endDate.getMonth() ||
+      (org_startDate.getMonth() === org_endDate.getMonth() &&
+        org_startDate.getDate() < org_endDate.getDate()) ||
+      (org_startDate.getMonth() === org_endDate.getMonth() &&
+        org_startDate.getDate() === org_endDate.getDate())
+    ) {
+      m_nextbirthday = moment(
+        new Date(
+          org_endDate.getFullYear() + 1,
+          org_startDate.getMonth(),
+          org_startDate.getDate()
+        )
+      );
+    } else {
+      m_nextbirthday = moment(
+        new Date(
+          org_endDate.getFullYear(),
+          org_startDate.getMonth(),
+          org_startDate.getDate()
+        )
+      );
+    }
+    m_startDate = m_endDate;
+    const rightside_summary = this.getSummary(m_startDate, m_nextbirthday);
+    console.log(m_startDate.toDate(), m_nextbirthday.toDate());
+    const days = this.findDay(m_startDate.toDate(), m_nextbirthday.toDate());
+
+    const days_arr = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    
+    this.setState({
+      nextbirthday_months:
+        days === 0 && rightside_summary.TotalMonths >= 1
+          ? rightside_summary.TotalMonths + 1
+          : rightside_summary.TotalMonths,
+      nextbirthday_days:
+        days === 0 && rightside_summary.TotalMonths === 0
+          ? rightside_summary.TotalDays
+          : days,
+      nextbirthday_day: days_arr[m_nextbirthday.toDate().getDay()],
+    });
+
+    // left side summary
+    const Age_months =
+      bottom_summary.TotalMonths - bottom_summary.TotalYears * 12;
+    const Age_days = this.findDay(org_startDate, org_endDate);
+    this.setState({
+      Age_months: Age_months,
+      Age_days: Age_days,
+    });
+  };
+
+  getSummary = (startDate, endDate) => {
+    const TotalYears = endDate.diff(startDate, "years");
+    const TotalMonths = endDate.diff(startDate, "months");
+    const TotalWeeks = endDate.diff(startDate, "weeks");
+    const TotalDays = endDate.diff(startDate, "days");
+    const TotalHours = endDate.diff(startDate, "hours");
+    const TotalMinutes = endDate.diff(startDate, "minutes");
+    return {
+      TotalYears,
+      TotalMonths,
+      TotalWeeks,
+      TotalDays,
+      TotalHours,
+      TotalMinutes,
+    };
   };
 
   leapYear = (year) => {
@@ -198,6 +165,9 @@ class Age extends Component {
 
     if (startDate > endDate) {
       startMonth = endMonth - 1;
+      if (startMonth === 0) {
+        startMonth = 12;
+      }
       const currentMonthDay = monthKeys[startMonth - 1];
       return endDate + (months[currentMonthDay] - startDate);
     } else {
