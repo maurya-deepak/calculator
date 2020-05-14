@@ -8,6 +8,7 @@ import DatePickerCustom from "./DatePicker_Custom";
 import Error from "./Error";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import {findDay}  from './FindDay';
 
 class Age extends Component {
   state = {
@@ -40,78 +41,90 @@ class Age extends Component {
     const org_endDate = this.state.startDate2;
     let m_startDate = moment(org_startDate); // date of birth
     let m_endDate = moment(org_endDate); // today's date
+    const utcDate1 = new Date(Date.UTC(org_startDate.getFullYear(), org_startDate.getMonth(), org_startDate.getDate()));
+    const utcDate2 = new Date(Date.UTC(org_endDate.getFullYear(), org_endDate.getMonth(), org_endDate.getDate()));
+
     // bottom summary
-    const bottom_summary = this.getSummary(m_startDate, m_endDate);
-  
-    this.setState({
-      TotalYears: bottom_summary.TotalYears,
-      TotalMonths: bottom_summary.TotalMonths,
-      TotalWeeks: bottom_summary.TotalWeeks,
-      TotalDays: bottom_summary.TotalDays,
-      TotalHours: bottom_summary.TotalHours,
-      TotalMinutes: bottom_summary.TotalMinutes,
-    });
+    if (utcDate2 - utcDate1 > 0) {
+      const bottom_summary = this.getSummary(m_startDate, m_endDate);
+      this.setState({
+        TotalYears: bottom_summary.TotalYears,
+        TotalMonths: bottom_summary.TotalMonths,
+        TotalWeeks: bottom_summary.TotalWeeks,
+        TotalDays: bottom_summary.TotalDays,
+        TotalHours: bottom_summary.TotalHours,
+        TotalMinutes: bottom_summary.TotalMinutes,
+      });
 
-    // right side summary
-    let m_nextbirthday;
-    if (
-      org_startDate.getMonth() < org_endDate.getMonth() ||
-      (org_startDate.getMonth() === org_endDate.getMonth() &&
-        org_startDate.getDate() < org_endDate.getDate()) ||
-      (org_startDate.getMonth() === org_endDate.getMonth() &&
-        org_startDate.getDate() === org_endDate.getDate())
-    ) {
-      m_nextbirthday = moment(
-        new Date(
-          org_endDate.getFullYear() + 1,
-          org_startDate.getMonth(),
-          org_startDate.getDate()
-        )
-      );
+      // right side summary
+      let m_nextbirthday;
+      if (
+        org_startDate.getMonth() < org_endDate.getMonth() ||
+        (org_startDate.getMonth() === org_endDate.getMonth() &&
+          org_startDate.getDate() < org_endDate.getDate()) ||
+        (org_startDate.getMonth() === org_endDate.getMonth() &&
+          org_startDate.getDate() === org_endDate.getDate())
+      ) {
+        m_nextbirthday = moment(
+          new Date(
+            org_endDate.getFullYear() + 1,
+            org_startDate.getMonth(),
+            org_startDate.getDate()
+          )
+        );
+      } else {
+        m_nextbirthday = moment(
+          new Date(
+            org_endDate.getFullYear(),
+            org_startDate.getMonth(),
+            org_startDate.getDate()
+          )
+        );
+      }
+      m_startDate = m_endDate;
+      const rightside_summary = this.getSummary(m_startDate, m_nextbirthday);
+      const days = findDay(m_startDate.toDate(), m_nextbirthday.toDate());
+
+      const days_arr = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+
+      this.setState({
+        nextbirthday_months:
+          days === 0 && rightside_summary.TotalMonths >= 1
+            ? rightside_summary.TotalMonths + 1
+            : rightside_summary.TotalMonths,
+        nextbirthday_days:
+          days === 0 && rightside_summary.TotalMonths === 0
+            ? rightside_summary.TotalDays
+            : days,
+        nextbirthday_day: days_arr[m_nextbirthday.toDate().getDay()],
+      });
+
+      // left side summary
+      const Age_months =
+        bottom_summary.TotalMonths - bottom_summary.TotalYears * 12;
+      const Age_days = findDay(org_startDate, org_endDate);
+      this.setState({
+        Age_months: Age_months,
+        Age_days: Age_days,
+      });
     } else {
-      m_nextbirthday = moment(
-        new Date(
-          org_endDate.getFullYear(),
-          org_startDate.getMonth(),
-          org_startDate.getDate()
-        )
-      );
+      this.setState({
+        dob_notValid: true,
+      });
+      setTimeout(() => {
+        this.setState({
+          dob_notValid: false,
+        });
+      }, 2000);
     }
-    m_startDate = m_endDate;
-    const rightside_summary = this.getSummary(m_startDate, m_nextbirthday);
-    console.log(m_startDate.toDate(), m_nextbirthday.toDate());
-    const days = this.findDay(m_startDate.toDate(), m_nextbirthday.toDate());
-
-    const days_arr = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    
-    this.setState({
-      nextbirthday_months:
-        days === 0 && rightside_summary.TotalMonths >= 1
-          ? rightside_summary.TotalMonths + 1
-          : rightside_summary.TotalMonths,
-      nextbirthday_days:
-        days === 0 && rightside_summary.TotalMonths === 0
-          ? rightside_summary.TotalDays
-          : days,
-      nextbirthday_day: days_arr[m_nextbirthday.toDate().getDay()],
-    });
-
-    // left side summary
-    const Age_months =
-      bottom_summary.TotalMonths - bottom_summary.TotalYears * 12;
-    const Age_days = this.findDay(org_startDate, org_endDate);
-    this.setState({
-      Age_months: Age_months,
-      Age_days: Age_days,
-    });
   };
 
   getSummary = (startDate, endDate) => {
@@ -131,49 +144,6 @@ class Age extends Component {
     };
   };
 
-  leapYear = (year) => {
-    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-  };
-
-  findDay = (stDate, eDate) => {
-    const startDate = stDate.getDate();
-    let startMonth = stDate.getMonth() + 1;
-    const endDate = eDate.getDate();
-    const endMonth = eDate.getMonth() + 1;
-    const endYear = eDate.getFullYear();
-    const months = {
-      Jan: 31,
-      Feb: 0,
-      Mar: 31,
-      Apr: 30,
-      May: 31,
-      Jun: 30,
-      Jul: 31,
-      Aug: 31,
-      Sept: 30,
-      Oct: 31,
-      Nov: 30,
-      Dec: 31,
-    };
-
-    if (this.leapYear(endYear)) {
-      months["Feb"] = 29;
-    } else {
-      months["Feb"] = 28;
-    }
-    const monthKeys = Object.keys(months);
-
-    if (startDate > endDate) {
-      startMonth = endMonth - 1;
-      if (startMonth === 0) {
-        startMonth = 12;
-      }
-      const currentMonthDay = monthKeys[startMonth - 1];
-      return endDate + (months[currentMonthDay] - startDate);
-    } else {
-      return endDate - startDate;
-    }
-  };
   handlechange = (date) => {
     if (this.state.isfirst_date) {
       this.setState(

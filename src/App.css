@@ -244,11 +244,8 @@ body {
   justify-content: center;
   box-sizing: border-box;
 }
-.summary
-  .TotalSummary
-  .totalSummary-content
-  .totalSummary-content-row
-  .summary-box {
+
+.summary-box {
   padding: 20px 20px;
 }
 .sbfont {
@@ -333,3 +330,47 @@ body {
   color: #000;
 }
 
+#subHeading{
+  margin:20px auto;
+  color:rgb(255, 85, 0);
+  text-align: center; 
+  font-size: 22px;
+}
+
+.BasickeypadContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.KeypadLeftSide{
+  grid-template-columns: auto auto auto;
+  justify-items: center;
+  padding: 5px;
+}
+.KeypadRightSide{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.KeypadRightSide > input, .KeypadRightSide  button{
+  width:50px;
+  height:100px;
+  border: 1px solid silver;
+  outline: none;
+  background: transparent;
+  font-size: 24px;
+  cursor: pointer;
+  margin: 5px 5px;
+  border-radius: 5px;
+}
+
+.KeypadRightSide > input:hover, .KeypadRightSide  button:hover {
+  background-color: rgba(80, 79, 79, 0.103);
+}
+#notusedbtn:hover{
+  cursor: default;
+  background-color: transparent;
+}

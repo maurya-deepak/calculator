@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-
+import BasicKeypad from './BasicKeypad';
 
 class Finance extends Component {
   render() {
-    return <h1>Finance Section</h1>;
+    return <BasicKeypad/>;
   }
 }
 export default Finance;
