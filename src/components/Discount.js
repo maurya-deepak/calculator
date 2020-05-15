@@ -103,8 +103,6 @@ class Discount extends Component {
   backspace = () => {
     const current = document.getElementById("current");
     const name = current.name;
-    console.log(typeof (this.state.original_price));
-    console.log(this.state.original_price);
     if (name === "original_price" && this.state.original_price !== '0') {
       this.setState(
         {
@@ -139,7 +137,6 @@ class Discount extends Component {
   calculateDiscount = () => {
     const originalPrice = parseFloat(this.state.original_price);
     const discountAmount = parseFloat(this.state.discount);
-    console.log(originalPrice, discountAmount);
     const saving = +((originalPrice * discountAmount) / 100).toFixed(2);
     const finalPrice = +(originalPrice - saving).toFixed(2);
     this.setState({
