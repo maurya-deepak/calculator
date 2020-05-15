@@ -131,7 +131,6 @@ class Keypad extends Component {
         <input
           name="#"
           id="notusedbtn"
-          onClick={e => this.props.onClick(e.target.name)}
           type="button"
           value=""
         />
