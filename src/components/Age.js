@@ -39,8 +39,8 @@ class Age extends Component {
   calulate_Age = () => {
     const org_startDate = this.state.startDate1;
     const org_endDate = this.state.startDate2;
-    let m_startDate = moment(org_startDate); // date of birth
-    let m_endDate = moment(org_endDate); // today's date
+    let m_startDate = moment(org_startDate,'YYYY/MM/DD'); // date of birth
+    let m_endDate = moment(org_endDate,'YYYY/MM/DD'); // today's date
     const utcDate1 = new Date(Date.UTC(org_startDate.getFullYear(), org_startDate.getMonth(), org_startDate.getDate()));
     const utcDate2 = new Date(Date.UTC(org_endDate.getFullYear(), org_endDate.getMonth(), org_endDate.getDate()));
 
@@ -84,7 +84,7 @@ class Age extends Component {
       m_startDate = m_endDate;
       const rightside_summary = this.getSummary(m_startDate, m_nextbirthday);
       const days = findDay(m_startDate.toDate(), m_nextbirthday.toDate());
-
+    
       const days_arr = [
         "Sunday",
         "Monday",
@@ -100,10 +100,7 @@ class Age extends Component {
           days === 0 && rightside_summary.TotalMonths >= 1
             ? rightside_summary.TotalMonths + 1
             : rightside_summary.TotalMonths,
-        nextbirthday_days:
-          days === 0 && rightside_summary.TotalMonths === 0
-            ? rightside_summary.TotalDays
-            : days,
+        nextbirthday_days:days,
         nextbirthday_day: days_arr[m_nextbirthday.toDate().getDay()],
       });
 

@@ -158,21 +158,21 @@ body {
   top: 200px;
 }
 
-#date_row{
+#date_row {
   cursor: pointer;
   display: inline;
   padding: 0px 5px;
 }
-.next_birth_dm{
+.next_birth_dm {
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
   padding: 15px 0px;
 }
-#border{
-  margin-left:5px ;
-  padding-left:5px;
+#border {
+  margin-left: 5px;
+  padding-left: 5px;
   border-left: 1.5px solid gray;
 }
 
@@ -206,8 +206,8 @@ body {
   background-color: rgb(255, 85, 0);
   border-radius: 50%;
 }
-.nextbirthday_icon{
-  padding:10px 0px;
+.nextbirthday_icon {
+  padding: 10px 0px;
 }
 .summary .summary-big-box .age-title {
   font-size: 40px;
@@ -236,7 +236,6 @@ body {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  color: rgb(97, 94, 86);
 }
 .totalSummary-content-row {
   display: flex;
@@ -249,11 +248,11 @@ body {
   padding: 20px 20px;
 }
 .sbfont {
-  color: rgb(97, 94, 86);
+  color: rgba(32, 31, 29, 0.8);
   font-size: 12px;
 }
 .error {
-  position: absolute;  
+  position: absolute;
   background: rgb(255, 255, 255);
   color: #000;
   top: 320px;
@@ -261,7 +260,7 @@ body {
   font-size: 12px;
   padding: 10px 10px;
   box-shadow: 0.1px 0.1px 20px 0.2px #d5c4c4;
-  transform: translate(8px,0px);
+  transform: translate(8px, 0px);
 }
 
 .custom_calender {
@@ -278,7 +277,7 @@ body {
   position: relative;
   overflow: hidden;
 }
-.test_cal{
+.test_cal {
   overflow: hidden;
   width: 80px;
 }
@@ -287,8 +286,8 @@ body {
 .cal_month,
 .cal_year {
   height: 145px;
-  width:90px;
-  overflow:auto;
+  width: 90px;
+  overflow: auto;
   scroll-behavior: smooth;
 }
 
@@ -298,13 +297,13 @@ body {
 .container-dmy ul li {
   padding: 5px 0px;
 }
-.selector{
+.selector {
   position: absolute;
-  top:90px;
+  top: 90px;
   left: 0;
-  height:20px;
+  height: 20px;
   padding: 5px 0px;
-  border-top:1px solid red;
+  border-top: 1px solid red;
   border-bottom: 1px solid red;
   width: 90%;
   margin: 0 15px;
@@ -330,47 +329,90 @@ body {
   color: #000;
 }
 
-#subHeading{
-  margin:20px auto;
-  color:rgb(255, 85, 0);
-  text-align: center; 
+#subHeading {
+  margin: 20px auto;
+  color: rgb(255, 85, 0);
+  text-align: center;
   font-size: 22px;
 }
 
-.BasickeypadContainer{
+.BasickeypadContainer {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.KeypadLeftSide{
+.KeypadLeftSide {
   grid-template-columns: auto auto auto;
   justify-items: center;
   padding: 5px;
 }
-.KeypadRightSide{
+.KeypadLeftSide input {
+  width: 60px;
+  height: 60px;
+}
+.KeypadRightSide {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
 }
-.KeypadRightSide > input, .KeypadRightSide  button{
-  width:50px;
-  height:100px;
+.KeypadRightSide > input,
+.KeypadRightSide button {
+  width: 50px;
+  height: 100px;
   border: 1px solid silver;
   outline: none;
   background: transparent;
   font-size: 24px;
   cursor: pointer;
   margin: 5px 5px;
-  border-radius: 5px;
+  border-radius: 25px;
 }
 
-.KeypadRightSide > input:hover, .KeypadRightSide  button:hover {
+.KeypadRightSide > input:hover,
+.KeypadRightSide button:hover {
   background-color: rgba(80, 79, 79, 0.103);
 }
-#notusedbtn:hover{
+#notusedbtn:hover {
   cursor: default;
   background-color: transparent;
+}
+.content_section {
+  margin: 20px 10px 0px 10px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid silver;
+}
+.content_section_1 .items {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0px;
+}
+.items input {
+  text-align: right;
+  width: 169px;
+  font-size: 18px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
+.items .finalPriceInput {
+  width: 200px;
+}
+.content_section_2 {
+  margin-top: 15px;
+  color: rgb(97, 94, 86);
+}
+.content_section_2 input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 18px;
+  width: 200px;
+}
+#current {
+  color: rgb(255, 85, 0);
+}
+.choose{
+  cursor: pointer;
 }

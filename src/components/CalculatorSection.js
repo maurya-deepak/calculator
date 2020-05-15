@@ -128,7 +128,6 @@ class CalculatorSection extends Component {
       <div className="container">
         <Result result={this.state.result} />
         <Keypad onClick={this.onClick} />
-        
       </div>
     );
   }

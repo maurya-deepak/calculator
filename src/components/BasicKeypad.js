@@ -2,17 +2,12 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBackspace,
-  faDivide,
-  faTimes,
-  faMinus,
-  faPlus,
-  faPercent,
   faCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 class Keypad extends Component {
   render() {
-      const classes = "keypad-container "+"KeypadLeftSide";
+      const classes = `keypad-container KeypadLeftSide`;
     return (
       <div className="BasickeypadContainer">
         <div className={classes}>
@@ -73,7 +68,6 @@ class Keypad extends Component {
           <input
             name="#"
             id="notusedbtn"
-            onClick={(e) => this.props.onClick(e.target.name)}
             type="button"
             value=""
           />
