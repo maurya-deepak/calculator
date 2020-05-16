@@ -9,8 +9,9 @@ class Discount extends Component {
     original_price: "0",
     discount: "0",
     final_price: "0",
-    save: "0",
+    save: "0"
   };
+
   onClick = (value) => {
     if (value === "Ac") {
       this.reset();
@@ -20,12 +21,14 @@ class Discount extends Component {
       const name = document.getElementById("current").attributes.name.value;
       const original_price = this.state.original_price;
       const discount = this.state.discount;
+
       if (name === "original_price") {
         let valid = isValidInput(original_price);
         const indexOfDot = original_price.indexOf(".");
+
         let currentLength = parseInt(original_price).toString().length;
-        let allowedlength = indexOfDot === -1 ? 15 : 17; 
-        console.log(allowedlength);
+        let allowedlength = indexOfDot === -1 ? 15 : 17;
+
         if (value === ".") {
           if (indexOfDot === -1) {
             this.setState(
@@ -36,7 +39,7 @@ class Discount extends Component {
               this.calculateDiscount
             );
           }
-        } else if (valid && currentLength < allowedlength ) {
+        } else if (valid && currentLength < allowedlength) {
           this.setState(
             {
               original_price:
@@ -94,7 +97,7 @@ class Discount extends Component {
           original_price:
             this.state.original_price.length === 1
               ? "0"
-              : this.state.original_price.slice(0, -1),
+              : this.state.original_price.slice(0, -1)
         },
         this.calculateDiscount
       );
@@ -105,7 +108,7 @@ class Discount extends Component {
           discount:
             this.state.discount.length === 1
               ? "0"
-              : this.state.discount.slice(0, -1),
+              : this.state.discount.slice(0, -1)
         },
         this.calculateDiscount
       );
@@ -115,11 +118,11 @@ class Discount extends Component {
   calculateDiscount = () => {
     const originalPrice = parseFloat(this.state.original_price);
     const discountAmount = parseFloat(this.state.discount);
-    const saving = +((originalPrice * discountAmount) / 100).toFixed(2);
-    const finalPrice = +(originalPrice - saving).toFixed(2);
+    const saving = ((originalPrice * discountAmount) / 100).toFixed(2);
+    const finalPrice = (originalPrice - saving).toFixed(2);
     this.setState({
       final_price: finalPrice.toString(),
-      save: saving.toString(),
+      save: saving.toString()
     });
   };
 
