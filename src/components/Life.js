@@ -14,6 +14,7 @@ import {
 import Age from './Age';
 import DateCalculate from './Date_Calculate';
 import Discount from './Discount';
+import Length from './Length';
 
 class Life extends Component {
   state = {
@@ -79,6 +80,8 @@ class Life extends Component {
         {this.state.id === 1 ? <Age reset={this.reset}/> : null}
         {this.state.id === 2 ? <Discount reset={this.reset}/> : null}
         {this.state.id === 4 ? <DateCalculate reset={this.reset}/>: null}
+        {this.state.id === 5 ? <Length reset={this.reset}/>: null}
+
       </React.Fragment>
     );
   }

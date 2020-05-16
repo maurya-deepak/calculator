@@ -3,7 +3,7 @@ import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBirthdayCake } from "@fortawesome/free-solid-svg-icons";
-import HeaderWithBackBtn from "./Header_with_back_btn";
+import HeaderWithBackBtn from "./HeaderWithBackBtn";
 import DatePickerCustom from "./DatePicker_Custom";
 import Error from "./Error";
 import Calendar from "react-calendar";

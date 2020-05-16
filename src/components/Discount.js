@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-import HeaderWithBackBtn from "./Header_with_back_btn";
+import HeaderWithBackBtn from "./HeaderWithBackBtn";
 import BasicKeypad from "./BasicKeypad";
+import ChangeSelectedInput from "./ChangeSelectedInput";
+import isValidInput from "./isValidInput";
 
 class Discount extends Component {
   state = {
-    original_price: '0',
-    discount: '0',
-    final_price: '0',
-    save: '0',
+    original_price: "0",
+    discount: "0",
+    final_price: "0",
+    save: "0",
   };
   onClick = (value) => {
     if (value === "Ac") {
@@ -15,36 +17,30 @@ class Discount extends Component {
     } else if (value === "backspace") {
       this.backspace();
     } else {
-      const current = document.getElementById("current");
-      const name = current.name;
+      const name = document.getElementById("current").attributes.name.value;
       const original_price = this.state.original_price;
       const discount = this.state.discount;
-
-      if (name === "original_price" && original_price.length < 15) {
-        let valid = original_price.split(".");
-        if (valid[1] !== undefined) {
-          valid = valid[1].length <= 1;
-        }
+      if (name === "original_price") {
+        let valid = isValidInput(original_price);
+        const indexOfDot = original_price.indexOf(".");
+        let currentLength = parseInt(original_price).toString().length;
+        let allowedlength = indexOfDot === -1 ? 15 : 17; 
+        console.log(allowedlength);
         if (value === ".") {
-          const indexOfDot = original_price.indexOf(".");
           if (indexOfDot === -1) {
             this.setState(
               {
                 original_price:
-                original_price === '0'
-                    ? "0."
-                    : parseFloat(original_price) + value,
+                  original_price === "0" ? "0." : original_price + value,
               },
               this.calculateDiscount
             );
           }
-        } else if (valid) {
+        } else if (valid && currentLength < allowedlength ) {
           this.setState(
             {
               original_price:
-              original_price === '0'
-                  ? value
-                  : parseFloat(original_price + value).toString(),
+                original_price === "0" ? value : original_price + value,
             },
             this.calculateDiscount
           );
@@ -52,19 +48,13 @@ class Discount extends Component {
       }
       if (name === "discount") {
         const isLessOrEqual = parseFloat(discount + value) <= 100.0;
-        let valid = discount.split(".");
-        if (valid[1] !== undefined) {
-          valid = valid[1].length <= 1;
-        }
+        let valid = isValidInput(discount);
         if (value === ".") {
           const indexOfDot = discount.indexOf(".");
           if (indexOfDot === -1 && isLessOrEqual) {
             this.setState(
               {
-                discount:
-                discount === '0'
-                    ? "0."
-                    : parseFloat(discount) + value,
+                discount: discount === "0" ? "0." : discount + value,
               },
               this.calculateDiscount
             );
@@ -72,10 +62,7 @@ class Discount extends Component {
         } else if (isLessOrEqual && valid) {
           this.setState(
             {
-              discount:
-              discount === '0'
-                  ? value
-                  : parseFloat(discount + value).toString(),
+              discount: discount === "0" ? value : discount + value,
             },
             this.calculateDiscount
           );
@@ -85,55 +72,46 @@ class Discount extends Component {
   };
 
   reset = () => {
-    const current = document.getElementById("current");
-    const name = current.name;
+    const name = document.getElementById("current").attributes.name.value;
     if (name === "original_price") {
       this.setState({
-        original_price: '0',
-        final_price: '0',
-        save: '0'
+        original_price: "0",
+        final_price: "0",
+        save: "0",
       });
     } else {
       this.setState({
-        discount: '0'
+        discount: "0",
       });
     }
   };
 
   backspace = () => {
-    const current = document.getElementById("current");
-    const name = current.name;
-    if (name === "original_price" && this.state.original_price !== '0') {
+    const name = document.getElementById("current").attributes.name.value;
+    if (name === "original_price" && this.state.original_price !== "0") {
       this.setState(
         {
           original_price:
             this.state.original_price.length === 1
-              ? '0'
+              ? "0"
               : this.state.original_price.slice(0, -1),
         },
         this.calculateDiscount
       );
     }
-    if (name === "discount" && this.state.discount !== '0') {
+    if (name === "discount" && this.state.discount !== "0") {
       this.setState(
         {
           discount:
             this.state.discount.length === 1
-              ? '0'
+              ? "0"
               : this.state.discount.slice(0, -1),
         },
         this.calculateDiscount
       );
     }
   };
-  change = (e) => {
-    const current_element = e.target;
-    const current_id = document.getElementById("current");
-    if (current_element !== current_id) {
-      current_id.id = "";
-      current_element.id = "current";
-    }
-  };
+
   calculateDiscount = () => {
     const originalPrice = parseFloat(this.state.original_price);
     const discountAmount = parseFloat(this.state.discount);
@@ -141,9 +119,10 @@ class Discount extends Component {
     const finalPrice = +(originalPrice - saving).toFixed(2);
     this.setState({
       final_price: finalPrice.toString(),
-      save: saving.toString()
+      save: saving.toString(),
     });
   };
+
   render() {
     return (
       <div className="Current-box">
@@ -151,35 +130,35 @@ class Discount extends Component {
         <div className="content_section">
           <div className="content_section_1">
             <div className="items">
-              <p>Original price</p>
-              <input
-                type="text"
+              <span>Original price</span>
+              <span
                 name="original_price"
-                value={this.state.original_price}
                 id="current"
-                readOnly
-                onClick={this.change}
+                onClick={ChangeSelectedInput}
                 className="choose"
-              />
+              >
+                {this.state.original_price}
+              </span>
             </div>
             <div className="items">
-              <p>Discount (% off)</p>
-              <input
+              <span>Discount (% off)</span>
+              <span
                 type="text"
                 name="discount"
-                value={this.state.discount}
-                readOnly
-                onClick={this.change}
+                onClick={ChangeSelectedInput}
                 className="choose"
-              />
+              >
+                {this.state.discount}
+              </span>
             </div>
             <div className="items">
-              <p>Final price</p>
-              <input type="text"  className="finalPriceInput" readOnly value={this.state.final_price} />
+              <span>Final price</span>
+              <span>{this.state.final_price}</span>
             </div>
           </div>
           <div className="content_section_2">
-            You save <input type="text" readOnly value={this.state.save} />
+            <span>You save </span>
+            <span>{this.state.save}</span>
           </div>
         </div>
         <div className="keypad_section">

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import HeaderWithBackBtn from "./Header_with_back_btn";
+import HeaderWithBackBtn from "./HeaderWithBackBtn";
 import DatePickerCustom from "./DatePicker_Custom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
