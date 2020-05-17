@@ -5,33 +5,43 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import BasicKeypad from "./BasicKeypad";
 import ChangeSelectedInput from "./ChangeSelectedInput";
 import isValidInput from "./isValidInput";
+import Reset from "./Reset";
+import Backspace from "./Backspace";
+import { Conversion } from "./Conversion";
 
 class Length extends Component {
-  state = {
-    from: "1",
-    to: "1",
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      from: "0",
+      to: "0",
+    };
+    this.onClick = this.onClick.bind(this);
+    this.calculate_length = this.calculate_length.bind(this);
+    this.backspace = this.backspace.bind(this);
+    this.reset = this.reset.bind(this);
+    this.Reset = Reset.bind(this);
+    this.Backspace = Backspace.bind(this);
+  }
   onClick = (value) => {
     if (value === "Ac") {
       this.reset();
     } else if (value === "backspace") {
-        this.backspace();
-      console.log("backspace.");
+      this.backspace();
     } else {
-      const current = document.getElementById("current");
-      const name = current.name;
+      const name = document.getElementById("current").attributes.name.value;
+
       const from = this.state.from;
       const to = this.state.to;
 
-      if (name === "from" && from.length < 14) {
+      if (name === "from" && from.length < 15) {
         let valid = isValidInput(from);
         if (value === ".") {
           const indexOfDot = from.indexOf(".");
           if (indexOfDot === -1) {
             this.setState(
               {
-                from: from === "0" ? "0." : parseFloat(from) + value,
+                from: from === "0" ? "0." : from + value,
               },
               this.calculate_length
             );
@@ -39,20 +49,20 @@ class Length extends Component {
         } else if (valid) {
           this.setState(
             {
-              from: from === "0" ? value : parseFloat(from + value).toString(),
+              from: from === "0" ? value : from + value,
             },
             this.calculate_length
           );
         }
       }
-      if (name === "to" && to.length < 14) {
+      if (name === "to" && to.length < 15) {
         let valid = isValidInput(to);
         if (value === ".") {
           const indexOfDot = to.indexOf(".");
           if (indexOfDot === -1) {
             this.setState(
               {
-                to: to === "0" ? "0." : parseFloat(to) + value,
+                to: to === "0" ? "0." : to + value,
               },
               this.calculate_length
             );
@@ -60,7 +70,7 @@ class Length extends Component {
         } else if (valid) {
           this.setState(
             {
-              to: to === "0" ? value : parseFloat(to + value).toString(),
+              to: to === "0" ? value : to + value,
             },
             this.calculate_length
           );
@@ -68,47 +78,48 @@ class Length extends Component {
       }
     }
   };
+
   calculate_length = () => {
     const item1 = document.getElementById("item1").value;
     const item2 = document.getElementById("item2").value;
-    const fromValue = this.state.from;
-    
-    if(item1 === 'm' && item2 === 'cm'){
+    const name = document.getElementById("current").attributes.name.value;
+    const fromValue = parseFloat(this.state.from);
+    const toValue = parseFloat(this.state.to);
 
+    // console.log(fromValue * Conversion[item1][item2]);
+
+    // console.log(toValue * Conversion[item1][item2]);
+
+    if (name === "from") {
+      this.setState({
+        to: Math.round((fromValue * Conversion[item1][item2])).toString(),
+      });
+    }
+    if (name === "to") {
+      this.setState({
+        from: (Math.round(toValue / Conversion[item1][item2])).toString(),
+      });
     }
   };
   backspace = () => {
-    const current = document.getElementById("current");
-    const name = current.name;
+    const name = document.getElementById("current").attributes.name.value;
     if (name === "from" && this.state.from !== "0") {
-      this.setState(
-        {
-          from:
-            this.state.from.length === 1 ? "0" : this.state.from.slice(0, -1),
-        },
-        this.calculate_length
-      );
+      let obj = { name: "from" };
+      this.Backspace(obj, this.calculate_length);
     }
     if (name === "to" && this.state.to !== "0") {
-      this.setState(
-        {
-          to: this.state.to.length === 1 ? "0" : this.state.to.slice(0, -1),
-        },
-        this.calculate_length
-      );
+      let obj = { name: "to" };
+      this.Backspace(obj, this.calculate_length);
     }
   };
   reset = () => {
-    const current = document.getElementById("current");
-    const name = current.name;
+    const name = document.getElementById("current").attributes.name.value;
     if (name === "from") {
-      this.setState({
-        from: "0",
-      });
+      const obj = [{ name: "from" }];
+      this.Reset(obj);
     } else {
-      this.setState({
-        to: "0",
-      });
+      const obj = [{ name: "to" }];
+      this.Reset(obj);
     }
   };
 
@@ -117,46 +128,41 @@ class Length extends Component {
       <div className="Current-box">
         <HeaderWithBackBtn name="Length" reset={this.props.reset} />
         <div className="contentSection">
-          <div className="item">
-            <select id="item1">
-              <option value="km">Kilometer km</option>
-              <option value="m">Meter m</option>
-              <option value="dm">Decimeter dm</option>
-              <option value="cm">Centimeter cm</option>
-              <option value="mm">Millimeter mm</option>
-              <option value="mi">Mile mi</option>
-              <option value="ft">Foot ft</option>
-              <option value="in">Inch in</option>
-            </select>
-            <FontAwesomeIcon icon={faCaretDown} />
-            <input
-              type="text"
-              id="current"
-              name="from"
-              readOnly
-              onClick={ChangeSelectedInput}
-              value={this.state.from}
-            />
+          <div className="items">
+            <div>
+              <select id="item1" onChange={this.calculate_length}>
+                <option value="km">Kilometer km</option>
+                <option value="m">Meter m</option>
+                <option value="dm">Decimeter dm</option>
+                <option value="cm">Centimeter cm</option>
+                <option value="mm">Millimeter mm</option>
+                <option value="mi">Mile mi</option>
+                <option value="ft">Foot ft</option>
+                <option value="in">Inch in</option>
+              </select>
+              <FontAwesomeIcon icon={faCaretDown} />
+            </div>
+            <span id="current" name="from" className="choose" onClick={ChangeSelectedInput}>
+              {this.state.from}
+            </span>
           </div>
-          <div className="item">
-            <select id="item2">
-              <option value="km">Kilometer km</option>
-              <option value="m">Meter m</option>
-              <option value="dm">Decimeter dm</option>
-              <option value="cm">Centimeter cm</option>
-              <option value="mm">Millimeter mm</option>
-              <option value="mi">Mile mi</option>
-              <option value="ft">Foot ft</option>
-              <option value="in">Inch in</option>
-            </select>
-            <FontAwesomeIcon icon={faCaretDown} />
-            <input
-              type="text"
-              readOnly
-              name="to"
-              onClick={ChangeSelectedInput}
-              value={this.state.to}
-            />
+          <div className="items">
+            <div>
+              <select id="item2" onChange={this.calculate_length}>
+                <option value="km">Kilometer km</option>
+                <option value="m">Meter m</option>
+                <option value="dm">Decimeter dm</option>
+                <option value="cm">Centimeter cm</option>
+                <option value="mm">Millimeter mm</option>
+                <option value="mi">Mile mi</option>
+                <option value="ft">Foot ft</option>
+                <option value="in">Inch in</option>
+              </select>
+              <FontAwesomeIcon icon={faCaretDown} />
+            </div>
+            <span name="to" className="choose" onClick={ChangeSelectedInput}>
+              {this.state.to}
+            </span>
           </div>
         </div>
         <div className="keypad_section">
