@@ -89,12 +89,12 @@ class Discount extends Component {
     if (name === "original_price") {
       const obj = [
         { name: "original_price" },
-        { name: "final_price"},
-        { name: "save"},
+        { name: "final_price" },
+        { name: "save" },
       ];
       this.Reset(obj);
     } else {
-      const obj = [{ name: "discount"}];
+      const obj = [{ name: "discount" }];
       this.Reset(obj);
     }
   };

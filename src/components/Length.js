@@ -81,8 +81,8 @@ class Length extends Component {
     const item1 = document.getElementById("item1").value;
     const item2 = document.getElementById("item2").value;
     const fromValue = this.state.from;
-    if (item1 === "m" && item2 === "cm") {
-    }
+  
+    
   };
   backspace = () => {
     const current = document.getElementById("current");
@@ -125,14 +125,9 @@ class Length extends Component {
               <option value="in">Inch in</option>
             </select>
             <FontAwesomeIcon icon={faCaretDown} />
-            <input
-              type="text"
-              id="current"
-              name="from"
-              readOnly
-              onClick={ChangeSelectedInput}
-              value={this.state.from}
-            />
+            <span id="current" name="from" onClick={ChangeSelectedInput}>
+              {this.state.from}
+            </span>
           </div>
           <div className="item">
             <select id="item2">
@@ -146,13 +141,9 @@ class Length extends Component {
               <option value="in">Inch in</option>
             </select>
             <FontAwesomeIcon icon={faCaretDown} />
-            <input
-              type="text"
-              readOnly
-              name="to"
-              onClick={ChangeSelectedInput}
-              value={this.state.to}
-            />
+            <span name="to" onClick={ChangeSelectedInput}>
+              {this.state.to}
+            </span>
           </div>
         </div>
         <div className="keypad_section">
