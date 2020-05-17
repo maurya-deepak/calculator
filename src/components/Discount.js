@@ -3,15 +3,25 @@ import HeaderWithBackBtn from "./HeaderWithBackBtn";
 import BasicKeypad from "./BasicKeypad";
 import ChangeSelectedInput from "./ChangeSelectedInput";
 import isValidInput from "./isValidInput";
+import Reset from "./Reset";
+import Backspace from "./Backspace";
 
 class Discount extends Component {
-  state = {
-    original_price: "0",
-    discount: "0",
-    final_price: "0",
-    save: "0"
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      original_price: "0",
+      discount: "0",
+      final_price: "0",
+      save: "0",
+    };
+    this.onClick = this.onClick.bind(this);
+    this.calculateDiscount = this.calculateDiscount.bind(this);
+    this.backspace = this.backspace.bind(this);
+    this.reset = this.reset.bind(this);
+    this.Reset = Reset.bind(this);
+    this.Backspace = Backspace.bind(this);
+  }
   onClick = (value) => {
     if (value === "Ac") {
       this.reset();
@@ -77,41 +87,27 @@ class Discount extends Component {
   reset = () => {
     const name = document.getElementById("current").attributes.name.value;
     if (name === "original_price") {
-      this.setState({
-        original_price: "0",
-        final_price: "0",
-        save: "0",
-      });
+      const obj = [
+        { name: "original_price" },
+        { name: "final_price"},
+        { name: "save"},
+      ];
+      this.Reset(obj);
     } else {
-      this.setState({
-        discount: "0",
-      });
+      const obj = [{ name: "discount"}];
+      this.Reset(obj);
     }
   };
 
   backspace = () => {
     const name = document.getElementById("current").attributes.name.value;
     if (name === "original_price" && this.state.original_price !== "0") {
-      this.setState(
-        {
-          original_price:
-            this.state.original_price.length === 1
-              ? "0"
-              : this.state.original_price.slice(0, -1)
-        },
-        this.calculateDiscount
-      );
+      let obj = { name: "original_price" };
+      this.Backspace(obj, this.calculateDiscount);
     }
     if (name === "discount" && this.state.discount !== "0") {
-      this.setState(
-        {
-          discount:
-            this.state.discount.length === 1
-              ? "0"
-              : this.state.discount.slice(0, -1)
-        },
-        this.calculateDiscount
-      );
+      let obj = { name: "discount" };
+      this.Backspace(obj, this.calculateDiscount);
     }
   };
 
@@ -122,7 +118,7 @@ class Discount extends Component {
     const finalPrice = (originalPrice - saving).toFixed(2);
     this.setState({
       final_price: finalPrice.toString(),
-      save: saving.toString()
+      save: saving.toString(),
     });
   };
 

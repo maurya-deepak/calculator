@@ -5,19 +5,28 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import BasicKeypad from "./BasicKeypad";
 import ChangeSelectedInput from "./ChangeSelectedInput";
 import isValidInput from "./isValidInput";
+import Reset from "./Reset";
+import Backspace from "./Backspace";
 
 class Length extends Component {
-  state = {
-    from: "1",
-    to: "1",
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      from: "0",
+      to: "0",
+    };
+    this.onClick = this.onClick.bind(this);
+    this.calculate_length = this.calculate_length.bind(this);
+    this.backspace = this.backspace.bind(this);
+    this.reset = this.reset.bind(this);
+    this.Reset = Reset.bind(this);
+    this.Backspace = Backspace.bind(this);
+  }
   onClick = (value) => {
     if (value === "Ac") {
       this.reset();
     } else if (value === "backspace") {
-        this.backspace();
-      console.log("backspace.");
+      this.backspace();
     } else {
       const current = document.getElementById("current");
       const name = current.name;
@@ -72,43 +81,30 @@ class Length extends Component {
     const item1 = document.getElementById("item1").value;
     const item2 = document.getElementById("item2").value;
     const fromValue = this.state.from;
-    
-    if(item1 === 'm' && item2 === 'cm'){
-
+    if (item1 === "m" && item2 === "cm") {
     }
   };
   backspace = () => {
     const current = document.getElementById("current");
     const name = current.name;
     if (name === "from" && this.state.from !== "0") {
-      this.setState(
-        {
-          from:
-            this.state.from.length === 1 ? "0" : this.state.from.slice(0, -1),
-        },
-        this.calculate_length
-      );
+      let obj = { name: "from" };
+      this.Backspace(obj, this.calculate_length);
     }
     if (name === "to" && this.state.to !== "0") {
-      this.setState(
-        {
-          to: this.state.to.length === 1 ? "0" : this.state.to.slice(0, -1),
-        },
-        this.calculate_length
-      );
+      let obj = { name: "to" };
+      this.Backspace(obj, this.calculate_length);
     }
   };
   reset = () => {
     const current = document.getElementById("current");
     const name = current.name;
     if (name === "from") {
-      this.setState({
-        from: "0",
-      });
+      const obj = [{ name: "from" }];
+      this.Reset(obj);
     } else {
-      this.setState({
-        to: "0",
-      });
+      const obj = [{ name: "to" }];
+      this.Reset(obj);
     }
   };
 
