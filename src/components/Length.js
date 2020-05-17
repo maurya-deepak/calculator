@@ -85,19 +85,14 @@ class Length extends Component {
     const name = document.getElementById("current").attributes.name.value;
     const fromValue = parseFloat(this.state.from);
     const toValue = parseFloat(this.state.to);
-
-    // console.log(fromValue * Conversion[item1][item2]);
-
-    // console.log(toValue * Conversion[item1][item2]);
-
     if (name === "from") {
       this.setState({
-        to: Math.round((fromValue * Conversion[item1][item2])).toString(),
+        to: (fromValue * Conversion[item1][item2]).toString(),
       });
     }
     if (name === "to") {
       this.setState({
-        from: (Math.round(toValue / Conversion[item1][item2])).toString(),
+        from:(toValue / Conversion[item1][item2]).toString(),
       });
     }
   };
