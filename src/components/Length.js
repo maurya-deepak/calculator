@@ -86,13 +86,24 @@ class Length extends Component {
     const fromValue = parseFloat(this.state.from);
     const toValue = parseFloat(this.state.to);
     if (name === "from") {
+      let convertedValue = fromValue * Conversion[item1][item2];
+      convertedValue =
+        convertedValue.toString().length > 15
+          ? convertedValue.toPrecision(9).toString()
+          : convertedValue.toString();
+
       this.setState({
-        to: (fromValue * Conversion[item1][item2]).toString(),
+        to: convertedValue,
       });
     }
     if (name === "to") {
+      let convertedValue = toValue / Conversion[item1][item2];
+      convertedValue =
+        convertedValue.toString().length > 15
+          ? convertedValue.toPrecision(9).toString()
+          : convertedValue.toString();
       this.setState({
-        from:(toValue / Conversion[item1][item2]).toString(),
+        from: convertedValue,
       });
     }
   };
@@ -108,14 +119,8 @@ class Length extends Component {
     }
   };
   reset = () => {
-    const name = document.getElementById("current").attributes.name.value;
-    if (name === "from") {
-      const obj = [{ name: "from" }];
-      this.Reset(obj);
-    } else {
-      const obj = [{ name: "to" }];
-      this.Reset(obj);
-    }
+    const obj = [{ name: "from" }, { name: "to" }];
+    this.Reset(obj);
   };
 
   render() {
@@ -137,7 +142,12 @@ class Length extends Component {
               </select>
               <FontAwesomeIcon icon={faCaretDown} />
             </div>
-            <span id="current" name="from" className="choose" onClick={ChangeSelectedInput}>
+            <span
+              id="current"
+              name="from"
+              className="choose"
+              onClick={ChangeSelectedInput}
+            >
               {this.state.from}
             </span>
           </div>
