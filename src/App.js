@@ -3,8 +3,8 @@ import Navbar from "./components/Navbar";
 import CalculatorSection from "./components/CalculatorSection";
 import Life from "./components/Life";
 import Finance from "./components/Finance";
-
 import "./App.css";
+
 
 class App extends Component {
   state = {

@@ -16,6 +16,9 @@ import DateCalculate from './Date_Calculate';
 import Discount from './Discount';
 import Length from './Length';
 
+
+
+
 class Life extends Component {
   state = {
     id: -1

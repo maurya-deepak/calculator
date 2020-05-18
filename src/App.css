@@ -399,7 +399,7 @@ body {
   color: rgb(97, 94, 86);
 }
 
-#current {
+.current {
   color: rgb(255, 85, 0);
 }
 .choose {
