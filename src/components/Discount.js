@@ -6,12 +6,12 @@ import Context from "./store/Context";
 
 const Discount = (props) => {
   const [state, setState] = useState({
-    final_price: "0.00",
-    save: "0.00",
+    final_price: "0",
+    save: "0",
   });
 
   const { globalState, actions } = useContext(Context);
-  
+
   const onClick = (key) => {
     if (key === "Ac") {
       reset();
@@ -52,12 +52,12 @@ const Discount = (props) => {
       type: "reset",
       current,
     });
-    if (globalState.firstInput === "0") {
-      setState({
-        final_price: "0.00",
-        save: "0.00",
-      });
-    }
+    // if (globalState.firstInput === "0") {
+    //   setState({
+    //     final_price: "0.00",
+    //     save: "0.00",
+    //   });
+    // }
   };
 
   const backspace = () => {
@@ -67,7 +67,12 @@ const Discount = (props) => {
       current,
     });
   };
-
+  useEffect(() => {
+    actions({
+      type: "setStateToInitial",
+    });
+  },[]);
+  
   useEffect(() => {
     const originalPrice = parseFloat(globalState.firstInput);
     const discountAmount = parseFloat(globalState.secondInput);

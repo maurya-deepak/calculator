@@ -1,181 +1,162 @@
-import React, { Component } from "react";
+import React, { memo, useState, useContext, useEffect } from "react";
 import HeaderWithBackBtn from "./HeaderWithBackBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import BasicKeypad from "./BasicKeypad";
 import ChangeSelectedInput from "./ChangeSelectedInput";
-import isValidInput from "./isValidInput";
-import Reset from "./Reset";
-import Backspace from "./Backspace";
 import { Conversion } from "./Conversion";
+import Context from "./store/Context";
+import { useCallback } from "react";
 
-class Length extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      from: "0",
-      to: "0",
-    };
-    this.onClick = this.onClick.bind(this);
-    this.calculate_length = this.calculate_length.bind(this);
-    this.backspace = this.backspace.bind(this);
-    this.reset = this.reset.bind(this);
-    this.Reset = Reset.bind(this);
-    this.Backspace = Backspace.bind(this);
-  }
-  onClick = (value) => {
-    if (value === "Ac") {
-      this.reset();
-    } else if (value === "backspace") {
-      this.backspace();
-    } else {
-      const name = document.getElementById("current").attributes.name.value;
+const Length = (props) => {
+  const [state, setState] = useState({
+    from: "0",
+    to: "0",
+    selected: false,
+  });
+  const { globalState, actions } = useContext(Context);
 
-      const from = this.state.from;
-      const to = this.state.to;
 
-      if (name === "from" && from.length < 15) {
-        let valid = isValidInput(from);
-        if (value === ".") {
-          const indexOfDot = from.indexOf(".");
-          if (indexOfDot === -1) {
-            this.setState(
-              {
-                from: from === "0" ? "0." : from + value,
-              },
-              this.calculate_length
-            );
-          }
-        } else if (valid) {
-          this.setState(
-            {
-              from: from === "0" ? value : from + value,
-            },
-            this.calculate_length
-          );
-        }
+  const onClick = useCallback(
+    (key) => {
+      if (key === "Ac") {
+        // reset();
+        const current = document.querySelector(".current");
+        actions({
+          type: "reset",
+          current,
+        });
+      } else if (key === "backspace") {
+        // backspace();
+        const current = document.querySelector(".current");
+        actions({
+          type: "backspace",
+          current,
+        });
+      } else if (key === ".") {
+        console.log(key);
+        const current = document.querySelector(".current");
+        actions({
+          type: "decimal",
+          current,
+        });
+      } else {
+        const current = document.querySelector(".current");
+        actions({
+          type: "number",
+          current,
+          key,
+        });
       }
-      if (name === "to" && to.length < 15) {
-        let valid = isValidInput(to);
-        if (value === ".") {
-          const indexOfDot = to.indexOf(".");
-          if (indexOfDot === -1) {
-            this.setState(
-              {
-                to: to === "0" ? "0." : to + value,
-              },
-              this.calculate_length
-            );
-          }
-        } else if (valid) {
-          this.setState(
-            {
-              to: to === "0" ? value : to + value,
-            },
-            this.calculate_length
-          );
-        }
-      }
-    }
+    },
+    [actions]
+  );
+
+  const selectChange = () => {
+    setState({
+      selected: !state.selected,
+    });
   };
 
-  calculate_length = () => {
+  useEffect(() => {
+    actions({
+      type: "setStateToInitial",
+    });
+  }, []);
+
+  useEffect(() => {
+    setState({
+      from: globalState.firstInput,
+      to: globalState.secondInput,
+    });
+  }, [globalState.firstInput, globalState.secondInput]);
+
+  useEffect(() => {
     const item1 = document.getElementById("item1").value;
     const item2 = document.getElementById("item2").value;
-    const name = document.getElementById("current").attributes.name.value;
-    const fromValue = parseFloat(this.state.from);
-    const toValue = parseFloat(this.state.to);
-    if (name === "from") {
+    const currentElement = document.querySelector(".current");
+    const fromValue = parseFloat(state.from);
+    const toValue = parseFloat(state.to);
+
+    if (currentElement.id === "1") {
       let convertedValue = fromValue * Conversion[item1][item2];
       convertedValue =
         convertedValue.toString().length > 15
           ? convertedValue.toPrecision(9).toString()
           : convertedValue.toString();
+      const key = convertedValue;
+      const current = document.getElementById("2");
 
-      this.setState({
-        to: convertedValue,
+      actions({
+        type: "setStateTokey",
+        current,
+        key,
       });
     }
-    if (name === "to") {
+    if (currentElement.id === "2") {
       let convertedValue = toValue / Conversion[item1][item2];
       convertedValue =
         convertedValue.toString().length > 15
           ? convertedValue.toPrecision(9).toString()
           : convertedValue.toString();
-      this.setState({
-        from: convertedValue,
+
+      const key = convertedValue;
+      const current = document.getElementById("1");
+      actions({
+        type: "setStateTokey",
+        current,
+        key,
       });
     }
-  };
-  backspace = () => {
-    const name = document.getElementById("current").attributes.name.value;
-    if (name === "from" && this.state.from !== "0") {
-      let obj = { name: "from" };
-      this.Backspace(obj, this.calculate_length);
-    }
-    if (name === "to" && this.state.to !== "0") {
-      let obj = { name: "to" };
-      this.Backspace(obj, this.calculate_length);
-    }
-  };
-  reset = () => {
-    const obj = [{ name: "from" }, { name: "to" }];
-    this.Reset(obj);
-  };
+    // warning: DO NOT PASS "actions" that will lead to infine state change.
+  }, [state.from, state.to, state.selected]);
 
-  render() {
-    return (
-      <div className="Current-box">
-        <HeaderWithBackBtn name="Length" reset={this.props.reset} />
-        <div className="contentSection">
-          <div className="items">
-            <div>
-              <select id="item1" onChange={this.calculate_length}>
-                <option value="km">Kilometer km</option>
-                <option value="m">Meter m</option>
-                <option value="dm">Decimeter dm</option>
-                <option value="cm">Centimeter cm</option>
-                <option value="mm">Millimeter mm</option>
-                <option value="mi">Mile mi</option>
-                <option value="ft">Foot ft</option>
-                <option value="in">Inch in</option>
-              </select>
-              <FontAwesomeIcon icon={faCaretDown} />
-            </div>
-            <span
-              id="current"
-              name="from"
-              className="choose"
-              onClick={ChangeSelectedInput}
-            >
-              {this.state.from}
-            </span>
+  return (
+    <div className="Current-box">
+      <HeaderWithBackBtn name="Length" reset={props.reset} />
+      <div className="contentSection">
+        <div className="items">
+          <div>
+            <select id="item1" onChange={selectChange}>
+              <option value="km">Kilometer km</option>
+              <option value="m">Meter m</option>
+              <option value="dm">Decimeter dm</option>
+              <option value="cm">Centimeter cm</option>
+              <option value="mm">Millimeter mm</option>
+              <option value="mi">Mile mi</option>
+              <option value="ft">Foot ft</option>
+              <option value="in">Inch in</option>
+            </select>
+            <FontAwesomeIcon icon={faCaretDown} />
           </div>
-          <div className="items">
-            <div>
-              <select id="item2" onChange={this.calculate_length}>
-                <option value="km">Kilometer km</option>
-                <option value="m">Meter m</option>
-                <option value="dm">Decimeter dm</option>
-                <option value="cm">Centimeter cm</option>
-                <option value="mm">Millimeter mm</option>
-                <option value="mi">Mile mi</option>
-                <option value="ft">Foot ft</option>
-                <option value="in">Inch in</option>
-              </select>
-              <FontAwesomeIcon icon={faCaretDown} />
-            </div>
-            <span name="to" className="choose" onClick={ChangeSelectedInput}>
-              {this.state.to}
-            </span>
-          </div>
+          <span id="1" className="current" onClick={ChangeSelectedInput}>
+            {globalState.firstInput}
+          </span>
         </div>
-        <div className="keypad_section">
-          <BasicKeypad onClick={this.onClick} />
+        <div className="items">
+          <div>
+            <select id="item2" onChange={selectChange}>
+              <option value="km">Kilometer km</option>
+              <option value="m">Meter m</option>
+              <option value="dm">Decimeter dm</option>
+              <option value="cm">Centimeter cm</option>
+              <option value="mm">Millimeter mm</option>
+              <option value="mi">Mile mi</option>
+              <option value="ft">Foot ft</option>
+              <option value="in">Inch in</option>
+            </select>
+            <FontAwesomeIcon icon={faCaretDown} />
+          </div>
+          <span id="2" onClick={ChangeSelectedInput}>
+            {globalState.secondInput}
+          </span>
         </div>
       </div>
-    );
-  }
-}
+      <div className="keypad_section">
+        <BasicKeypad onClick={onClick} />
+      </div>
+    </div>
+  );
+};
 
-export default Length;
+export default memo(Length);

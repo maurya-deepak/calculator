@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 const useGlobalState = () => {
   const [globalState, setState] = useState({
@@ -6,9 +6,23 @@ const useGlobalState = () => {
     secondInput: "0",
   });
 
-  const actions = (action) => {
-    const { type, current , key} = action;
+  const actions = useCallback((action) => {
+    const { type, current, key } = action;
     switch (type) {
+      case "setStateToInitial":
+        // console.log("setting to initial state");
+        return setState({ ...globalState, firstInput: "0", secondInput: "0" });
+      case "setStateTokey":
+        // console.log("case setState:")
+        if (current.id === "1") {
+          // console.log("setting state 1")
+          return setState({ ...globalState, firstInput: key });
+        }
+        if (current.id === "2") {
+          // console.log("setting state 2")
+          return setState({ ...globalState, secondInput: key });
+        }
+        break;
       case "reset":
         if (current.id === "1") {
           return setState({ ...globalState, firstInput: "0" });
@@ -20,7 +34,6 @@ const useGlobalState = () => {
       case "backspace":
         if (current.id === "1") {
           const firstInputValue = globalState.firstInput;
-          console.log(firstInputValue);
           if (firstInputValue !== "0") {
             if (firstInputValue.length === 1) {
               return setState({ ...globalState, firstInput: "0" });
@@ -96,7 +109,7 @@ const useGlobalState = () => {
       default:
         return globalState;
     }
-  };
+  },[globalState]);
   return { globalState, actions };
 };
 

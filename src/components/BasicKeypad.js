@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component , memo} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBackspace,
@@ -7,6 +7,7 @@ import {
 
 class Keypad extends Component {
   render() {
+    console.log("basic keypad render");
       const classes = `keypad-container KeypadLeftSide`;
     return (
       <div className="BasickeypadContainer">
@@ -107,4 +108,4 @@ class Keypad extends Component {
   }
 }
 
-export default Keypad;
+export default memo(Keypad);
