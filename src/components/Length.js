@@ -124,6 +124,7 @@ class Length extends Component {
   };
 
   render() {
+    console.log("length re-render");
     return (
       <div className="Current-box">
         <HeaderWithBackBtn name="Length" reset={this.props.reset} />
@@ -171,7 +172,7 @@ class Length extends Component {
           </div>
         </div>
         <div className="keypad_section">
-          <BasicKeypad onClick={this.onClick} />
+          <BasicKeypad onClick={this.onClick}/>
         </div>
       </div>
     );

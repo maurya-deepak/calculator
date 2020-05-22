@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component } from "react";
 import HeaderWithBackBtn from "./HeaderWithBackBtn";
 import BasicKeypad from "./BasicKeypad";
 import ChangeSelectedInput from "./ChangeSelectedInput";
