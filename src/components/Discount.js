@@ -1,16 +1,15 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import HeaderWithBackBtn from "./HeaderWithBackBtn";
 import BasicKeypad from "./BasicKeypad";
 import ChangeSelectedInput from "./ChangeSelectedInput";
-import Context from "./store/Context";
+import global from "./store/global";
 
 const Discount = (props) => {
+
   const [state, setState] = useState({
     final_price: "0",
     save: "0",
   });
-
-  const { globalState, actions } = useContext(Context);
 
   const onClick = (key) => {
     if (key === "Ac") {
@@ -19,26 +18,26 @@ const Discount = (props) => {
       backspace();
     } else if (key === ".") {
       const current = document.querySelector(".current");
-      actions({
+      global.globalState.actions({
         type: "decimal",
         current,
       });
     } else {
       const current = document.querySelector(".current");
       if (current.id === "2") {
-        const discount = globalState.secondInput;
+        const discount = global.globalState.state.secondInput;
         const check = parseFloat(discount + key) <= 100.0;
         if (!check) return;
         if (discount.length > 4) return;
       } else if (current.id === "1") {
-        const originalPrice = globalState.firstInput;
+        const originalPrice = global.globalState.state.firstInput;
         if (originalPrice.indexOf(".") !== -1) {
           if (originalPrice.split(".")[1].length > 1) {
             return;
           }
         }
       }
-      actions({
+      global.globalState.actions({
         type: "number",
         current,
         key,
@@ -48,41 +47,37 @@ const Discount = (props) => {
 
   const reset = () => {
     const current = document.querySelector(".current");
-    actions({
+    global.globalState.actions({
       type: "reset",
       current,
     });
-    // if (globalState.firstInput === "0") {
-    //   setState({
-    //     final_price: "0.00",
-    //     save: "0.00",
-    //   });
-    // }
   };
 
   const backspace = () => {
     const current = document.querySelector(".current");
-    actions({
+    global.globalState.actions({
       type: "backspace",
       current,
     });
   };
+
   useEffect(() => {
-    actions({
+    global.globalState.actions({
       type: "setStateToInitial",
     });
   },[]);
   
+ 
   useEffect(() => {
-    const originalPrice = parseFloat(globalState.firstInput);
-    const discountAmount = parseFloat(globalState.secondInput);
+    const originalPrice = parseFloat(global.globalState.state.firstInput);
+    const discountAmount = parseFloat(global.globalState.state.secondInput);
     const saving = ((originalPrice * discountAmount) / 100).toFixed(2);
     const finalPrice = (originalPrice - saving).toFixed(2);
     setState({
       final_price: finalPrice.toString(),
       save: saving.toString(),
     });
-  }, [globalState.firstInput, globalState.secondInput]);
+  },[global.globalState.state.firstInput, global.globalState.state.secondInput]);
 
   return (
     <div className="Current-box">
@@ -97,7 +92,7 @@ const Discount = (props) => {
               onClick={ChangeSelectedInput}
               className="current"
             >
-              {globalState.firstInput}
+              {global.globalState.state.firstInput}
             </span>
           </div>
           <div className="items">
@@ -108,7 +103,7 @@ const Discount = (props) => {
               id="2"
               onClick={ChangeSelectedInput}
             >
-              {globalState.secondInput}
+              {global.globalState.state.secondInput}
             </span>
           </div>
           <div className="items">

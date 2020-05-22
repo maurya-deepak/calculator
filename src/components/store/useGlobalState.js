@@ -1,58 +1,56 @@
-import { useState, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 const useGlobalState = () => {
-  const [globalState, setState] = useState({
+  const [state, setState] = useState({
     firstInput: "0",
     secondInput: "0",
   });
 
-  const actions = useCallback((action) => {
+  const actions = (action) => {
     const { type, current, key } = action;
     switch (type) {
       case "setStateToInitial":
-        // console.log("setting to initial state");
-        return setState({ ...globalState, firstInput: "0", secondInput: "0" });
+        console.log("setting to initial state");
+        setState({ ...state, firstInput: "0", secondInput: "0" });
+        break;
       case "setStateTokey":
-        // console.log("case setState:")
         if (current.id === "1") {
-          // console.log("setting state 1")
-          return setState({ ...globalState, firstInput: key });
+          setState({ ...state, firstInput: key });
         }
         if (current.id === "2") {
-          // console.log("setting state 2")
-          return setState({ ...globalState, secondInput: key });
+          setState({ ...state, secondInput: key });
         }
         break;
       case "reset":
         if (current.id === "1") {
-          return setState({ ...globalState, firstInput: "0" });
+          setState({ ...state, firstInput: "0" });
         }
         if (current.id === "2") {
-          return setState({ ...globalState, secondInput: "0" });
+          setState({ ...state, secondInput: "0" });
         }
         break;
       case "backspace":
         if (current.id === "1") {
-          const firstInputValue = globalState.firstInput;
+          const firstInputValue = state.firstInput;
           if (firstInputValue !== "0") {
             if (firstInputValue.length === 1) {
-              return setState({ ...globalState, firstInput: "0" });
+              setState({ ...state, firstInput: "0" });
             } else {
-              return setState({
-                ...globalState,
+              setState({
+                ...state,
                 firstInput: firstInputValue.slice(0, -1),
               });
             }
           }
         }
         if (current.id === "2") {
-          const secondInputValue = globalState.secondInput;
+          const secondInputValue = state.secondInput;
           if (secondInputValue !== 0) {
             if (secondInputValue.length === 1) {
-              return setState({ ...globalState, secondInput: "0" });
+              setState({ ...state, secondInput: "0" });
             } else {
-              return setState({
-                ...globalState,
+              setState({
+                ...state,
                 secondInput: secondInputValue.slice(0, -1),
               });
             }
@@ -60,24 +58,24 @@ const useGlobalState = () => {
         }
         break;
       case "decimal":
-        if (current.id === "1" && globalState.firstInput.indexOf(".") === -1) {
-          return setState({
-            ...globalState,
-            firstInput: globalState.firstInput + ".",
+        if (current.id === "1" && state.firstInput.indexOf(".") === -1) {
+          setState({
+            ...state,
+            firstInput: state.firstInput + ".",
           });
         } else if (
           current.id === "2" &&
-          globalState.secondInput.indexOf(".") === -1
+          state.secondInput.indexOf(".") === -1
         ) {
-          return setState({
-            ...globalState,
-            secondInput: globalState.secondInput + ".",
+          setState({
+            ...state,
+            secondInput: state.secondInput + ".",
           });
         }
         break;
       case "number":
         if (current.id === "1") {
-          let value = globalState.firstInput;
+          let value = state.firstInput;
           const len = value.indexOf(".") === -1 ? 15 : 18;
           if (value.length < len) {
             if (value === "0") {
@@ -85,13 +83,13 @@ const useGlobalState = () => {
             } else {
               value += key;
             }
-            return setState({
-              ...globalState,
+            setState({
+              ...state,
               firstInput: value,
             });
           }
         } else if (current.id === "2") {
-          let value = globalState.secondInput;
+          let value = state.secondInput;
           const len = value.indexOf(".") === -1 ? 15 : 18;
           if (value.length < len) {
             if (value === "0") {
@@ -99,18 +97,18 @@ const useGlobalState = () => {
             } else {
               value += key;
             }
-            return setState({
-              ...globalState,
+            setState({
+              ...state,
               secondInput: value,
             });
           }
         }
         break;
       default:
-        return globalState;
+        break;
     }
-  },[globalState]);
-  return { globalState, actions };
+  };
+  return { state, actions };
 };
 
 export default useGlobalState;

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPager,
@@ -9,84 +9,84 @@ import {
   faSquare,
   faTemperatureLow,
   faTachometerAlt,
-  faClock
+  faClock,
 } from "@fortawesome/free-solid-svg-icons";
-import Age from './Age';
-import DateCalculate from './Date_Calculate';
-import Discount from './Discount';
-import Length from './Length';
+import Age from "./Age";
+import DateCalculate from "./Date_Calculate";
+import Discount from "./Discount";
+import Length from "./Length";
+import global from "./store/global";
+import useGlobalState from "./store/useGlobalState";
 
+const Life = (props) => {
+  global.globalState = useGlobalState();
 
+  const [state, setState] = useState({
+    id: -1,
+  });
 
-
-class Life extends Component {
-  state = {
-    id: -1
-  };
-  change = event => {
+  const change = (event) => {
     const id = parseInt(event.currentTarget.id);
-    this.setState({
-      id: id
+    setState({
+      id: id,
     });
-    this.props.hideNav();
+    props.hideNav();
   };
-  reset = ()=>{
-    this.setState({
-      id:-1
-    })
-    this.props.showNav();
-  }
 
-  render() {
-    return (
-      <React.Fragment>
-      { this.state.id === -1 ?
+  const reset = () => {
+    setState({
+      id: -1,
+    });
+    props.showNav();
+  };
+  return (
+    <React.Fragment>
+      {state.id === -1 ? (
         <div className="Life-container">
-          <div className="box" id="1" onClick={this.change}>
+          <div className="box" id="1" onClick={change}>
             <FontAwesomeIcon icon={faPager} />
             <p>Age</p>
           </div>
-          <div className="box" id="2" onClick={this.change}>
+          <div className="box" id="2" onClick={change}>
             <FontAwesomeIcon icon={faTags} />
             <p>Discount</p>
           </div>
-          <div className="box" id="3" onClick={this.change}>
+          <div className="box" id="3" onClick={change}>
             <FontAwesomeIcon icon={faPercent} />
             <p>Percent</p>
           </div>
-          <div className="box" id="4" onClick={this.change}>
+          <div className="box" id="4" onClick={change}>
             <FontAwesomeIcon icon={faCalendarMinus} />
             <p>Date</p>
           </div>
-          <div className="box" id="5" onClick={this.change}>
+          <div className="box" id="5" onClick={change}>
             <FontAwesomeIcon icon={faRuler} />
             <p>Length</p>
           </div>
-          <div className="box" id="6" onClick={this.change}>
+          <div className="box" id="6" onClick={change}>
             <FontAwesomeIcon icon={faSquare} />
             <p>Area</p>
           </div>
-          <div className="box" id="7" onClick={this.change}>
+          <div className="box" id="7" onClick={change}>
             <FontAwesomeIcon icon={faTemperatureLow} />
             <p>Temperature</p>
           </div>
-          <div className="box" id="8" onClick={this.change}>
+          <div className="box" id="8" onClick={change}>
             <FontAwesomeIcon icon={faTachometerAlt} />
             <p>Speed</p>
           </div>
-          <div className="box" id="9" onClick={this.change}>
+          <div className="box" id="9" onClick={change}>
             <FontAwesomeIcon icon={faClock} />
             <p>Time</p>
           </div>
-        </div> : null }
+        </div>
+      ) : null}
 
-        {this.state.id === 1 ? <Age reset={this.reset}/> : null}
-        {this.state.id === 2 ? <Discount reset={this.reset}/> : null}
-        {this.state.id === 4 ? <DateCalculate reset={this.reset}/>: null}
-        {this.state.id === 5 ? <Length reset={this.reset}/>: null}
-
-      </React.Fragment>
-    );
-  }
-}
+      {state.id === 1 ? <Age reset={reset} /> : null}
+      {state.id === 2 ? <Discount reset={reset} /> : null}
+      {state.id === 4 ? <DateCalculate reset={reset} /> : null}
+      {state.id === 5 ? <Length reset={reset} /> : null}
+    </React.Fragment>
+  );
+};
 export default Life;

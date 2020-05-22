@@ -1,82 +1,24 @@
-import React, { memo, useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import HeaderWithBackBtn from "./HeaderWithBackBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import BasicKeypad from "./BasicKeypad";
 import ChangeSelectedInput from "./ChangeSelectedInput";
 import { Conversion } from "./Conversion";
-import Context from "./store/Context";
-import { useCallback } from "react";
+import global from "./store/global";
 
 const Length = (props) => {
+
   const [state, setState] = useState({
-    from: "0",
-    to: "0",
     selected: false,
   });
-  const { globalState, actions } = useContext(Context);
 
-
-  const onClick = useCallback(
-    (key) => {
-      if (key === "Ac") {
-        // reset();
-        const current = document.querySelector(".current");
-        actions({
-          type: "reset",
-          current,
-        });
-      } else if (key === "backspace") {
-        // backspace();
-        const current = document.querySelector(".current");
-        actions({
-          type: "backspace",
-          current,
-        });
-      } else if (key === ".") {
-        console.log(key);
-        const current = document.querySelector(".current");
-        actions({
-          type: "decimal",
-          current,
-        });
-      } else {
-        const current = document.querySelector(".current");
-        actions({
-          type: "number",
-          current,
-          key,
-        });
-      }
-    },
-    [actions]
-  );
-
-  const selectChange = () => {
-    setState({
-      selected: !state.selected,
-    });
-  };
-
-  useEffect(() => {
-    actions({
-      type: "setStateToInitial",
-    });
-  }, []);
-
-  useEffect(() => {
-    setState({
-      from: globalState.firstInput,
-      to: globalState.secondInput,
-    });
-  }, [globalState.firstInput, globalState.secondInput]);
-
-  useEffect(() => {
+  function calculate_length() {
     const item1 = document.getElementById("item1").value;
     const item2 = document.getElementById("item2").value;
     const currentElement = document.querySelector(".current");
-    const fromValue = parseFloat(state.from);
-    const toValue = parseFloat(state.to);
+    const fromValue = parseFloat(global.globalState.state.firstInput);
+    const toValue = parseFloat(global.globalState.state.secondInput);
 
     if (currentElement.id === "1") {
       let convertedValue = fromValue * Conversion[item1][item2];
@@ -87,7 +29,7 @@ const Length = (props) => {
       const key = convertedValue;
       const current = document.getElementById("2");
 
-      actions({
+      global.globalState.actions({
         type: "setStateTokey",
         current,
         key,
@@ -102,14 +44,59 @@ const Length = (props) => {
 
       const key = convertedValue;
       const current = document.getElementById("1");
-      actions({
+      global.globalState.actions({
         type: "setStateTokey",
         current,
         key,
       });
     }
-    // warning: DO NOT PASS "actions" that will lead to infine state change.
-  }, [state.from, state.to, state.selected]);
+  };
+
+  const onClick = (key) => {
+    if (key === "Ac") {
+      const current = document.querySelector(".current");
+      global.globalState.actions({
+        type: "reset",
+        current,
+      });
+    } else if (key === "backspace") {
+      const current = document.querySelector(".current");
+      global.globalState.actions({
+        type: "backspace",
+        current,
+      });
+    } else if (key === ".") {
+      console.log(key);
+      const current = document.querySelector(".current");
+      global.globalState.actions({
+        type: "decimal",
+        current,
+      });
+    } else {
+      const current = document.querySelector(".current");
+      global.globalState.actions({
+        type: "number",
+        current,
+        key,
+      });
+    }
+  };
+
+  const selectChange = () => {
+    setState({
+      selected: !state.selected,
+    });
+  };
+
+  useEffect(() => {
+    global.globalState.actions({
+      type: "setStateToInitial",
+    });
+  }, []);
+
+  useEffect(() => {
+    calculate_length();
+  },[state.selected, global.globalState.state.firstInput, global.globalState.state.secondInput]);
 
   return (
     <div className="Current-box">
@@ -130,7 +117,7 @@ const Length = (props) => {
             <FontAwesomeIcon icon={faCaretDown} />
           </div>
           <span id="1" className="current" onClick={ChangeSelectedInput}>
-            {globalState.firstInput}
+            {global.globalState.state.firstInput}
           </span>
         </div>
         <div className="items">
@@ -148,7 +135,7 @@ const Length = (props) => {
             <FontAwesomeIcon icon={faCaretDown} />
           </div>
           <span id="2" onClick={ChangeSelectedInput}>
-            {globalState.secondInput}
+            {global.globalState.state.secondInput}
           </span>
         </div>
       </div>
@@ -159,4 +146,4 @@ const Length = (props) => {
   );
 };
 
-export default memo(Length);
+export default Length;
