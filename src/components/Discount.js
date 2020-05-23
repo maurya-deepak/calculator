@@ -102,7 +102,7 @@ const Discount = (props) => {
           </div>
           <div className="items">
             <span>Final price</span>
-            <span>{state.final_price}</span>
+            <span id="no-curPointer">{state.final_price}</span>
           </div>
         </div>
         <div className="content_section_2">

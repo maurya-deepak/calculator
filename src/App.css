@@ -393,7 +393,9 @@ body {
   text-align: right;
   cursor: pointer;
 }
-
+#no-curPointer{
+  cursor: default;
+}
 .content_section_2 {
   margin-top: 15px;
   text-align: center;
