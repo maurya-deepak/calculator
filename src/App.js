@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Navbar from "./components/Navbar";
-import CalculatorSection from "./components/CalculatorSection";
-import Life from "./components/Life";
-import Finance from "./components/Finance";
+import Navbar from "./components/Reusable/Navbar";
+import CalculatorSection from "./components/Calculator Section/CalculatorSection";
+import Life from "./components/Life Section/Life";
+import Finance from "./components/Finance Section/Finance";
 import "./App.css";
 
 
