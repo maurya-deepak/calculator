@@ -15,6 +15,7 @@ import Age from "./Age";
 import DateCalculate from "./DateCalculate";
 import Discount from "./Discount";
 import Length from "./Length";
+import Percentage from "./Percentage";
 import GlobalStateProvider from "../store/GlobalStateProvider";
 
 const Life = (props) => {
@@ -51,7 +52,7 @@ const Life = (props) => {
             </div>
             <div className="box" id="3" onClick={change}>
               <FontAwesomeIcon icon={faPercent} />
-              <p>Percent</p>
+              <p>Percentage</p>
             </div>
             <div className="box" id="4" onClick={change}>
               <FontAwesomeIcon icon={faCalendarMinus} />
@@ -82,6 +83,7 @@ const Life = (props) => {
 
         {state.id === 1 ? <Age reset={reset} /> : null}
         {state.id === 2 ? <Discount reset={reset} /> : null}
+        {state.id === 3 ? <Percentage reset={reset} /> : null}
         {state.id === 4 ? <DateCalculate reset={reset} /> : null}
         {state.id === 5 ? <Length reset={reset} /> : null}
       </GlobalStateProvider>

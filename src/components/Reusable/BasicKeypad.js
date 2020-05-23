@@ -71,9 +71,8 @@ class Keypad extends Component {
             value="0"
           />
           <button
-            id="icon"
             name="."
-            className="dot"
+            className="basic-dot"
             onClick={(e) => this.props.onClick(e.currentTarget.name)}
           >
             <FontAwesomeIcon icon={faCircle} />

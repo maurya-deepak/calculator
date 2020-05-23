@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
 import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
-import BasicKeypad from "../Reusable/BasicKeypad";
 import ContentSection from "../Reusable/ContentSection";
+import BasicKeypad from "../Reusable/BasicKeypad";
 import Context from "../store/Context";
 
-const Discount = (props) => {
-  // using global state context
+export default function Percentage(props) {
   const { globalState, globalDispatch } = useContext(Context);
 
-  // initializing local state
   const [state, setState] = useState({
-    final_price: "0",
-    save: "0",
+    result: 0,
   });
+
+  useEffect(() => {
+    globalDispatch({
+      type: "setStateToInitial",
+    });
+  }, [globalDispatch]);
 
   const onClick = (key) => {
     if (key === "Ac") {
@@ -35,11 +38,11 @@ const Discount = (props) => {
       });
     } else {
       const current = document.querySelector(".current");
-      if (current.id === "2") {
-        const discount = globalState.secondInput;
-        const check = parseFloat(discount + key) <= 100.0;
+      if (current.id === "1") {
+        const percentage = globalState.firstInput;
+        const check = parseFloat(percentage + key) <= 100.0;
         if (!check) return;
-        if (discount.length > 4) return;
+        if (percentage.length > 4) return;
       }
       globalDispatch({
         type: "number",
@@ -50,19 +53,11 @@ const Discount = (props) => {
   };
 
   useEffect(() => {
-    globalDispatch({
-      type: "setStateToInitial",
-    });
-  }, [globalDispatch]);
-
-  useEffect(() => {
-    const originalPrice = parseFloat(globalState.firstInput);
-    const discountAmount = parseFloat(globalState.secondInput);
-    const saving = ((originalPrice * discountAmount) / 100).toFixed(2);
-    const finalPrice = (originalPrice - saving).toFixed(2);
+    const percent = parseFloat(globalState.firstInput);
+    const total = parseFloat(globalState.secondInput);
+    const result = ((total * percent) / 100).toFixed(2);
     setState({
-      final_price: finalPrice.toString(),
-      save: saving.toString(),
+      result,
     });
   }, [globalState.firstInput, globalState.secondInput]);
 
@@ -71,23 +66,17 @@ const Discount = (props) => {
       <HeaderWithBackBtn reset={props.reset} name="Discount" />
       <div className="content_section">
         <ContentSection
-          name1="Original price"
-          name2="Discount (% off)"
-          name3="Final price"
+          name1="Percentage (%)"
+          name2="Total"
+          name3="Result"
           value1={globalState.firstInput}
           value2={globalState.secondInput}
-          value3={state.final_price}
+          value3={state.result}
         />
-        <div className="content_section_2">
-          <span>You save </span>
-          <span>{state.save}</span>
-        </div>
       </div>
       <div className="keypad_section">
         <BasicKeypad onClick={onClick} />
       </div>
     </div>
   );
-};
-
-export default Discount;
+}

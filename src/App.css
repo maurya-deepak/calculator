@@ -268,11 +268,21 @@ body {
   text-align: center;
   font-size: 22px;
 }
-
 .BasickeypadContainer {
+  padding:20px 0px;
+  border-top: 1px solid silver;
+  margin: 0px 15px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.basic-dot{
+  border:0;
+  outline: 0;
+  background: transparent;
+  font-size: 5px;
+  width: 60px;
+  height: 60px;
 }
 .KeypadLeftSide {
   grid-template-columns: auto auto auto;
@@ -304,7 +314,7 @@ body {
 }
 
 .KeypadRightSide > input:hover,
-.KeypadRightSide button:hover {
+.KeypadRightSide button:hover ,.basic-dot:hover{
   background-color: rgba(80, 79, 79, 0.103);
 }
 #notusedbtn:hover {
@@ -313,8 +323,7 @@ body {
 }
 .content_section {
   margin: 20px 10px 0px 10px;
-  padding-bottom: 40px;
-  border-bottom: 1px solid silver;
+  padding-bottom: 5px;
 }
 .items {
   display: flex;
@@ -343,8 +352,7 @@ body {
 }
 .contentSection {
   margin: 20px 5px 20px 5px;
-  padding-bottom: 80px;
-  border-bottom: 1px solid silver;
+  padding-bottom: 50px;
 }
 
 .contentSection .items select {
