@@ -1,4 +1,4 @@
-import React, {Component } from "react";
+import React, {memo, Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackspace, faCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -29,13 +29,13 @@ class Keypad extends Component {
           />
           <input
             name="4"
-            // onClick={(e) => this.props.onClick(e.target.name)}
+            onClick={(e) => this.props.onClick(e.target.name)}
             type="button"
             value="4"
           />
           <input
             name="5"
-            // onClick={(e) => this.props.onClick(e.target.name)}
+            onClick={(e) => this.props.onClick(e.target.name)}
             type="button"
             value="5"
           />

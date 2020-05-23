@@ -31,7 +31,7 @@ const reducer = (state, action) => {
         const firstInputValue = state.firstInput;
         if (firstInputValue !== "0") {
           if (firstInputValue.length === 1) {
-            return { firstInput: "0" };
+            return { ...state, firstInput: "0" };
           } else {
             return {
               ...state,
@@ -44,7 +44,7 @@ const reducer = (state, action) => {
         const secondInputValue = state.secondInput;
         if (secondInputValue !== 0) {
           if (secondInputValue.length === 1) {
-            return { secondInput: "0" };
+            return { ...state, secondInput: "0" };
           } else {
             return {
               ...state,
@@ -75,7 +75,9 @@ const reducer = (state, action) => {
       if (current.id === "1") {
         let value = state.firstInput;
         const len = value.indexOf(".") === -1 ? 15 : 18;
-        if (value.length < len) {
+        const isValid =
+          value.indexOf(".") === -1 ? true : value.split(".")[1].length <= 1;
+        if (value.length < len && isValid) {
           if (value === "0") {
             value = key;
           } else {
@@ -89,7 +91,9 @@ const reducer = (state, action) => {
       } else if (current.id === "2") {
         let value = state.secondInput;
         const len = value.indexOf(".") === -1 ? 15 : 18;
-        if (value.length < len) {
+        const isValid =
+          value.indexOf(".") === -1 ? true : value.split(".")[1].length <= 1;
+        if (value.length < len && isValid) {
           if (value === "0") {
             value = key;
           } else {
