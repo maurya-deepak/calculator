@@ -141,7 +141,7 @@ const Length = (props) => {
         </div>
       </div>
         <div className="keypad_section">
-          <BasicKeypad onClick={this.onClick}/>
+          <BasicKeypad onClick={onClick}/>
       </div>
     </div>
   );
