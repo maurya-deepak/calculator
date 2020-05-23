@@ -63,7 +63,7 @@ export default function Percentage(props) {
 
   return (
     <div className="Current-box">
-      <HeaderWithBackBtn reset={props.reset} name="Discount" />
+      <HeaderWithBackBtn reset={props.reset} name="Percentage" />
       <div className="content_section">
         <ContentSection
           name1="Percentage (%)"
