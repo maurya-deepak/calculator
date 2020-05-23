@@ -1,11 +1,6 @@
-import React, {useContext } from "react";
+import React from "react";
 
 const Finance = () => {
-  
-  return (
-    <div>
-      hiii
-    </div>
-  );
+  return <div>hiii</div>;
 };
 export default Finance;

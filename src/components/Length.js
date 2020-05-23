@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import React, {useState, useEffect, useContext, useCallback } from "react";
 import HeaderWithBackBtn from "./HeaderWithBackBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
@@ -98,7 +98,6 @@ const Length = (props) => {
       selected: !state.selected,
     });
   };
-
   return (
     <div className="Current-box">
       <HeaderWithBackBtn name="Length" reset={props.reset} />

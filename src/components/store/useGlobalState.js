@@ -4,7 +4,6 @@ const reducer = (state, action) => {
   const { type, current, key } = action;
   switch (type) {
     case "setStateToInitial":
-      console.log("setting to initial state");
       return {
         firstInput: "0",
         secondInput: "0",
