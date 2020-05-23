@@ -1,170 +1,120 @@
-import React, {Component } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import HeaderWithBackBtn from "./HeaderWithBackBtn";
 import BasicKeypad from "./BasicKeypad";
 import ChangeSelectedInput from "./ChangeSelectedInput";
-import isValidInput from "./isValidInput";
-import Reset from "./Reset";
-import Backspace from "./Backspace";
+import Context from "./store/Context";
 
-class Discount extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      original_price: "0",
-      discount: "0",
-      final_price: "0",
-      save: "0",
-    };
-    this.onClick = this.onClick.bind(this);
-    this.calculateDiscount = this.calculateDiscount.bind(this);
-    this.backspace = this.backspace.bind(this);
-    this.reset = this.reset.bind(this);
-    this.Reset = Reset.bind(this);
-    this.Backspace = Backspace.bind(this);
-  }
-  onClick = (value) => {
-    if (value === "Ac") {
-      this.reset();
-    } else if (value === "backspace") {
-      this.backspace();
+const Discount = (props) => {
+  // using global state context
+  const { globalState, globalDispatch } = useContext(Context);
+
+  // initializing local state
+  const [state, setState] = useState({
+    final_price: "0",
+    save: "0",
+  });
+
+  const onClick = (key) => {
+    if (key === "Ac") {
+      const current = document.querySelector(".current");
+      globalDispatch({
+        type: "reset",
+        current,
+      });
+    } else if (key === "backspace") {
+      const current = document.querySelector(".current");
+      globalDispatch({
+        type: "backspace",
+        current,
+      });
+    } else if (key === ".") {
+      const current = document.querySelector(".current");
+      globalDispatch({
+        type: "decimal",
+        current,
+      });
     } else {
-      const name = document.getElementById("current").attributes.name.value;
-      const original_price = this.state.original_price;
-      const discount = this.state.discount;
-
-      if (name === "original_price") {
-        let valid = isValidInput(original_price);
-        const indexOfDot = original_price.indexOf(".");
-
-        let currentLength = parseInt(original_price).toString().length;
-        let allowedlength = indexOfDot === -1 ? 15 : 17;
-
-        if (value === ".") {
-          if (indexOfDot === -1) {
-            this.setState(
-              {
-                original_price:
-                  original_price === "0" ? "0." : original_price + value,
-              },
-              this.calculateDiscount
-            );
+      const current = document.querySelector(".current");
+      if (current.id === "2") {
+        const discount = globalState.secondInput;
+        const check = parseFloat(discount + key) <= 100.0;
+        if (!check) return;
+        if (discount.length > 4) return;
+      } else if (current.id === "1") {
+        const originalPrice = globalState.firstInput;
+        if (originalPrice.indexOf(".") !== -1) {
+          if (originalPrice.split(".")[1].length > 1) {
+            return;
           }
-        } else if (valid && currentLength < allowedlength) {
-          this.setState(
-            {
-              original_price:
-                original_price === "0" ? value : original_price + value,
-            },
-            this.calculateDiscount
-          );
         }
       }
-      if (name === "discount") {
-        const isLessOrEqual = parseFloat(discount + value) <= 100.0;
-        let valid = isValidInput(discount);
-        if (value === ".") {
-          const indexOfDot = discount.indexOf(".");
-          if (indexOfDot === -1 && isLessOrEqual) {
-            this.setState(
-              {
-                discount: discount === "0" ? "0." : discount + value,
-              },
-              this.calculateDiscount
-            );
-          }
-        } else if (isLessOrEqual && valid) {
-          this.setState(
-            {
-              discount: discount === "0" ? value : discount + value,
-            },
-            this.calculateDiscount
-          );
-        }
-      }
+      globalDispatch({
+        type: "number",
+        current,
+        key,
+      });
     }
   };
 
-  reset = () => {
-    const name = document.getElementById("current").attributes.name.value;
-    if (name === "original_price") {
-      const obj = [
-        { name: "original_price" },
-        { name: "final_price" },
-        { name: "save" },
-      ];
-      this.Reset(obj);
-    } else {
-      const obj = [{ name: "discount" }];
-      this.Reset(obj);
-    }
-  };
+  useEffect(() => {
+    globalDispatch({
+      type: "setStateToInitial",
+    });
+  }, [globalDispatch]);
 
-  backspace = () => {
-    const name = document.getElementById("current").attributes.name.value;
-    if (name === "original_price" && this.state.original_price !== "0") {
-      let obj = { name: "original_price" };
-      this.Backspace(obj, this.calculateDiscount);
-    }
-    if (name === "discount" && this.state.discount !== "0") {
-      let obj = { name: "discount" };
-      this.Backspace(obj, this.calculateDiscount);
-    }
-  };
-
-  calculateDiscount = () => {
-    const originalPrice = parseFloat(this.state.original_price);
-    const discountAmount = parseFloat(this.state.discount);
+  useEffect(() => {
+    const originalPrice = parseFloat(globalState.firstInput);
+    const discountAmount = parseFloat(globalState.secondInput);
     const saving = ((originalPrice * discountAmount) / 100).toFixed(2);
     const finalPrice = (originalPrice - saving).toFixed(2);
-    this.setState({
+    setState({
       final_price: finalPrice.toString(),
       save: saving.toString(),
     });
-  };
+  }, [globalState.firstInput, globalState.secondInput]);
 
-  render() {
-    return (
-      <div className="Current-box">
-        <HeaderWithBackBtn reset={this.props.reset} name="Discount" />
-        <div className="content_section">
-          <div className="content_section_1">
-            <div className="items">
-              <span>Original price</span>
-              <span
-                name="original_price"
-                id="current"
-                onClick={ChangeSelectedInput}
-                className="choose"
-              >
-                {this.state.original_price}
-              </span>
-            </div>
-            <div className="items">
-              <span>Discount (% off)</span>
-              <span
-                type="text"
-                name="discount"
-                onClick={ChangeSelectedInput}
-                className="choose"
-              >
-                {this.state.discount}
-              </span>
-            </div>
-            <div className="items">
-              <span>Final price</span>
-              <span>{this.state.final_price}</span>
-            </div>
+  return (
+    <div className="Current-box">
+      <HeaderWithBackBtn reset={props.reset} name="Discount" />
+      <div className="content_section">
+        <div className="content_section_1">
+          <div className="items">
+            <span>Original price</span>
+            <span
+              name="original_price"
+              id="1"
+              onClick={ChangeSelectedInput}
+              className="current"
+            >
+              {globalState.firstInput}
+            </span>
           </div>
-          <div className="content_section_2">
-            <span>You save </span>
-            <span>{this.state.save}</span>
+          <div className="items">
+            <span>Discount (% off)</span>
+            <span
+              type="text"
+              name="discount"
+              id="2"
+              onClick={ChangeSelectedInput}
+            >
+              {globalState.secondInput}
+            </span>
+          </div>
+          <div className="items">
+            <span>Final price</span>
+            <span>{state.final_price}</span>
           </div>
         </div>
-        <div className="keypad_section">
-          <BasicKeypad onClick={this.onClick} />
+        <div className="content_section_2">
+          <span>You save </span>
+          <span>{state.save}</span>
         </div>
       </div>
-    );
-  }
-}
+      <div className="keypad_section">
+        <BasicKeypad onClick={onClick} />
+      </div>
+    </div>
+  );
+};
+
 export default Discount;

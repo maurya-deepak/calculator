@@ -399,15 +399,15 @@ body {
   color: rgb(97, 94, 86);
 }
 
-#current {
+.current {
   color: rgb(255, 85, 0);
 }
 .choose {
   cursor: pointer;
 }
 .contentSection {
-  margin: 5px 5px;
-  padding-bottom: 40px;
+  margin: 5px 5px 20px 5px;
+  padding-bottom: 95px;
   border-bottom: 1px solid silver;
 }
 

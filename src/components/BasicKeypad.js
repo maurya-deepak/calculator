@@ -100,4 +100,4 @@ class Keypad extends Component {
   }
 }
 
-export default Keypad;
+export default memo(Keypad);
