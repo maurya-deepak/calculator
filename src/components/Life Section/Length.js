@@ -1,11 +1,11 @@
 import React, {useState, useEffect, useContext, useCallback } from "react";
-import HeaderWithBackBtn from "./HeaderWithBackBtn";
+import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import BasicKeypad from "./BasicKeypad";
-import ChangeSelectedInput from "./ChangeSelectedInput";
+import BasicKeypad from "../Reusable/BasicKeypad";
+import ChangeSelectedInput from "../Reusable/ChangeSelectedInput";
 import { Conversion } from "./Conversion";
-import Context from "./store/Context";
+import Context from "../store/Context";
 
 const Length = (props) => {
   const { globalState, globalDispatch } = useContext(Context);

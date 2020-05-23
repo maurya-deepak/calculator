@@ -3,12 +3,12 @@ import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBirthdayCake } from "@fortawesome/free-solid-svg-icons";
-import HeaderWithBackBtn from "./HeaderWithBackBtn";
-import DatePickerCustom from "./DatePicker_Custom";
-import Error from "./Error";
+import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
+import DatePickerCustom from "../Reusable/DatePickerCustom";
+import Error from "../Reusable/Error";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import {findDay}  from './FindDay';
+import {findDay}  from '../Reusable/FindDay';
 
 class Age extends Component {
   state = {

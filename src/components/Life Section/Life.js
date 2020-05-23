@@ -12,10 +12,10 @@ import {
   faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import Age from "./Age";
-import DateCalculate from "./Date_Calculate";
+import DateCalculate from "./DateCalculate";
 import Discount from "./Discount";
 import Length from "./Length";
-import GlobalStateProvider from "./store/GlobalStateProvider";
+import GlobalStateProvider from "../store/GlobalStateProvider";
 
 const Life = (props) => {
   const [state, setState] = useState({

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Result from "./Result";
 import Keypad from "./keypad";
 
-
 class CalculatorSection extends Component {
   state = {
     result: ["0"]

@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import HeaderWithBackBtn from "./HeaderWithBackBtn";
-import DatePickerCustom from "./DatePicker_Custom";
+import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
+import DatePickerCustom from "../Reusable/DatePickerCustom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import {findDay}  from './FindDay';
+import {findDay}  from '../Reusable/FindDay';
 import moment from 'moment';
-
 
 class DateCalculate extends Component {
   state = {

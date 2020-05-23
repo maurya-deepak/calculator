@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext} from "react";
-import HeaderWithBackBtn from "./HeaderWithBackBtn";
-import BasicKeypad from "./BasicKeypad";
-import ChangeSelectedInput from "./ChangeSelectedInput";
-import Context from "./store/Context";
+import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
+import BasicKeypad from "../Reusable/BasicKeypad";
+import ChangeSelectedInput from "../Reusable/ChangeSelectedInput";
+import Context from "../store/Context";
 
 const Discount = (props) => {
   // using global state context
