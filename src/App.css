@@ -391,6 +391,7 @@ body {
 .items span:nth-child(2) {
   min-width: 160px;
   text-align: right;
+  cursor: pointer;
 }
 
 .content_section_2 {
