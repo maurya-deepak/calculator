@@ -92,6 +92,7 @@ const Length = (props) => {
     }
   }, [globalState.firstInput, globalState.secondInput, globalDispatch, state.selected]);
 
+
   // change local state when drop-down value is changed
   const selectChange = () => {
     setState({
@@ -139,8 +140,8 @@ const Length = (props) => {
           </span>
         </div>
       </div>
-      <div className="keypad_section">
-        <BasicKeypad onClick={onClick} />
+        <div className="keypad_section">
+          <BasicKeypad onClick={this.onClick}/>
       </div>
     </div>
   );
