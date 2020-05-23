@@ -15,12 +15,9 @@ import Age from "./Age";
 import DateCalculate from "./Date_Calculate";
 import Discount from "./Discount";
 import Length from "./Length";
-import global from "./store/global";
-import useGlobalState from "./store/useGlobalState";
+import GlobalStateProvider from "./store/GlobalStateProvider";
 
 const Life = (props) => {
-  global.globalState = useGlobalState();
-
   const [state, setState] = useState({
     id: -1,
   });
@@ -41,51 +38,53 @@ const Life = (props) => {
   };
   return (
     <React.Fragment>
-      {state.id === -1 ? (
-        <div className="Life-container">
-          <div className="box" id="1" onClick={change}>
-            <FontAwesomeIcon icon={faPager} />
-            <p>Age</p>
+      <GlobalStateProvider>
+        {state.id === -1 ? (
+          <div className="Life-container">
+            <div className="box" id="1" onClick={change}>
+              <FontAwesomeIcon icon={faPager} />
+              <p>Age</p>
+            </div>
+            <div className="box" id="2" onClick={change}>
+              <FontAwesomeIcon icon={faTags} />
+              <p>Discount</p>
+            </div>
+            <div className="box" id="3" onClick={change}>
+              <FontAwesomeIcon icon={faPercent} />
+              <p>Percent</p>
+            </div>
+            <div className="box" id="4" onClick={change}>
+              <FontAwesomeIcon icon={faCalendarMinus} />
+              <p>Date</p>
+            </div>
+            <div className="box" id="5" onClick={change}>
+              <FontAwesomeIcon icon={faRuler} />
+              <p>Length</p>
+            </div>
+            <div className="box" id="6" onClick={change}>
+              <FontAwesomeIcon icon={faSquare} />
+              <p>Area</p>
+            </div>
+            <div className="box" id="7" onClick={change}>
+              <FontAwesomeIcon icon={faTemperatureLow} />
+              <p>Temperature</p>
+            </div>
+            <div className="box" id="8" onClick={change}>
+              <FontAwesomeIcon icon={faTachometerAlt} />
+              <p>Speed</p>
+            </div>
+            <div className="box" id="9" onClick={change}>
+              <FontAwesomeIcon icon={faClock} />
+              <p>Time</p>
+            </div>
           </div>
-          <div className="box" id="2" onClick={change}>
-            <FontAwesomeIcon icon={faTags} />
-            <p>Discount</p>
-          </div>
-          <div className="box" id="3" onClick={change}>
-            <FontAwesomeIcon icon={faPercent} />
-            <p>Percent</p>
-          </div>
-          <div className="box" id="4" onClick={change}>
-            <FontAwesomeIcon icon={faCalendarMinus} />
-            <p>Date</p>
-          </div>
-          <div className="box" id="5" onClick={change}>
-            <FontAwesomeIcon icon={faRuler} />
-            <p>Length</p>
-          </div>
-          <div className="box" id="6" onClick={change}>
-            <FontAwesomeIcon icon={faSquare} />
-            <p>Area</p>
-          </div>
-          <div className="box" id="7" onClick={change}>
-            <FontAwesomeIcon icon={faTemperatureLow} />
-            <p>Temperature</p>
-          </div>
-          <div className="box" id="8" onClick={change}>
-            <FontAwesomeIcon icon={faTachometerAlt} />
-            <p>Speed</p>
-          </div>
-          <div className="box" id="9" onClick={change}>
-            <FontAwesomeIcon icon={faClock} />
-            <p>Time</p>
-          </div>
-        </div>
-      ) : null}
+        ) : null}
 
-      {state.id === 1 ? <Age reset={reset} /> : null}
-      {state.id === 2 ? <Discount reset={reset} /> : null}
-      {state.id === 4 ? <DateCalculate reset={reset} /> : null}
-      {state.id === 5 ? <Length reset={reset} /> : null}
+        {state.id === 1 ? <Age reset={reset} /> : null}
+        {state.id === 2 ? <Discount reset={reset} /> : null}
+        {state.id === 4 ? <DateCalculate reset={reset} /> : null}
+        {state.id === 5 ? <Length reset={reset} /> : null}
+      </GlobalStateProvider>
     </React.Fragment>
   );
 };

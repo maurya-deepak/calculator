@@ -1,24 +1,64 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import HeaderWithBackBtn from "./HeaderWithBackBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import BasicKeypad from "./BasicKeypad";
 import ChangeSelectedInput from "./ChangeSelectedInput";
 import { Conversion } from "./Conversion";
-import global from "./store/global";
+import Context from "./store/Context";
 
 const Length = (props) => {
+  const { globalState, globalDispatch } = useContext(Context);
 
   const [state, setState] = useState({
     selected: false,
   });
+  
+  // To reset global state to initial value
+  useEffect(()=>{
+    globalDispatch({
+      type:"setStateToInitial"
+    })
+  },[globalDispatch]);
+  
+  // When keypad button clicked is sets state and using useCallback() 
+  // so on every key press "keypad" component should not be re-render
+  const onClick = useCallback((key) => {
+    if (key === "Ac") {
+      const current = document.querySelector(".current");
+      globalDispatch({
+        type: "reset",
+        current,
+      });
+    } else if (key === "backspace") {
+      const current = document.querySelector(".current");
+      globalDispatch({
+        type: "backspace",
+        current,
+      });
+    } else if (key === ".") {
+      const current = document.querySelector(".current");
+      globalDispatch({
+        type: "decimal",
+        current,
+      });
+    } else {
+      const current = document.querySelector(".current");
+      globalDispatch({
+        type: "number",
+        current,
+        key,
+      });
+    }
+  },[globalDispatch]);
 
-  function calculate_length() {
+  // Whenever state changes it calculates length and updates global state
+  useEffect(() => {
     const item1 = document.getElementById("item1").value;
     const item2 = document.getElementById("item2").value;
     const currentElement = document.querySelector(".current");
-    const fromValue = parseFloat(global.globalState.state.firstInput);
-    const toValue = parseFloat(global.globalState.state.secondInput);
+    const fromValue = parseFloat(globalState.firstInput);
+    const toValue = parseFloat(globalState.secondInput);
 
     if (currentElement.id === "1") {
       let convertedValue = fromValue * Conversion[item1][item2];
@@ -29,7 +69,7 @@ const Length = (props) => {
       const key = convertedValue;
       const current = document.getElementById("2");
 
-      global.globalState.actions({
+      globalDispatch({
         type: "setStateTokey",
         current,
         key,
@@ -44,59 +84,20 @@ const Length = (props) => {
 
       const key = convertedValue;
       const current = document.getElementById("1");
-      global.globalState.actions({
+      globalDispatch({
         type: "setStateTokey",
         current,
         key,
       });
     }
-  };
+  }, [globalState.firstInput, globalState.secondInput, globalDispatch, state.selected]);
 
-  const onClick = (key) => {
-    if (key === "Ac") {
-      const current = document.querySelector(".current");
-      global.globalState.actions({
-        type: "reset",
-        current,
-      });
-    } else if (key === "backspace") {
-      const current = document.querySelector(".current");
-      global.globalState.actions({
-        type: "backspace",
-        current,
-      });
-    } else if (key === ".") {
-      console.log(key);
-      const current = document.querySelector(".current");
-      global.globalState.actions({
-        type: "decimal",
-        current,
-      });
-    } else {
-      const current = document.querySelector(".current");
-      global.globalState.actions({
-        type: "number",
-        current,
-        key,
-      });
-    }
-  };
-
+  // change local state when drop-down value is changed
   const selectChange = () => {
     setState({
       selected: !state.selected,
     });
   };
-
-  useEffect(() => {
-    global.globalState.actions({
-      type: "setStateToInitial",
-    });
-  }, []);
-
-  useEffect(() => {
-    calculate_length();
-  },[state.selected, global.globalState.state.firstInput, global.globalState.state.secondInput]);
 
   return (
     <div className="Current-box">
@@ -117,7 +118,7 @@ const Length = (props) => {
             <FontAwesomeIcon icon={faCaretDown} />
           </div>
           <span id="1" className="current" onClick={ChangeSelectedInput}>
-            {global.globalState.state.firstInput}
+            {globalState.firstInput}
           </span>
         </div>
         <div className="items">
@@ -135,7 +136,7 @@ const Length = (props) => {
             <FontAwesomeIcon icon={faCaretDown} />
           </div>
           <span id="2" onClick={ChangeSelectedInput}>
-            {global.globalState.state.secondInput}
+            {globalState.secondInput}
           </span>
         </div>
       </div>

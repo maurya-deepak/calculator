@@ -1,14 +1,10 @@
-import React, { Component , memo} from "react";
+import React, { Component, memo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBackspace,
-  faCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBackspace, faCircle } from "@fortawesome/free-solid-svg-icons";
 
 class Keypad extends Component {
   render() {
-    console.log("basic keypad render");
-      const classes = `keypad-container KeypadLeftSide`;
+    const classes = `keypad-container KeypadLeftSide`;
     return (
       <div className="BasickeypadContainer">
         <div className={classes}>
@@ -66,12 +62,7 @@ class Keypad extends Component {
             type="button"
             value="3"
           />
-          <input
-            name="#"
-            id="notusedbtn"
-            type="button"
-            value=""
-          />
+          <input name="#" id="notusedbtn" type="button" value="" />
           <input
             name="0"
             onClick={(e) => this.props.onClick(e.target.name)}
