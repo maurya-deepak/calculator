@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPager,
   faTags,
@@ -11,11 +10,13 @@ import {
   faTachometerAlt,
   faClock,
 } from "@fortawesome/free-solid-svg-icons";
+import LifeBox from "../Reusable/LifeBox";
 import Age from "./Age";
 import DateCalculate from "./DateCalculate";
 import Discount from "./Discount";
 import Length from "./Length";
 import Percentage from "./Percentage";
+
 import GlobalStateProvider from "../store/GlobalStateProvider";
 
 const Life = (props) => {
@@ -42,45 +43,37 @@ const Life = (props) => {
       <GlobalStateProvider>
         {state.id === -1 ? (
           <div className="Life-container">
-            <div className="box" id="1" onClick={change}>
-              <FontAwesomeIcon icon={faPager} />
-              <p>Age</p>
-            </div>
-            <div className="box" id="2" onClick={change}>
-              <FontAwesomeIcon icon={faTags} />
-              <p>Discount</p>
-            </div>
-            <div className="box" id="3" onClick={change}>
-              <FontAwesomeIcon icon={faPercent} />
-              <p>Percentage</p>
-            </div>
-            <div className="box" id="4" onClick={change}>
-              <FontAwesomeIcon icon={faCalendarMinus} />
-              <p>Date</p>
-            </div>
-            <div className="box" id="5" onClick={change}>
-              <FontAwesomeIcon icon={faRuler} />
-              <p>Length</p>
-            </div>
-            <div className="box" id="6" onClick={change}>
-              <FontAwesomeIcon icon={faSquare} />
-              <p>Area</p>
-            </div>
-            <div className="box" id="7" onClick={change}>
-              <FontAwesomeIcon icon={faTemperatureLow} />
-              <p>Temperature</p>
-            </div>
-            <div className="box" id="8" onClick={change}>
-              <FontAwesomeIcon icon={faTachometerAlt} />
-              <p>Speed</p>
-            </div>
-            <div className="box" id="9" onClick={change}>
-              <FontAwesomeIcon icon={faClock} />
-              <p>Time</p>
-            </div>
+            <LifeBox id="1" change={change} icon={faPager} name="Age" />
+            <LifeBox id="2" change={change} icon={faTags} name="Discount" />
+            <LifeBox
+              id="3"
+              change={change}
+              icon={faPercent}
+              name="Percentage"
+            />
+            <LifeBox
+              id="4"
+              change={change}
+              icon={faCalendarMinus}
+              name="Date"
+            />
+            <LifeBox id="5" change={change} icon={faRuler} name="Length" />
+            <LifeBox id="6" change={change} icon={faSquare} name="Area" />
+            <LifeBox
+              id="7"
+              change={change}
+              icon={faTemperatureLow}
+              name="Temperature"
+            />
+            <LifeBox
+              id="8"
+              change={change}
+              icon={faTachometerAlt}
+              name="Speed"
+            />
+            <LifeBox id="9" change={change} icon={faClock} name="Time" />
           </div>
         ) : null}
-
         {state.id === 1 ? <Age reset={reset} /> : null}
         {state.id === 2 ? <Discount reset={reset} /> : null}
         {state.id === 3 ? <Percentage reset={reset} /> : null}

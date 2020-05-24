@@ -127,13 +127,6 @@ class Keypad extends Component {
         >
           <FontAwesomeIcon icon={faPlus} />
         </button>
-
-        <input
-          name="#"
-          id="notusedbtn"
-          type="button"
-          value=""
-        />
         <input
           name="0"
           onClick={e => this.props.onClick(e.target.name)}
