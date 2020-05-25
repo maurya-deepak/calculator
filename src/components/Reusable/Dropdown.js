@@ -10,24 +10,32 @@ const Dropdown = ({
   options,
   inputValue,
   classname,
+  selectedName,
 }) => {
   return (
-    <div className="items">
-      <div>
-        <select id={selectId} onChange={selectChange}>
-          {options.map((option) => {
-            return (
-              <option key={option.value} value={option.value}>
-                {option.name}
-              </option>
-            );
-          })}
-        </select>
-        <FontAwesomeIcon icon={faCaretDown} />
+    <div>
+      <div className="items">
+        <div>
+          <select id={selectId} onChange={selectChange}>
+            {options.map((option) => {
+              return (
+                <option
+                  key={option.value}
+                  value={option.value}
+                  label={option.fullname}
+                >
+                  {option.name}
+                </option>
+              );
+            })}
+          </select>
+          <FontAwesomeIcon icon={faCaretDown} />
+        </div>
+        <span id={spanId} className={classname} onClick={ChangeSelectedInput}>
+          {inputValue}
+        </span>
       </div>
-      <span id={spanId} className={classname} onClick={ChangeSelectedInput}>
-        {inputValue}
-      </span>
+      <p id="selected-subtitle">{selectedName}</p>
     </div>
   );
 };

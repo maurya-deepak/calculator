@@ -340,7 +340,7 @@ body {
 .items {
   display: flex;
   justify-content: space-between;
-  padding: 10px 0px;
+  padding: 10px 0px 0px 0px;
 }
 .items span:nth-child(2) {
   min-width: 160px;
@@ -374,4 +374,10 @@ body {
   font-size: 16px;
   appearance: none;
   cursor: pointer;
+}
+
+#selected-subtitle{
+  font-size: 12px;
+  text-align: right ;
+  color:rgba(19, 18, 18, 0.61);
 }
