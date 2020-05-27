@@ -108,6 +108,18 @@ const reducer = (state, action) => {
       return {
         ...state,
       };
+    case "negativeOfNumber":
+      if(current.id === "1"){
+        let value = globalState.firstInput;
+        if(value[0] === "-"){
+          return {...state, firstInput: value.slice(1)}
+        }else{
+          return {...state, firstInput: "-"+value}
+        }
+      }else if(current.id === "2"){
+
+      }
+
     default:
       return state;
   }

@@ -6,29 +6,13 @@ import Context from "../store/Context";
 import UpdatedStructure from "./UpdatedStructureHOC";
 
 const optionsObj = [
-  { name: "Square kilometer km2", value: "km2", fullname: "Square kilometer" },
-  { name: "Square meter m2", value: "m2", fullname: "Square meter" },
-  { name: "Square decimeter dm2", value: "dm2", fullname: "Square decimeter" },
-  {
-    name: "Square centimeter cm2",
-    value: "cm2",
-    fullname: "Square centimeter",
-  },
-  {
-    name: "Square millimeter mm2",
-    value: "mm2",
-    fullname: "Square millimeter",
-  },
-  { name: "Square micron um2", value: "um2", fullname: "Square micron" },
-  { name: "Hectare ha", value: "ha", fullname: "Hectare" },
-  { name: "Square mile mi2", value: "mi2", fullname: "Square mile" },
-  { name: "Square foot ft2", value: "ft2", fullname: "Square foot" },
-  { name: "Square inch in2", value: "in2", fullname: "Square inch" },
-  { name: "Square yard yd2", value: "yd2", fullname: "Square yard" },
-  { name: "Acre", value: "ac", fullname: "Acre" },
+  { name: "Celsius C", value: "C", fullname: "Celsius" },
+  { name: "Fahrenheit F", value: "F", fullname: "Fahrenheit" },
+  { name: "Kelvin K", value: "K", fullname: "Kelvin" },
+  { name: "Rankine R", value: "R", fullname: "Rankine" },
 ];
 
-const Area = (props) => {
+const Temperature = (props) => {
   const { globalState, globalDispatch } = useContext(Context);
 
   // To reset global state to initial value
@@ -40,7 +24,7 @@ const Area = (props) => {
 
   return (
     <div className="Current-box">
-      <HeaderWithBackBtn name="Area" reset={props.reset} />
+      <HeaderWithBackBtn name="Temperature Coversion" reset={props.reset} />
       <div className="contentSection">
         <Dropdown
           selectChange={props.selectChange}
@@ -62,10 +46,10 @@ const Area = (props) => {
         />
       </div>
       <div className="keypad_section">
-        <BasicKeypad onClick={props.btnClicked} />
+        <BasicKeypad onClick={props.btnClicked} isTemperature={true} class="temperature-keypad-btn" />
       </div>
     </div>
   );
 };
 
-export default UpdatedStructure(Area, "area");
+export default UpdatedStructure(Temperature, "temperature");

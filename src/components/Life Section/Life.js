@@ -9,7 +9,7 @@ import {
   faTemperatureLow,
   faTachometerAlt,
   faClock,
-  faCube
+  faCube,
 } from "@fortawesome/free-solid-svg-icons";
 import LifeBox from "../Reusable/LifeBox";
 import Age from "./Age";
@@ -19,7 +19,7 @@ import Length from "./Length";
 import Area from "./Area";
 import Volume from "./Volume";
 import Percentage from "./Percentage";
-
+import Temperature from "./Temperature";
 import GlobalStateProvider from "../store/GlobalStateProvider";
 
 const Life = (props) => {
@@ -85,6 +85,7 @@ const Life = (props) => {
         {state.id === 5 ? <Length reset={reset} /> : null}
         {state.id === 6 ? <Area reset={reset} /> : null}
         {state.id === 7 ? <Volume reset={reset} /> : null}
+        {state.id === 8 ? <Temperature reset={reset} /> : null}
       </GlobalStateProvider>
     </React.Fragment>
   );

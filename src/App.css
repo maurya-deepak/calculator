@@ -11,9 +11,8 @@ body {
     margin-top: 30px;
     min-width: 100%;
     height: 100vh;
-  }  
+  }
 }
-
 
 @media only screen and (min-device-width: 400px) and (max-device-width: 800px) and (orientation: landscape) {
   .main-container {
@@ -309,7 +308,7 @@ body {
   transition: 0.2s ease-in;
 }
 .basic-keypad-container #allClear {
-  grid-column: 4;
+  grid-column: 4/5;
   grid-row-start: 1;
   grid-row-end: 4;
   margin: auto;
@@ -331,6 +330,20 @@ body {
   background: transparent;
   border: 1px solid silver;
   transition: 0.3s ease-in;
+}
+
+.temperature-keypad-btn #allClear {
+  grid-row-end: 3;
+}
+.temperature-keypad-btn #backspace {
+  grid-row-start: 3;
+  grid-row-end: 5;
+  grid-column-start: 4;
+  height: 90%;
+  width: 60px;
+}
+#tempPlusMinusbtn {
+  color: rgb(255, 85, 0);
 }
 
 .content_section {
@@ -376,11 +389,11 @@ body {
   overflow: hidden;
   cursor: pointer;
   text-overflow: clip;
-  width:123px;
+  width: 123px;
 }
 
-#selected-subtitle{
+#selected-subtitle {
   font-size: 12px;
-  text-align: right ;
-  color:rgba(19, 18, 18, 0.61);
+  text-align: right;
+  color: rgba(19, 18, 18, 0.61);
 }

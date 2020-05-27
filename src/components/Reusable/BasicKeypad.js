@@ -4,7 +4,9 @@ import { faBackspace, faCircle } from "@fortawesome/free-solid-svg-icons";
 
 class Keypad extends Component {
   render() {
-    const classes = `keypad-container basic-keypad-container`
+    const classes = this.props.class
+      ? `keypad-container basic-keypad-container temperature-keypad-btn`
+      : `keypad-container basic-keypad-container`;
     return (
       <div className={classes}>
         <input
@@ -82,6 +84,15 @@ class Keypad extends Component {
         >
           <FontAwesomeIcon icon={faCircle} />
         </button>
+        {this.props.isTemperature ? (
+          <input
+            name="-"
+            id="tempPlusMinusbtn"
+            onClick={(e) => this.props.onClick(e.target.name)}
+            type="button"
+            value="+/-"
+          />
+        ) : null}
         <button
           name="backspace"
           onClick={(e) => this.props.onClick(e.currentTarget.name)}

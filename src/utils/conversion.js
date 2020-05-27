@@ -1,8 +1,9 @@
 import length from "./definitions/length";
 import area from "./definitions/area";
 import volume from './definitions/volume';
+import temperature from './definitions/Temperature';
 
-const measures = { length, area, volume };
+const measures = { length, area, volume, temperature };
 
 class Converter {
     constructor(value, measure) {
