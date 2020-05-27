@@ -9,12 +9,14 @@ import {
   faTemperatureLow,
   faTachometerAlt,
   faClock,
+  faCube
 } from "@fortawesome/free-solid-svg-icons";
 import LifeBox from "../Reusable/LifeBox";
 import Age from "./Age";
 import DateCalculate from "./DateCalculate";
 import Discount from "./Discount";
 import Length from "./Length";
+import Area from "./Area";
 import Percentage from "./Percentage";
 
 import GlobalStateProvider from "../store/GlobalStateProvider";
@@ -59,19 +61,20 @@ const Life = (props) => {
             />
             <LifeBox id="5" change={change} icon={faRuler} name="Length" />
             <LifeBox id="6" change={change} icon={faSquare} name="Area" />
+            <LifeBox id="7" change={change} icon={faCube} name="Volume" />
             <LifeBox
-              id="7"
+              id="8"
               change={change}
               icon={faTemperatureLow}
               name="Temperature"
             />
             <LifeBox
-              id="8"
+              id="9"
               change={change}
               icon={faTachometerAlt}
               name="Speed"
             />
-            <LifeBox id="9" change={change} icon={faClock} name="Time" />
+            <LifeBox id="10" change={change} icon={faClock} name="Time" />
           </div>
         ) : null}
         {state.id === 1 ? <Age reset={reset} /> : null}
@@ -79,6 +82,7 @@ const Life = (props) => {
         {state.id === 3 ? <Percentage reset={reset} /> : null}
         {state.id === 4 ? <DateCalculate reset={reset} /> : null}
         {state.id === 5 ? <Length reset={reset} /> : null}
+        {state.id === 6 ? <Area reset={reset} /> : null}
       </GlobalStateProvider>
     </React.Fragment>
   );

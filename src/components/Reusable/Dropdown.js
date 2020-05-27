@@ -15,7 +15,7 @@ const Dropdown = ({
   return (
     <div>
       <div className="items">
-        <div>
+        <div className="dropdown">
           <select id={selectId} onChange={selectChange}>
             {options.map((option) => {
               return (
