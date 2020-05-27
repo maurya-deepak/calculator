@@ -6,35 +6,24 @@ import { convert } from "../../utils/conversion";
 import Context from "../store/Context";
 
 const optionsObj = [
-  { name: "Square kilometer km2", value: "km2", fullname: "Square kilometer" },
-  { name: "Square meter m2", value: "m2", fullname: "Square meter" },
-  { name: "Square decimeter dm2", value: "dm2", fullname: "Square decimeter" },
-  {
-    name: "Square centimeter cm2",
-    value: "cm2",
-    fullname: "Square centimeter",
-  },
-  {
-    name: "Square millimeter mm2",
-    value: "mm2",
-    fullname: "Square millimeter",
-  },
-  { name: "Square micron um2", value: "um2", fullname: "Square micron" },
-  { name: "Hectare ha", value: "ha", fullname: "Hectare" },
-  { name: "Square mile mi2", value: "mi2", fullname: "Square mile" },
-  { name: "Square foot ft2", value: "ft2", fullname: "Square foot" },
-  { name: "Square inch in2", value: "in2", fullname: "Square inch" },
-  { name: "Square yard yd2", value: "yd2", fullname: "Square yard" },
-  { name: "Acre", value: "ac", fullname: "Acre" },
+  { name: "Cubic meter m3", value: "m3", fullname: "Cubic meter" },
+  { name: "Cubic decimeter dm3", value: "dm3", fullname: "Cubic decimeter" },
+  { name: "Cubic centimeter cm3", value: "cm3", fullname: "Cubic centimeter" },
+  { name: "Cubic millimeter mm3", value: "mm3", fullname: "Cubic millimeter" },
+  { name: "Hectoliter hl", value: "hl", fullname: "Hectoliter" },
+  { name: "Liter l", value: "l", fullname: "Liter"},
+  { name: "Deciliter dl", value: "dl", fullname: "Deciliter" },
+  { name: "Centiliter cl", value: "cl", fullname: "Centiliter" }, 
+  { name: "Milliliter ml", value: "ml", fullname: "Milliliter" }, 
 ];
 
-const Area = (props) => {
+const Volume = (props) => {
   const { globalState, globalDispatch } = useContext(Context);
 
   const [state, setState] = useState({
     selected: false,
-    selectedFirst: "Square kilometer",
-    selectedSecond: "Square kilometer",
+    selectedFirst: "Cubic meter",
+    selectedSecond: "Cubic meter",
   });
 
   // To reset global state to initial value
@@ -94,8 +83,7 @@ const Area = (props) => {
       });
 
       if (currentElement.id === "1") {
-        let convertedValue = convert(fromValue,"area").from(item1Value).to(item2Value);
-        console.log("1::"+ convertedValue);
+        let convertedValue = convert(fromValue,"volume").from(item1Value).to(item2Value);
         convertedValue =
           convertedValue.toString().length > 15
             ? convertedValue.toPrecision(9).toString()
@@ -110,8 +98,7 @@ const Area = (props) => {
         });
       }
       if (currentElement.id === "2") {
-        let convertedValue = convert(toValue,"area").from(item1Value).to(item2Value);
-        console.log("2::"+ convertedValue);
+        let convertedValue = convert(toValue,"volume").from(item1Value).to(item2Value);
         convertedValue =
           convertedValue.toString().length > 15
             ? convertedValue.toPrecision(9).toString()
@@ -142,7 +129,7 @@ const Area = (props) => {
 
   return (
     <div className="Current-box">
-      <HeaderWithBackBtn name="Area" reset={props.reset} />
+      <HeaderWithBackBtn name="Volume" reset={props.reset} />
       <div className="contentSection">
         <Dropdown
           selectChange={selectChange}
@@ -170,4 +157,4 @@ const Area = (props) => {
   );
 };
 
-export default Area;
+export default Volume;

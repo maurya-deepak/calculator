@@ -17,6 +17,7 @@ import DateCalculate from "./DateCalculate";
 import Discount from "./Discount";
 import Length from "./Length";
 import Area from "./Area";
+import Volume from "./Volume";
 import Percentage from "./Percentage";
 
 import GlobalStateProvider from "../store/GlobalStateProvider";
@@ -83,6 +84,7 @@ const Life = (props) => {
         {state.id === 4 ? <DateCalculate reset={reset} /> : null}
         {state.id === 5 ? <Length reset={reset} /> : null}
         {state.id === 6 ? <Area reset={reset} /> : null}
+        {state.id === 7 ? <Volume reset={reset} /> : null}
       </GlobalStateProvider>
     </React.Fragment>
   );
