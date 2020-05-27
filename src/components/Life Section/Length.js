@@ -128,7 +128,7 @@ const Length = (props) => {
 
   return (
     <div className="Current-box">
-      <HeaderWithBackBtn name="Length" reset={props.reset} />
+      <HeaderWithBackBtn name="Length Coverter" reset={props.reset} />
       <div className="contentSection">
         <Dropdown
           selectChange={selectChange}

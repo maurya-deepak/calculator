@@ -1,16 +1,16 @@
 const metric = {
   C: {
     name: {
-      singular: "degree Celsius",
-      plural: "degrees Celsius",
+      singular: "Degree Celsius",
+      plural: "Degrees Celsius",
     },
     to_anchor: 1,
     anchor_shift: 0,
   },
   K: {
     name: {
-      singular: "degree Kelvin",
-      plural: "degrees Kelvin",
+      singular: "Degree Kelvin",
+      plural: "Degrees Kelvin",
     },
     to_anchor: 1,
     anchor_shift: 273.15,
@@ -20,15 +20,15 @@ const metric = {
 const imperial = {
   F: {
     name: {
-      singular: "degree Fahrenheit",
-      plural: "degrees Fahrenheit",
+      singular: "Degree Fahrenheit",
+      plural: "Degrees Fahrenheit",
     },
     to_anchor: 1,
   },
   R: {
     name: {
-      singular: "degree Rankine",
-      plural: "degrees Rankine",
+      singular: "Degree Rankine",
+      plural: "Degrees Rankine",
     },
     to_anchor: 1,
     anchor_shift: 459.67,
@@ -36,19 +36,19 @@ const imperial = {
 };
 
 const temperature = {
-  metric: metric,
-  imperial: imperial,
+  metric,
+  imperial,
   _anchors: {
     metric: {
       unit: "C",
-      transform: function (C) {
-        return C / (5 / 9) + 32;
+      transform: (celsius) => {
+        return celsius / (5 / 9) + 32;
       },
     },
     imperial: {
       unit: "F",
-      transform: function (F) {
-        return (F - 32) * (5 / 9);
+      transform: (fahrenheit) => {
+        return (fahrenheit - 32) * (5 / 9);
       },
     },
   },

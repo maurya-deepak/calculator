@@ -6,10 +6,10 @@ import Context from "../store/Context";
 import UpdatedStructure from "./UpdatedStructureHOC";
 
 const optionsObj = [
-  { name: "Celsius C", value: "C", fullname: "Celsius" },
-  { name: "Fahrenheit F", value: "F", fullname: "Fahrenheit" },
+  { name: "Celsius \u00B0C", value: "C", fullname: "Celsius" },
+  { name: "Fahrenheit \u00B0F", value: "F", fullname: "Fahrenheit" },
   { name: "Kelvin K", value: "K", fullname: "Kelvin" },
-  { name: "Rankine R", value: "R", fullname: "Rankine" },
+  { name: "Rankine \u00B0R", value: "R", fullname: "Rankine" },
 ];
 
 const Temperature = (props) => {
@@ -24,7 +24,7 @@ const Temperature = (props) => {
 
   return (
     <div className="Current-box">
-      <HeaderWithBackBtn name="Temperature Coversion" reset={props.reset} />
+      <HeaderWithBackBtn name="Temperature Coverter" reset={props.reset} />
       <div className="contentSection">
         <Dropdown
           selectChange={props.selectChange}

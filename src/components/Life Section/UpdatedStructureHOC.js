@@ -83,6 +83,7 @@ const UpdatedStructure = (OriginalComponent, measureType) => {
         let convertedValue = convert(fromValue, measureType)
           .from(item1Value)
           .to(item2Value);
+
         convertedValue =
           convertedValue.toString().length > 15
             ? convertedValue.toPrecision(9).toString()
@@ -98,8 +99,9 @@ const UpdatedStructure = (OriginalComponent, measureType) => {
       }
       if (currentElement.id === "2") {
         let convertedValue = convert(toValue, measureType)
-          .from(item1Value)
-          .to(item2Value);
+          .from(item2Value)
+          .to(item1Value);
+
         convertedValue =
           convertedValue.toString().length > 15
             ? convertedValue.toPrecision(9).toString()
