@@ -2,18 +2,18 @@ import React, { useState, useEffect, useContext, useCallback } from "react";
 import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
 import BasicKeypad from "../Reusable/BasicKeypad";
 import Dropdown from "../Reusable/Dropdown";
-import { Conversion } from "./Conversion";
+import { Conversion } from "./LengthConversionUnits";
 import Context from "../store/Context";
 
 const optionsObj = [
-  { name: "Kilometer km", value: "km" },
-  { name: "Meter m", value: "m" },
-  { name: "Decimeter dm", value: "dm" },
-  { name: "Centimeter cm", value: "cm" },
-  { name: "Millimeter mm", value: "mm" },
-  { name: "Mile mi", value: "mi" },
-  { name: "Foot ft", value: "ft" },
-  { name: "Inch in", value: "in" },
+  { name: "Kilometer km", value: "km", fullname: "Kilometer" },
+  { name: "Meter m", value: "m", fullname: "Meter" },
+  { name: "Decimeter dm", value: "dm", fullname: "Decimeter" },
+  { name: "Centimeter cm", value: "cm", fullname: "Centimeter" },
+  { name: "Millimeter mm", value: "mm", fullname: "Millimeter" },
+  { name: "Mile mi", value: "mi", fullname: "Mile" },
+  { name: "Foot ft", value: "ft", fullname: "Foot" },
+  { name: "Inch in", value: "in", fullname: "Inch" },
 ];
 
 const Length = (props) => {
@@ -21,6 +21,8 @@ const Length = (props) => {
 
   const [state, setState] = useState({
     selected: false,
+    selectedFirst: "Kilometer",
+    selectedSecond: "Kilometer",
   });
 
   // To reset global state to initial value
@@ -66,14 +68,21 @@ const Length = (props) => {
 
   // Whenever state changes it calculates length and updates global state
   useEffect(() => {
-    const item1 = document.getElementById("item1").value;
-    const item2 = document.getElementById("item2").value;
+    const item1 = document.getElementById("item1");
+    const item2 = document.getElementById("item2");
+    const item1Value = item1.value;
+    const item2Value = item2.value;
     const currentElement = document.querySelector(".current");
     const fromValue = parseFloat(globalState.firstInput);
     const toValue = parseFloat(globalState.secondInput);
 
+    setState({
+      selectedFirst: item1.selectedOptions[0].label,
+      selectedSecond: item2.selectedOptions[0].label,
+    });
+
     if (currentElement.id === "1") {
-      let convertedValue = fromValue * Conversion[item1][item2];
+      let convertedValue = fromValue * Conversion[item1Value][item2Value];
       convertedValue =
         convertedValue.toString().length > 15
           ? convertedValue.toPrecision(9).toString()
@@ -88,7 +97,7 @@ const Length = (props) => {
       });
     }
     if (currentElement.id === "2") {
-      let convertedValue = toValue / Conversion[item1][item2];
+      let convertedValue = toValue / Conversion[item1Value][item2Value];
       convertedValue =
         convertedValue.toString().length > 15
           ? convertedValue.toPrecision(9).toString()
@@ -96,6 +105,7 @@ const Length = (props) => {
 
       const key = convertedValue;
       const current = document.getElementById("1");
+      console.log(item2.selectedOptions[0].label);
       globalDispatch({
         type: "setStateTokey",
         current,
@@ -118,7 +128,7 @@ const Length = (props) => {
 
   return (
     <div className="Current-box">
-      <HeaderWithBackBtn name="Length" reset={props.reset} />
+      <HeaderWithBackBtn name="Length Coverter" reset={props.reset} />
       <div className="contentSection">
         <Dropdown
           selectChange={selectChange}
@@ -127,6 +137,7 @@ const Length = (props) => {
           options={optionsObj}
           inputValue={globalState.firstInput}
           classname="current"
+          selectedName={state.selectedFirst}
         />
         <Dropdown
           selectChange={selectChange}
@@ -135,6 +146,7 @@ const Length = (props) => {
           options={optionsObj}
           inputValue={globalState.secondInput}
           classname=""
+          selectedName={state.selectedSecond}
         />
       </div>
       <div className="keypad_section">

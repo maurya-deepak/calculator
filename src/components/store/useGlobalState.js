@@ -30,7 +30,11 @@ const reducer = (state, action) => {
       if (current.id === "1") {
         const firstInputValue = state.firstInput;
         if (firstInputValue !== "0") {
-          if (firstInputValue.length === 1) {
+          let inputSize = firstInputValue.length;
+          if (
+            inputSize === 1 ||
+            (inputSize === 2 && firstInputValue[0] === "-")
+          ) {
             return { ...state, firstInput: "0" };
           } else {
             return {
@@ -43,7 +47,11 @@ const reducer = (state, action) => {
       if (current.id === "2") {
         const secondInputValue = state.secondInput;
         if (secondInputValue !== 0) {
-          if (secondInputValue.length === 1) {
+          let inputSize = secondInputValue.length;
+          if (
+            inputSize === 1 ||
+            (inputSize === 2 && secondInputValue[0] === "-")
+          ) {
             return { ...state, secondInput: "0" };
           } else {
             return {
@@ -108,6 +116,23 @@ const reducer = (state, action) => {
       return {
         ...state,
       };
+    case "negativeOfNumber":
+      if (current.id === "1") {
+        let value = state.firstInput;
+        if (value[0] === "-") {
+          return { ...state, firstInput: value.slice(1) };
+        } else if (value !== "0") {
+          return { ...state, firstInput: "-" + value };
+        }
+      } else if (current.id === "2") {
+        let value = state.secondInput;
+        if (value[0] === "-") {
+          return { ...state, secondInput: value.slice(1) };
+        } else if (value !== "0") {
+          return { ...state, secondInput: "-" + value };
+        }
+      }
+      return state;
     default:
       return state;
   }
