@@ -83,9 +83,7 @@ const reducer = (state, action) => {
       if (current.id === "1") {
         let value = state.firstInput;
         const len = value.indexOf(".") === -1 ? 15 : 18;
-        const isValid =
-          value.indexOf(".") === -1 ? true : value.split(".")[1].length <= 1;
-        if (value.length < len && isValid) {
+        if (value.length < len ) {
           if (value === "0") {
             value = key;
           } else {
@@ -99,9 +97,7 @@ const reducer = (state, action) => {
       } else if (current.id === "2") {
         let value = state.secondInput;
         const len = value.indexOf(".") === -1 ? 15 : 18;
-        const isValid =
-          value.indexOf(".") === -1 ? true : value.split(".")[1].length <= 1;
-        if (value.length < len && isValid) {
+        if (value.length < len) {
           if (value === "0") {
             value = key;
           } else {
