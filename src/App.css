@@ -54,7 +54,6 @@ body {
   overflow: scroll;
   word-break: break-all;
   font-size: 24px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.123);
   margin: 0px 15px;
 }
 
@@ -62,7 +61,8 @@ body {
   display: grid;
   grid-template-columns: auto auto auto auto;
   justify-items: center;
-  padding: 5px;
+  border-top: 1px solid silver;
+  margin: 0px 5px;
 }
 .keypad-container input {
   border: none;
@@ -132,10 +132,10 @@ body {
   color: rgba(0, 0, 0, 0.712);
   cursor: pointer;
 }
-
 .Life-container .box p {
   padding: 5px 0px;
   font-size: 12px;
+  text-align: center;
 }
 
 .header {
@@ -402,4 +402,14 @@ body {
   font-size: 12px;
   text-align: right;
   color: rgba(19, 18, 18, 0.61);
+}
+
+.number-system-keypad > input:nth-child(17) {
+  grid-column: 2;
+}
+.number-system-keypad .basic-dot {
+  grid-column: 3;
+}
+.number-system-keypad > input:nth-child(19) {
+  grid-column: 4;
 }

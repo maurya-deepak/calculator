@@ -11,7 +11,8 @@ import {
   faClock,
   faCube,
   faWeightHanging,
-  faMicrochip
+  faMicrochip,
+  faSync,
 } from "@fortawesome/free-solid-svg-icons";
 import LifeBox from "../Reusable/LifeBox";
 import Age from "./Age";
@@ -26,6 +27,7 @@ import Speed from "./Speed";
 import Time from "./Time";
 import Mass from "./Mass";
 import BitBytes from "./BitBytes";
+import NumeralSyatem from "./NumeralSystem";
 import GlobalStateProvider from "../store/GlobalStateProvider";
 
 const Life = (props) => {
@@ -82,8 +84,24 @@ const Life = (props) => {
               name="Speed"
             />
             <LifeBox id="10" change={change} icon={faClock} name="Time" />
-            <LifeBox id="11" change={change} icon={faWeightHanging} name="Mass" />
-            <LifeBox id="12" change={change} icon={faMicrochip} name="Digital" />
+            <LifeBox
+              id="11"
+              change={change}
+              icon={faWeightHanging}
+              name="Mass"
+            />
+            <LifeBox
+              id="12"
+              change={change}
+              icon={faMicrochip}
+              name="Digital"
+            />
+            <LifeBox
+              id="13"
+              change={change}
+              icon={faSync}
+              name="Numeral System"
+            />
           </div>
         ) : null}
         {state.id === 1 ? <Age reset={reset} /> : null}
@@ -98,6 +116,7 @@ const Life = (props) => {
         {state.id === 9 ? <Speed reset={reset} /> : null}
         {state.id === 11 ? <Mass reset={reset} /> : null}
         {state.id === 12 ? <BitBytes reset={reset} /> : null}
+        {state.id === 13 ? <NumeralSyatem reset={reset} /> : null}
       </GlobalStateProvider>
     </React.Fragment>
   );
