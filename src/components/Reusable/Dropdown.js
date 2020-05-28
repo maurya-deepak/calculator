@@ -13,7 +13,7 @@ const Dropdown = ({
   selectedName,
 }) => {
   return (
-    <div>
+    <div className="itemsWrapper">
       <div className="items">
         <div className="dropdown">
           <select id={selectId} onChange={selectChange}>

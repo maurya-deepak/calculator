@@ -6,13 +6,18 @@ import Context from "../store/Context";
 import UpdatedStructure from "./UpdatedStructureHOC";
 
 const optionsObj = [
-  { name: "Celsius \u00B0C", value: "C", fullname: "Celsius" },
-  { name: "Fahrenheit \u00B0F", value: "F", fullname: "Fahrenheit" },
-  { name: "Kelvin K", value: "K", fullname: "Kelvin" },
-  { name: "Rankine \u00B0R", value: "R", fullname: "Rankine" },
+  { name: "Light speed c", value: "c", fullname: "Light speed" },
+  { name: "Mach ma", value: "ma", fullname: "Mach" },
+  { name: "Kilometer per second km/s", value: "km/s", fullname: "Kilometer per second" },
+  { name: "Meter per second m/s", value: "m/s", fullname: "Meter per second" },
+  { name: "Kilometer per hour km/h", value: "km/h", fullname: "Kilometer per hour" },
+  { name: "Mile per hour m/h", value: "m/h", fullname: "Mile per hour" },
+  { name: "Knot kn", value: "kn", fullname: "Knot" },
+  { name: "Foot per second ft/s", value: "ft/s", fullname: "Foot per second" },
+  { name: "Inch per second in/s", value: "in/s", fullname: "Inch per second" },
 ];
 
-const Temperature = (props) => {
+const Speed = (props) => {
   const { globalState, globalDispatch } = useContext(Context);
 
   // To reset global state to initial value
@@ -24,7 +29,7 @@ const Temperature = (props) => {
 
   return (
     <div className="Current-box">
-      <HeaderWithBackBtn name="Temperature Converter" reset={props.reset} />
+      <HeaderWithBackBtn name="Speed Converter" reset={props.reset} />
       <div className="contentSection">
         <Dropdown
           selectChange={props.selectChange}
@@ -46,10 +51,10 @@ const Temperature = (props) => {
         />
       </div>
       <div className="keypad_section">
-        <BasicKeypad onClick={props.btnClicked} isTemperature={true} class="temperature-keypad-btn" />
+        <BasicKeypad onClick={props.btnClicked} />
       </div>
     </div>
   );
 };
 
-export default UpdatedStructure(Temperature, "temperature");
+export default UpdatedStructure(Speed, "speed");

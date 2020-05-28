@@ -29,7 +29,7 @@ const Volume = (props) => {
 
   return (
     <div className="Current-box">
-      <HeaderWithBackBtn name="Volume Coverter" reset={props.reset} />
+      <HeaderWithBackBtn name="Volume Converter" reset={props.reset} />
       <div className="contentSection">
         <Dropdown
           selectChange={props.selectChange}

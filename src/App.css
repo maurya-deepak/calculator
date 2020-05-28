@@ -124,6 +124,7 @@ body {
 .Life-container .box {
   width: 100px;
   height: 100px;
+  margin: 0px auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -347,13 +348,15 @@ body {
 }
 
 .content_section {
-  margin: 20px 10px 0px 10px;
-  padding-bottom: 5px;
+  margin: 15px 10px 15px 10px;
 }
-.items {
+.itemsWrapper {
+  padding: 0px 0px 30px 0px;
+}
+.content_section .items {
   display: flex;
   justify-content: space-between;
-  padding: 10px 0px 0px 0px;
+  padding: 15px 0px 15px 0px;
 }
 .items span:nth-child(2) {
   min-width: 160px;
@@ -376,10 +379,13 @@ body {
   cursor: pointer;
 }
 .contentSection {
-  margin: 20px 5px 20px 5px;
-  padding-bottom: 50px;
+  margin: 20px 5px 30px 5px;
 }
-
+.contentSection .items {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0px 0px 0px;
+}
 .contentSection .items select {
   border: 0;
   outline: 0;
@@ -389,7 +395,7 @@ body {
   overflow: hidden;
   cursor: pointer;
   text-overflow: clip;
-  width: 130px;
+  width: 123px;
 }
 
 #selected-subtitle {
