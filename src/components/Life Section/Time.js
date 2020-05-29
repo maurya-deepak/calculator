@@ -6,13 +6,20 @@ import Context from "../store/Context";
 import UpdatedStructure from "./UpdatedStructureHOC";
 
 const optionsObj = [
-  { name: "Celsius \u00B0C", value: "C", fullname: "Celsius" },
-  { name: "Fahrenheit \u00B0F", value: "F", fullname: "Fahrenheit" },
-  { name: "Kelvin K", value: "K", fullname: "Kelvin" },
-  { name: "Rankine \u00B0R", value: "R", fullname: "Rankine" },
+  { name: "Year y", value: "y", fullname: "Year" },
+  { name: "Month m", value: "m", fullname: "Month" },
+  { name: "Week wk", value: "wk", fullname: "Week" },
+  { name: "Day d", value: "d", fullname: "Day" },
+  { name: "Hour h", value: "h", fullname: "Hour" },
+  { name: "Minute min", value: "min", fullname: "Year" },
+  { name: "Second s", value: "s", fullname: "Second" },
+  { name: "Millisecond ms", value: "ms", fullname: "Millisecond" },
+  { name: "Microsecond mu", value: "mu", fullname: "Microsecond" },
+  { name: "Nanosecond ns", value: "ns", fullname: "Nanosecond" },
+  { name: "Picosecond ps", value: "ps", fullname: "Picosecond" },
 ];
 
-const Temperature = (props) => {
+const Time = (props) => {
   const { globalState, globalDispatch } = useContext(Context);
 
   // To reset global state to initial value
@@ -24,7 +31,7 @@ const Temperature = (props) => {
 
   return (
     <div className="Current-box">
-      <HeaderWithBackBtn name="Temperature Converter" reset={props.reset} />
+      <HeaderWithBackBtn name="Time Converter" reset={props.reset} />
       <div className="contentSection">
         <Dropdown
           selectChange={props.selectChange}
@@ -46,10 +53,10 @@ const Temperature = (props) => {
         />
       </div>
       <div className="keypad_section">
-        <BasicKeypad onClick={props.btnClicked} isTemperature={true} class="temperature-keypad-btn" />
+        <BasicKeypad onClick={props.btnClicked} />
       </div>
     </div>
   );
 };
 
-export default UpdatedStructure(Temperature, "temperature");
+export default UpdatedStructure(Time, "time");

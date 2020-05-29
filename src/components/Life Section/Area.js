@@ -40,7 +40,7 @@ const Area = (props) => {
 
   return (
     <div className="Current-box">
-      <HeaderWithBackBtn name="Area Coverter" reset={props.reset} />
+      <HeaderWithBackBtn name="Area Converter" reset={props.reset} />
       <div className="contentSection">
         <Dropdown
           selectChange={props.selectChange}

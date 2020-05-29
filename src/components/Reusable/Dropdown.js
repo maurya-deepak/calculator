@@ -11,9 +11,10 @@ const Dropdown = ({
   inputValue,
   classname,
   selectedName,
+  change,
 }) => {
   return (
-    <div>
+    <div className="itemsWrapper">
       <div className="items">
         <div className="dropdown">
           <select id={selectId} onChange={selectChange}>
@@ -31,7 +32,11 @@ const Dropdown = ({
           </select>
           <FontAwesomeIcon icon={faCaretDown} />
         </div>
-        <span id={spanId} className={classname} onClick={ChangeSelectedInput}>
+        <span
+          id={spanId}
+          className={classname}
+          onClick={(e) => ChangeSelectedInput(e, change)}
+        >
           {inputValue}
         </span>
       </div>

@@ -54,7 +54,6 @@ body {
   overflow: scroll;
   word-break: break-all;
   font-size: 24px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.123);
   margin: 0px 15px;
 }
 
@@ -62,7 +61,8 @@ body {
   display: grid;
   grid-template-columns: auto auto auto auto;
   justify-items: center;
-  padding: 5px;
+  border-top: 1px solid silver;
+  margin: 0px 5px;
 }
 .keypad-container input {
   border: none;
@@ -124,6 +124,7 @@ body {
 .Life-container .box {
   width: 100px;
   height: 100px;
+  margin: 0px auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -131,10 +132,10 @@ body {
   color: rgba(0, 0, 0, 0.712);
   cursor: pointer;
 }
-
 .Life-container .box p {
   padding: 5px 0px;
   font-size: 12px;
+  text-align: center;
 }
 
 .header {
@@ -347,13 +348,15 @@ body {
 }
 
 .content_section {
-  margin: 20px 10px 0px 10px;
-  padding-bottom: 5px;
+  margin: 15px 10px 15px 10px;
 }
-.items {
+.itemsWrapper {
+  padding: 0px 0px 30px 0px;
+}
+.content_section .items {
   display: flex;
   justify-content: space-between;
-  padding: 10px 0px 0px 0px;
+  padding: 15px 0px 15px 0px;
 }
 .items span:nth-child(2) {
   min-width: 160px;
@@ -376,10 +379,13 @@ body {
   cursor: pointer;
 }
 .contentSection {
-  margin: 20px 5px 20px 5px;
-  padding-bottom: 50px;
+  margin: 20px 5px 30px 5px;
 }
-
+.contentSection .items {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0px 0px 0px;
+}
 .contentSection .items select {
   border: 0;
   outline: 0;
@@ -389,11 +395,21 @@ body {
   overflow: hidden;
   cursor: pointer;
   text-overflow: clip;
-  width: 130px;
+  width: 123px;
 }
 
 #selected-subtitle {
   font-size: 12px;
   text-align: right;
   color: rgba(19, 18, 18, 0.61);
+}
+
+.number-system-keypad > input:nth-child(17) {
+  grid-column: 2;
+}
+.number-system-keypad .basic-dot {
+  grid-column: 3;
+}
+.number-system-keypad > input:nth-child(19) {
+  grid-column: 4;
 }
