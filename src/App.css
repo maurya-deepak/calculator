@@ -114,14 +114,14 @@ body {
   transition: 0.3s ease-in;
 }
 
-.Life-container {
+.Container {
   position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
-.Life-container .box {
+.Container .box {
   width: 100px;
   height: 100px;
   margin: 0px auto;
@@ -132,7 +132,7 @@ body {
   color: rgba(0, 0, 0, 0.712);
   cursor: pointer;
 }
-.Life-container .box p {
+.Container .box p {
   padding: 5px 0px;
   font-size: 12px;
   text-align: center;
@@ -412,4 +412,20 @@ body {
 }
 .number-system-keypad > input:nth-child(19) {
   grid-column: 4;
+}
+.content-section-currency {
+  margin-top: 5px;
+}
+.content-section-currency .itemsWrapper {
+  padding: 0px 0px 10px 0px;
+}
+#fetching-data {
+  position: absolute;
+  top: 240px;
+  left: 5px;
+  font-size: 10px;
+  color:rgba(17, 17, 16, 0.712)
+}
+#fetching-data span {
+  color: rgb(255, 30, 0);
 }

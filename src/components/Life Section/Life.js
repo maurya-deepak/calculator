@@ -14,7 +14,7 @@ import {
   faMicrochip,
   faSync,
 } from "@fortawesome/free-solid-svg-icons";
-import LifeBox from "../Reusable/LifeBox";
+import LifeBox from "../Reusable/Box";
 import Age from "./Age";
 import DateCalculate from "./DateCalculate";
 import Discount from "./Discount";
@@ -53,7 +53,7 @@ const Life = (props) => {
     <React.Fragment>
       <GlobalStateProvider>
         {state.id === -1 ? (
-          <div className="Life-container">
+          <div className="Container">
             <LifeBox id="1" change={change} icon={faPager} name="Age" />
             <LifeBox id="2" change={change} icon={faTags} name="Discount" />
             <LifeBox

@@ -4,131 +4,43 @@ const reducer = (state, action) => {
   const { type, current, key } = action;
   switch (type) {
     case "setStateToInitial":
-      return {
-        firstInput: "0",
-        secondInput: "0",
-      };
+      return { firstInput: "0", secondInput: "0", thirdInput: "0" };
+
     case "setStateTokey":
-      if (current.id === "1") {
-        return { ...state, firstInput: key };
-      }
-      if (current.id === "2") {
-        return { ...state, secondInput: key };
-      }
-      return {
-        ...state,
-      };
+      if (current.id === "1") return setToKey("firstInput", key, state);
+      if (current.id === "2") return setToKey("secondInput", key, state);
+      if (current.id === "3") return setToKey("thirdInput", key, state);
+      return { ...state };
+
     case "reset":
-      if (current.id === "1") {
-        return { ...state, firstInput: "0" };
-      }
-      if (current.id === "2") {
-        return { ...state, secondInput: "0" };
-      }
-      break;
+      if (current.id === "1") return { ...state, firstInput: "0" };
+      if (current.id === "2") return { ...state, secondInput: "0" };
+      if (current.id === "3") return { ...state, thirdInput: "0" };
+      return { ...state };
+
     case "backspace":
-      if (current.id === "1") {
-        const firstInputValue = state.firstInput;
-        if (firstInputValue !== "0") {
-          let inputSize = firstInputValue.length;
-          if (
-            inputSize === 1 ||
-            (inputSize === 2 && firstInputValue[0] === "-")
-          ) {
-            return { ...state, firstInput: "0" };
-          } else {
-            return {
-              ...state,
-              firstInput: firstInputValue.slice(0, -1),
-            };
-          }
-        }
-      }
-      if (current.id === "2") {
-        const secondInputValue = state.secondInput;
-        if (secondInputValue !== 0) {
-          let inputSize = secondInputValue.length;
-          if (
-            inputSize === 1 ||
-            (inputSize === 2 && secondInputValue[0] === "-")
-          ) {
-            return { ...state, secondInput: "0" };
-          } else {
-            return {
-              ...state,
-              secondInput: secondInputValue.slice(0, -1),
-            };
-          }
-        }
-      }
-      return {
-        ...state,
-      };
+      if (current.id === "1") return backspace("firstInput", state);
+      if (current.id === "2") return backspace("secondInput", state);
+      if (current.id === "3") return backspace("thirdInput", state);
+      return { ...state };
+
     case "decimal":
-      if (current.id === "1" && state.firstInput.indexOf(".") === -1) {
-        return {
-          ...state,
-          firstInput: state.firstInput + ".",
-        };
-      } else if (current.id === "2" && state.secondInput.indexOf(".") === -1) {
-        return {
-          ...state,
-          secondInput: state.secondInput + ".",
-        };
-      }
-      return {
-        ...state,
-      };
+      if (current.id === "1") return decimal("firstInput", state);
+      else if (current.id === "2") return decimal("secondInput", state);
+      else if (current.id === "3") return decimal("thirdInput", state);
+      return { ...state };
+
     case "number":
-      if (current.id === "1") {
-        let value = state.firstInput;
-        const len = value.indexOf(".") === -1 ? 15 : 18;
-        if (value.length < len ) {
-          if (value === "0") {
-            value = key;
-          } else {
-            value += key;
-          }
-          return {
-            ...state,
-            firstInput: value,
-          };
-        }
-      } else if (current.id === "2") {
-        let value = state.secondInput;
-        const len = value.indexOf(".") === -1 ? 15 : 18;
-        if (value.length < len) {
-          if (value === "0") {
-            value = key;
-          } else {
-            value += key;
-          }
-          return {
-            ...state,
-            secondInput: value,
-          };
-        }
-      }
-      return {
-        ...state,
-      };
+      if (current.id === "1") return number("firstInput", key, state);
+      else if (current.id === "2") return number("secondInput", key, state);
+      else if (current.id === "3") return number("thirdInput", key, state);
+      return { ...state };
+
     case "negativeOfNumber":
-      if (current.id === "1") {
-        let value = state.firstInput;
-        if (value[0] === "-") {
-          return { ...state, firstInput: value.slice(1) };
-        } else if (value !== "0") {
-          return { ...state, firstInput: "-" + value };
-        }
-      } else if (current.id === "2") {
-        let value = state.secondInput;
-        if (value[0] === "-") {
-          return { ...state, secondInput: value.slice(1) };
-        } else if (value !== "0") {
-          return { ...state, secondInput: "-" + value };
-        }
-      }
-      return state;
+      if (current.id === "1") negativeOfNumber("firstInput", state);
+      else if (current.id === "2") negativeOfNumber("secondInput", state);
+      return { ...state };
+
     default:
       return state;
   }
@@ -138,8 +50,57 @@ const useGlobalState = () => {
   const [globalState, globalDispatch] = useReducer(reducer, {
     firstInput: "0",
     secondInput: "0",
+    thirdInput: "0",
   });
   return { globalState, globalDispatch };
+};
+
+const setToKey = (stateName, key, state) => {
+  return { ...state, [stateName]: key };
+};
+
+const number = (stateName, key, state) => {
+  let value = state[stateName];
+  const len = value.indexOf(".") === -1 ? 15 : 18;
+  if (value.length < len) {
+    if (value === "0") {
+      value = key;
+    } else {
+      value += key;
+    }
+    return { ...state, [stateName]: value };
+  } else {
+    return { ...state };
+  }
+};
+
+const backspace = (stateName, state) => {
+  const inputValue = state[stateName];
+  if (inputValue !== "0") {
+    let inputSize = inputValue.length;
+    if (inputSize === 1 || (inputSize === 2 && inputValue[0] === "-")) {
+      return { ...state, [stateName]: "0" };
+    } else {
+      return { ...state, [stateName]: inputValue.slice(0, -1) };
+    }
+  } else {
+    return { ...state };
+  }
+};
+
+const decimal = (stateName, state) => {
+  if (state[stateName].indexOf(".") === -1) {
+    return { ...state, [stateName]: state[stateName] + "." };
+  } else {
+    return { ...state };
+  }
+};
+
+const negativeOfNumber = (stateName, state) => {
+  let value = state[stateName];
+  if (value[0] === "-") return { ...state, [stateName]: value.slice(1) };
+  else if (value !== "0") return { ...state, [stateName]: "-" + value };
+  else return { ...state };
 };
 
 export default useGlobalState;
