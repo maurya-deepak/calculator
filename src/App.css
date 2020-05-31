@@ -123,8 +123,8 @@ body {
 }
 .Container .box {
   width: 100px;
-  height: 100px;
-  margin: 0px auto;
+  height: 90px;
+  margin: 5px auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -132,11 +132,15 @@ body {
   color: rgba(0, 0, 0, 0.712);
   cursor: pointer;
 }
+.Container #box-icon{
+  font-size: 18px;
+}
 .Container .box p {
   padding: 5px 0px;
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
 }
+
 
 .header {
   display: flex;
@@ -420,9 +424,6 @@ body {
   padding: 0px 0px 10px 0px;
 }
 #fetching-data {
-  position: absolute;
-  top: 240px;
-  left: 5px;
   font-size: 10px;
   color:rgba(17, 17, 16, 0.712)
 }

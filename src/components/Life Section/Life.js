@@ -30,7 +30,7 @@ import BitBytes from "./BitBytes";
 import NumeralSyatem from "./NumeralSystem";
 import GlobalStateProvider from "../store/GlobalStateProvider";
 
-const Life = (props) => {
+const Life = ({ hideNav, showNav }) => {
   const [state, setState] = useState({
     id: -1,
   });
@@ -40,15 +40,16 @@ const Life = (props) => {
     setState({
       id: id,
     });
-    props.hideNav();
+    hideNav();
   };
 
   const reset = () => {
     setState({
       id: -1,
     });
-    props.showNav();
+    showNav();
   };
+
   return (
     <React.Fragment>
       <GlobalStateProvider>

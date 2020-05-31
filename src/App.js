@@ -42,11 +42,13 @@ class App extends Component {
       show_nav: false,
     });
   };
+
   showNav = () => {
     this.setState({
       show_nav: true,
     });
   };
+
   render() {
     return (
       <div className="main-container">
