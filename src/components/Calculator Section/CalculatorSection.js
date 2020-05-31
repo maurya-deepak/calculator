@@ -1,13 +1,81 @@
-import React, { useState, useCallback , memo} from "react";
+import React, { Component } from "react";
 import Result from "./Result";
 import Keypad from "./keypad";
 
-const CalculatorSection = () => {
-  const [resultState, setResultState] = useState(["0"]);
+class CalculatorSection extends Component {
+  state = {
+    result: ["0"],
+  };
 
-  const calculate = useCallback(() => {
+  onClick = (val) => {
+    if (val === "=") {
+      if (this.state.result.length > 1) this.calculate();
+    } else if (val === "Ac") {
+      this.reset();
+    } else if (val === "backspace") {
+      this.backspace();
+    } else if (
+      val === "+" ||
+      val === "-" ||
+      val === "*" ||
+      val === "/" ||
+      val === "%"
+    ) {
+      let textArray = [...this.state.result];
+      const last_val = textArray[textArray.length - 1];
+      if (
+        last_val === "+" ||
+        last_val === "-" ||
+        last_val === "*" ||
+        last_val === "/" ||
+        last_val === "%"
+      ) {
+        textArray.pop();
+        textArray.push(val);
+        this.setState({
+          result: textArray,
+        });
+      } else {
+        textArray.push(val);
+        this.setState({
+          result: textArray,
+        });
+      }
+    } else {
+      let current;
+      let textArray = [...this.state.result];
+      if (textArray.length >= 1) {
+        current = textArray[textArray.length - 1];
+        const regexp = /\d|\.+/g;
+        if (regexp.test(current)) {
+          if (val === ".") {
+            if (current === "0") {
+              current = "0.";
+            } else if (current.indexOf(".") === -1) {
+              current += val;
+            }
+          } else if (current === "0") {
+            current = val;
+          } else {
+            current += val;
+          }
+          textArray.pop();
+          textArray.push(current);
+          this.setState({
+            result: textArray,
+          });
+        } else {
+          textArray.push(val);
+          this.setState({
+            result: textArray,
+          });
+        }
+      }
+    }
+  };
+  calculate = () => {
     try {
-      const last = resultState[resultState.length - 1];
+      const last = this.state.result[this.state.result.length - 1];
       if (
         last !== "+" &&
         last !== "-" &&
@@ -15,110 +83,53 @@ const CalculatorSection = () => {
         last !== "/" &&
         last !== "%"
       ) {
-        const tocalculate = resultState.join(" ");
-         // eslint-disable-next-line
-        setResultState([String(eval(tocalculate))]);
+        const tocalculate = this.state.result.join(" ");
+        this.setState({
+          result: [String(eval(tocalculate))],
+        });
       }
     } catch (e) {
       console.log(e);
     }
-   
-  }, [setResultState, resultState]);
+  };
 
-  const reset = useCallback(() => {
-    setResultState(["0"]);
-  }, [setResultState]);
+  reset = () => {
+    this.setState({
+      result: ["0"],
+    });
+  };
 
-  const backspace = useCallback(() => {
-    if (resultState.length >= 1) {
-      const last = resultState[resultState.length - 1];
+  backspace = () => {
+    if (this.state.result.length >= 1) {
+      const last = this.state.result[this.state.result.length - 1];
       if (last.length > 1) {
-        const newArr = [...resultState];
+        const newArr = [...this.state.result];
         newArr.pop();
         newArr.push(last.slice(0, -1));
-        setResultState(newArr);
-      } else if (resultState.length === 1 && last.length === 1) {
-        setResultState(["0"]);
+        this.setState({
+          result: newArr,
+        });
+      } else if (this.state.result.length === 1 && last.length === 1) {
+        this.setState({
+          result: ["0"],
+        });
       } else {
-        const newArr = [...resultState];
+        const newArr = [...this.state.result];
         newArr.pop();
-        setResultState(newArr);
+        this.setState({
+          result: newArr,
+        });
       }
     }
-  }, [setResultState, resultState]);
+  };
+  render() {
+    return (
+      <div className="container">
+        <Result result={this.state.result} />
+        <Keypad onClick={this.onClick} />
+      </div>
+    );
+  }
+}
 
-  const onClick = useCallback(
-    (val) => {
-      if (val === "=") {
-        if (resultState.length > 1) calculate();
-      } else if (val === "Ac") {
-        reset();
-      } else if (val === "backspace") {
-        backspace();
-      } else if (
-        val === "+" ||
-        val === "-" ||
-        val === "*" ||
-        val === "/" ||
-        val === "%"
-      ) {
-        setResultState((prevResultState) => {
-          let textArray = [...prevResultState];
-          const last_val = textArray[textArray.length - 1];
-          if (
-            last_val === "+" ||
-            last_val === "-" ||
-            last_val === "*" ||
-            last_val === "/" ||
-            last_val === "%"
-          ) {
-            textArray.pop();
-            textArray.push(val);
-            return textArray;
-          } else {
-            textArray.push(val);
-            return textArray;
-          }
-        });
-      } else {
-        let current;
-        setResultState((prevResultState) => {
-          let textArray = [...prevResultState];
-          if (textArray.length >= 1) {
-            current = textArray[textArray.length - 1];
-            const regexp = /\d|\.+/g;
-            if (regexp.test(current)) {
-              if (val === ".") {
-                if (current === "0") {
-                  current = "0.";
-                } else if (current.indexOf(".") === -1) {
-                  current += val;
-                }
-              } else if (current === "0") {
-                current = val;
-              } else {
-                current += val;
-              }
-              textArray.pop();
-              textArray.push(current);
-              return textArray;
-            } else {
-              textArray.push(val);
-              return textArray;
-            }
-          }
-        });
-      }
-    },
-    [setResultState, resultState, calculate, reset, backspace]
-  );
-
-  return (
-    <div className="container">
-      <Result result={resultState} />
-      <Keypad onClick={onClick} />
-    </div>
-  );
-};
-
-export default memo(CalculatorSection);
+export default CalculatorSection;

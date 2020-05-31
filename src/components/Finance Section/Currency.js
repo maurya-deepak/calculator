@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
 import BasicKeypad from "../Reusable/BasicKeypad";
-import Dropdown from "../Reusable/Dropdown";
+import Dropdown from "../Reusable/DropdownWithInput";
 import Context from "../store/Context";
 import axios from "axios";
 
@@ -122,9 +122,9 @@ const Currency = (props) => {
   }, [globalDispatch]);
 
   // change local state when drop-down value is changed
-  const selectChange = () => {
+  const selectChange = useCallback(() => {
     setSelected((prev) => !prev);
-  };
+  },[setSelected]);
 
   const onClick = useCallback(
     (key) => {

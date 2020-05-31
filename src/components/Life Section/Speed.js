@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
 import BasicKeypad from "../Reusable/BasicKeypad";
-import Dropdown from "../Reusable/Dropdown";
+import Dropdown from "../Reusable/DropdownWithInput";
 import Context from "../store/Context";
 import UpdatedStructure from "./UpdatedStructureHOC";
 

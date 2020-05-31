@@ -21,11 +21,11 @@ const UpdatedStructure = (OriginalComponent, measureType) => {
       });
     }, []);
 
-    const selectChange = () => {
+    const selectChange = useCallback(() => {
       setState({
         selected: !state.selected,
       });
-    };
+    },[setState, state.selected]);
 
     const onClick = useCallback(
       (key) => {
