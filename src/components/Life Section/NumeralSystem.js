@@ -22,9 +22,9 @@ const NumeralSystem = (props) => {
   const [disable_89_btn, setDisable_89_btn] = useState(false);
   const [disable_all_E01, setDisable_all_E01] = useState(false);
 
-  const selectChange = () => {
+  const selectChange = useCallback(() => {
     setSelected((prevState) => ({ selected: !prevState }));
-  };
+  }, [setSelected]);
 
   // To reset global state to initial value
   useEffect(() => {
