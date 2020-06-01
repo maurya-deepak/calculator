@@ -430,3 +430,23 @@ body {
 #fetching-data span {
   color: rgb(255, 30, 0);
 }
+.gst-list ul{
+  list-style: none;
+  display: flex;
+  border: 1px solid rgba(192, 192, 192, 0.185);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.gst-list ul li{
+  padding: 10px 10px;
+}
+.gst-list ul li:not(:last-child) {
+  border-right: 1px solid rgba(192, 192, 192, 0.185);
+}
+.gst-list .current-gst{
+  background-color:rgb(255, 85, 0);
+  color: #fff;
+  
+  /* border-top-left-radius: 10px; */
+  /* border-bottom-left-radius: 10px; */
+}
