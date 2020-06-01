@@ -34,19 +34,17 @@ const BillSplit = (props) => {
       } else if (key === ".") {
         const current = document.querySelector(".current");
         if (current.id === "2") return;
-        else {
+        globalDispatch({
+          type: "decimal",
+          current,
+        });
+      } else {
+        const current = document.querySelector(".current");
+        if (current.id === "1") {
           const amount = globalState.firstInput;
           if (amount.indexOf(".") !== -1 && amount.split(".")[1].length >= 2)
             return;
-
-          globalDispatch({
-            type: "decimal",
-            current,
-          });
-        }
-      } else {
-        const current = document.querySelector(".current");
-        if (current.id === "2") {
+        } else if (current.id === "2") {
           const people = globalState.secondInput;
           const check = parseFloat(people + key) <= 999;
           if (!check) return;
