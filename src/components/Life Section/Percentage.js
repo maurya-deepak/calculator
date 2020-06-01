@@ -3,8 +3,9 @@ import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
 import ContentSection from "../Reusable/ContentSection";
 import BasicKeypad from "../Reusable/BasicKeypad";
 import Context from "../store/Context";
+import WithOnClick from "../HOC/withOnClick";
 
-export default function Percentage(props) {
+const Percentage = (props)=> {
   const { globalState, globalDispatch } = useContext(Context);
 
   const [state, setState] = useState({
@@ -16,41 +17,6 @@ export default function Percentage(props) {
       type: "setStateToInitial",
     });
   }, [globalDispatch]);
-
-  const onClick = (key) => {
-    if (key === "Ac") {
-      const current = document.querySelector(".current");
-      globalDispatch({
-        type: "reset",
-        current,
-      });
-    } else if (key === "backspace") {
-      const current = document.querySelector(".current");
-      globalDispatch({
-        type: "backspace",
-        current,
-      });
-    } else if (key === ".") {
-      const current = document.querySelector(".current");
-      globalDispatch({
-        type: "decimal",
-        current,
-      });
-    } else {
-      const current = document.querySelector(".current");
-      if (current.id === "1") {
-        const percentage = globalState.firstInput;
-        const check = parseFloat(percentage + key) <= 100.0;
-        if (!check) return;
-        if (percentage.length > 4) return;
-      }
-      globalDispatch({
-        type: "number",
-        current,
-        key,
-      });
-    }
-  };
 
   useEffect(() => {
     const percent = parseFloat(globalState.firstInput);
@@ -75,8 +41,11 @@ export default function Percentage(props) {
         />
       </div>
       <div className="keypad_section">
-        <BasicKeypad onClick={onClick} />
+        <BasicKeypad onClick={props.onClick} />
       </div>
     </div>
   );
 }
+
+export default WithOnClick(Percentage, "firstInput", 100, "1");
+
