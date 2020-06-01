@@ -1,19 +1,16 @@
-import React, { Component } from "react";
+import React, { memo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
+const HeaderWithBackBtn = ({ reset, name }) => {
+  return (
+    <div className="header">
+      <button className="back-btn" onClick={reset}>
+        <FontAwesomeIcon icon={faChevronLeft} />
+      </button>
+      <p>{name}</p>
+    </div>
+  );
+};
 
-class HeaderWithBackBtn extends Component {
-  render() {
-    return (
-      <div className="header">
-        <button className="back-btn" onClick={this.props.reset}>
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </button>
-        <p>{this.props.name}</p>
-      </div>
-    );
-  }
-}
-
-export default HeaderWithBackBtn;
+export default memo(HeaderWithBackBtn);

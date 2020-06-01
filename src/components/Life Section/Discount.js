@@ -3,6 +3,7 @@ import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
 import BasicKeypad from "../Reusable/BasicKeypad";
 import ContentSection from "../Reusable/ContentSection";
 import Context from "../store/Context";
+import WithOnClick from "../HOC/withOnClick";
 
 const Discount = (props) => {
   // using global state context
@@ -13,41 +14,6 @@ const Discount = (props) => {
     final_price: "0",
     save: "0",
   });
-
-  const onClick = (key) => {
-    if (key === "Ac") {
-      const current = document.querySelector(".current");
-      globalDispatch({
-        type: "reset",
-        current,
-      });
-    } else if (key === "backspace") {
-      const current = document.querySelector(".current");
-      globalDispatch({
-        type: "backspace",
-        current,
-      });
-    } else if (key === ".") {
-      const current = document.querySelector(".current");
-      globalDispatch({
-        type: "decimal",
-        current,
-      });
-    } else {
-      const current = document.querySelector(".current");
-      if (current.id === "2") {
-        const discount = globalState.secondInput;
-        const check = parseFloat(discount + key) <= 100.0;
-        if (!check) return;
-        if (discount.length > 4) return;
-      }
-      globalDispatch({
-        type: "number",
-        current,
-        key,
-      });
-    }
-  };
 
   useEffect(() => {
     globalDispatch({
@@ -84,10 +50,10 @@ const Discount = (props) => {
         </div>
       </div>
       <div className="keypad_section">
-        <BasicKeypad onClick={onClick} />
+        <BasicKeypad onClick={props.onClick} />
       </div>
     </div>
   );
 };
 
-export default Discount;
+export default WithOnClick(Discount, "secondInput", 100, "2");

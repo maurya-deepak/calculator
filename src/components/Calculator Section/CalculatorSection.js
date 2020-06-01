@@ -4,10 +4,10 @@ import Keypad from "./keypad";
 
 class CalculatorSection extends Component {
   state = {
-    result: ["0"]
+    result: ["0"],
   };
 
-  onClick = val => {
+  onClick = (val) => {
     if (val === "=") {
       if (this.state.result.length > 1) this.calculate();
     } else if (val === "Ac") {
@@ -33,12 +33,12 @@ class CalculatorSection extends Component {
         textArray.pop();
         textArray.push(val);
         this.setState({
-          result: textArray
+          result: textArray,
         });
       } else {
         textArray.push(val);
         this.setState({
-          result: textArray
+          result: textArray,
         });
       }
     } else {
@@ -62,12 +62,12 @@ class CalculatorSection extends Component {
           textArray.pop();
           textArray.push(current);
           this.setState({
-            result: textArray
+            result: textArray,
           });
         } else {
           textArray.push(val);
           this.setState({
-            result: textArray
+            result: textArray,
           });
         }
       }
@@ -85,7 +85,7 @@ class CalculatorSection extends Component {
       ) {
         const tocalculate = this.state.result.join(" ");
         this.setState({
-          result: [String(eval(tocalculate))]
+          result: [String(eval(tocalculate))],
         });
       }
     } catch (e) {
@@ -95,7 +95,7 @@ class CalculatorSection extends Component {
 
   reset = () => {
     this.setState({
-      result: ["0"]
+      result: ["0"],
     });
   };
 
@@ -107,17 +107,17 @@ class CalculatorSection extends Component {
         newArr.pop();
         newArr.push(last.slice(0, -1));
         this.setState({
-          result: newArr
+          result: newArr,
         });
       } else if (this.state.result.length === 1 && last.length === 1) {
         this.setState({
-          result: ["0"]
+          result: ["0"],
         });
       } else {
         const newArr = [...this.state.result];
         newArr.pop();
         this.setState({
-          result: newArr
+          result: newArr,
         });
       }
     }

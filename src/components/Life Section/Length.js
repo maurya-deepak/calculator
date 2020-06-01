@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
 import BasicKeypad from "../Reusable/BasicKeypad";
-import Dropdown from "../Reusable/Dropdown";
+import Dropdown from "../Reusable/DropdownWithInput";
 import { Conversion } from "./LengthConversionUnits";
 import Context from "../store/Context";
 
@@ -81,7 +81,7 @@ const Length = (props) => {
       selectedSecond: item2.selectedOptions[0].label,
     });
 
-    if (currentElement.id === "1") {
+    if (currentElement && currentElement.id === "1") {
       let convertedValue = fromValue * Conversion[item1Value][item2Value];
       convertedValue =
         convertedValue.toString().length > 15
@@ -96,7 +96,7 @@ const Length = (props) => {
         key,
       });
     }
-    if (currentElement.id === "2") {
+    if (currentElement && currentElement.id === "2") {
       let convertedValue = toValue / Conversion[item1Value][item2Value];
       convertedValue =
         convertedValue.toString().length > 15
@@ -120,11 +120,11 @@ const Length = (props) => {
   ]);
 
   // change local state when drop-down value is changed
-  const selectChange = () => {
+  const selectChange = useCallback(() => {
     setState({
       selected: !state.selected,
     });
-  };
+  },[setState, state.selected]);
 
   return (
     <div className="Current-box">

@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useContext } from "react";
 import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
 import NumberSystemKeypad from "./NumberSystemKeypad";
-import Dropdown from "../Reusable/Dropdown";
+import Dropdown from "../Reusable/DropdownWithInput";
 import Context from "../store/Context";
 import numeralSystem from "../../utils/definitions/numeralSystem";
 
@@ -22,9 +22,9 @@ const NumeralSystem = (props) => {
   const [disable_89_btn, setDisable_89_btn] = useState(false);
   const [disable_all_E01, setDisable_all_E01] = useState(false);
 
-  const selectChange = () => {
+  const selectChange = useCallback(() => {
     setSelected((prevState) => ({ selected: !prevState }));
-  };
+  }, [setSelected]);
 
   // To reset global state to initial value
   useEffect(() => {

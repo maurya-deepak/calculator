@@ -14,7 +14,7 @@ import {
   faMicrochip,
   faSync,
 } from "@fortawesome/free-solid-svg-icons";
-import LifeBox from "../Reusable/LifeBox";
+import LifeBox from "../Reusable/Box";
 import Age from "./Age";
 import DateCalculate from "./DateCalculate";
 import Discount from "./Discount";
@@ -30,7 +30,7 @@ import BitBytes from "./BitBytes";
 import NumeralSyatem from "./NumeralSystem";
 import GlobalStateProvider from "../store/GlobalStateProvider";
 
-const Life = (props) => {
+const Life = ({ hideNav, showNav }) => {
   const [state, setState] = useState({
     id: -1,
   });
@@ -40,20 +40,21 @@ const Life = (props) => {
     setState({
       id: id,
     });
-    props.hideNav();
+    hideNav();
   };
 
   const reset = () => {
     setState({
       id: -1,
     });
-    props.showNav();
+    showNav();
   };
+
   return (
     <React.Fragment>
       <GlobalStateProvider>
         {state.id === -1 ? (
-          <div className="Life-container">
+          <div className="Container">
             <LifeBox id="1" change={change} icon={faPager} name="Age" />
             <LifeBox id="2" change={change} icon={faTags} name="Discount" />
             <LifeBox
