@@ -1,9 +1,10 @@
 import React, { Fragment, useState } from "react";
 import FinanceBox from "../Reusable/Box";
-import {faCoins, faWallet} from "@fortawesome/free-solid-svg-icons";
+import {faCoins, faWallet, faGhost} from "@fortawesome/free-solid-svg-icons";
 import GlobalStateProvider from "../store/GlobalStateProvider";
 import Currency from "./Currency";
 import BillSplit from './BillSplit';
+import Gst from "./Gst";
 
 const Finance = (props) => {
   const [state, setState] = useState({
@@ -31,10 +32,12 @@ const Finance = (props) => {
           <div className="Container">
             <FinanceBox id="1" change={change} icon={faCoins} name="Currency" />
             <FinanceBox id="2" change={change} icon={faWallet} name="Split bill" />
+            <FinanceBox id="3" change={change} icon={faGhost} name="GST" />
           </div>
         ) : null}
         {state.id === 1 ? <Currency reset={reset}/> : null}
         {state.id === 2 ? <BillSplit reset={reset}/> : null}
+        {state.id === 3 ? <Gst reset={reset}/> : null}
       </GlobalStateProvider>
     </Fragment>
   );
