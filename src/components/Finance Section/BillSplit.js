@@ -3,7 +3,6 @@ import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
 import ContentSection from "../Reusable/ContentSection";
 import BasicKeypad from "../Reusable/BasicKeypad";
 import Context from "../store/Context";
-import WithOnClick from "../HOC/withOnClick";
 
 const BillSplit = (props) => {
   const { globalState, globalDispatch } = useContext(Context);

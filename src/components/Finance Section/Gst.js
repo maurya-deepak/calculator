@@ -36,6 +36,13 @@ const Gst = (props) => {
           current,
         });
       } else {
+        const originalPrice = globalState.firstInput;
+        if (
+          originalPrice.indexOf(".") !== -1 &&
+          originalPrice.split(".")[1].length > 1
+        ) {
+          return;
+        }
         globalDispatch({
           type: "number",
           current,
@@ -43,7 +50,7 @@ const Gst = (props) => {
         });
       }
     },
-    [globalDispatch]
+    [globalDispatch, globalState.firstInput]
   );
 
   useEffect(() => {
