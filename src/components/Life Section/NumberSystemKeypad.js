@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBackspace, faCircle } from "@fortawesome/free-solid-svg-icons";
+import { faBackspace } from "@fortawesome/free-solid-svg-icons";
 
 const NumberSystemKeypad = (props) => {
   const classes = `keypad-container number-system-keypad`;
@@ -127,13 +127,6 @@ const NumberSystemKeypad = (props) => {
         type="button"
         value="0"
       />
-      <button
-        name="."
-        className="basic-dot"
-        onClick={(e) => props.onClick(e.currentTarget.name)}
-      >
-        <FontAwesomeIcon icon={faCircle} />
-      </button>
       <input
         name="A"
         onClick={(e) => props.onClick(e.target.name)}

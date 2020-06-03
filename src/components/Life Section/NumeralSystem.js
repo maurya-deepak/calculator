@@ -22,9 +22,40 @@ const NumeralSystem = (props) => {
   const [disable_89_btn, setDisable_89_btn] = useState(false);
   const [disable_all_E01, setDisable_all_E01] = useState(false);
 
-  const selectChange = useCallback(() => {
-    setSelected((prevState) => ({ selected: !prevState }));
-  }, [setSelected]);
+  const selectChange = useCallback(
+    (event) => {
+      const current = document.querySelector(".current");
+      if (
+        current.id === "1" &&
+        event.target.id === "item1" &&
+        globalState.firstInput !== 0
+      ) {
+        globalDispatch({
+          type: "setStateToInitial",
+        });
+        showHidebtn(event.target);
+        setSelectedFirst(event.target.selectedOptions[0].label);
+      } else if (
+        current.id === "2" &&
+        event.target.id === "item2" &&
+        globalState.secondInput !== 0
+      ) {
+        globalDispatch({
+          type: "setStateToInitial",
+        });
+        showHidebtn(event.target);
+        setSelectedSecond(event.target.selectedOptions[0].label);
+      } else {
+        setSelected((prevState) => ({ selected: !prevState }));
+      }
+    },
+    [
+      setSelected,
+      globalDispatch,
+      globalState.firstInput,
+      globalState.secondInput,
+    ]
+  );
 
   // To reset global state to initial value
   useEffect(() => {
@@ -103,7 +134,7 @@ const NumeralSystem = (props) => {
     if (currentElement.id === "1") {
       showHidebtn(item1);
       let convertedValue = numeralSystem(fromValue, item1Value, item2Value);
-      const key = convertedValue.toString();
+      const key = convertedValue.toString().toUpperCase();
       const current = document.getElementById("2");
 
       globalDispatch({
@@ -115,7 +146,7 @@ const NumeralSystem = (props) => {
     if (currentElement.id === "2") {
       showHidebtn(item2);
       let convertedValue = numeralSystem(toValue, item2Value, item1Value);
-      const key = convertedValue.toString();
+      const key = convertedValue.toString().toUpperCase();
       const current = document.getElementById("1");
 
       globalDispatch({
@@ -136,7 +167,7 @@ const NumeralSystem = (props) => {
       <HeaderWithBackBtn name="Numeral System" reset={props.reset} />
       <div className="contentSection">
         <Dropdown
-          selectChange={selectChange}
+          selectChange={(e) => selectChange(e)}
           selectId="item1"
           spanId="1"
           options={optionsObj}
@@ -146,7 +177,7 @@ const NumeralSystem = (props) => {
           change={showHidebtn}
         />
         <Dropdown
-          selectChange={selectChange}
+          selectChange={(e) => selectChange(e)}
           selectId="item2"
           spanId="2"
           options={optionsObj}

@@ -109,7 +109,7 @@ const Gst = (props) => {
         </div>
       </div>
       <div className="keypad_section">
-        <BasicKeypad onClick={onClick} />
+        <BasicKeypad onClick={onClick} disableDot={true}/>
       </div>
     </div>
   );

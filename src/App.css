@@ -412,10 +412,7 @@ body {
 .number-system-keypad > input:nth-child(17) {
   grid-column: 2;
 }
-.number-system-keypad .basic-dot {
-  grid-column: 3;
-}
-.number-system-keypad > input:nth-child(19) {
+.number-system-keypad > input:nth-child(18) {
   grid-column: 4;
 }
 .content-section-currency {
