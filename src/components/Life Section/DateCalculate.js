@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React, { Component , lazy} from "react";
 import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
 import DatePickerCustom from "../Reusable/DatePickerCustom";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
 import {findDay}  from '../Reusable/FindDay';
 import moment from 'moment';
+const Calendar = lazy(() => import('react-calendar'));
 
 class DateCalculate extends Component {
   state = {

@@ -11,7 +11,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Keypad = (props) => {
-  console.log("keypad re render");
   return (
     <div className="keypad-container">
       <input
