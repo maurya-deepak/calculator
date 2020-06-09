@@ -22,6 +22,7 @@ const Keypad = (props) => {
         className="org-key"
       />
       <button
+        aria-label="backspace"
         id="icon"
         name="backspace"
         onClick={(e) => props.onClick(e.currentTarget.name)}
@@ -31,6 +32,7 @@ const Keypad = (props) => {
       </button>
 
       <button
+        aria-label="mod"
         id="icon"
         name="%"
         onClick={(e) => props.onClick(e.currentTarget.name)}
@@ -39,6 +41,7 @@ const Keypad = (props) => {
         <FontAwesomeIcon icon={faPercent} />
       </button>
       <button
+        aria-label="divide"
         id="icon"
         name="/"
         onClick={(e) => props.onClick(e.currentTarget.name)}
@@ -66,6 +69,7 @@ const Keypad = (props) => {
         value="9"
       />
       <button
+        aria-label="multiply"
         id="icon"
         name="*"
         onClick={(e) => props.onClick(e.currentTarget.name)}
@@ -93,6 +97,7 @@ const Keypad = (props) => {
         value="6"
       />
       <button
+        aria-label="minus"
         id="icon"
         name="-"
         onClick={(e) => props.onClick(e.currentTarget.name)}
@@ -120,6 +125,7 @@ const Keypad = (props) => {
         value="3"
       />
       <button
+        aria-label="plus"
         id="icon"
         name="+"
         onClick={(e) => props.onClick(e.currentTarget.name)}
@@ -134,6 +140,7 @@ const Keypad = (props) => {
         value="0"
       />
       <button
+        aria-label="dot"
         id="icon"
         name="."
         className="dot"

@@ -77,6 +77,7 @@ const BasicKeypad = (props) => {
         value="0"
       />
       <button
+        aria-label="dot"
         name="."
         className="basic-dot"
         onClick={(e) => props.onClick(e.currentTarget.name)}
@@ -94,6 +95,7 @@ const BasicKeypad = (props) => {
         />
       ) : null}
       <button
+        aria-label="backspace"
         name="backspace"
         onClick={(e) => props.onClick(e.currentTarget.name)}
         className="org-key"
