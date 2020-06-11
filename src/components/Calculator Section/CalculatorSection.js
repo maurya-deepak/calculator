@@ -196,6 +196,9 @@ class CalculatorSection extends Component {
   };
 
   backspace = () => {
+    if (this.state.isEqualClicked) {
+      this.setState({ isEqualClicked: false }, this.active_exp);
+    }
     const exp = [...this.state.expression];
     if (exp.length >= 1) {
       const last = exp[exp.length - 1];
