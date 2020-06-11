@@ -11,7 +11,7 @@ const optionsObj = [
   { name: "Week wk", value: "wk", fullname: "Week" },
   { name: "Day d", value: "d", fullname: "Day" },
   { name: "Hour h", value: "h", fullname: "Hour" },
-  { name: "Minute min", value: "min", fullname: "Year" },
+  { name: "Minute min", value: "min", fullname: "Minute" },
   { name: "Second s", value: "s", fullname: "Second" },
   { name: "Millisecond ms", value: "ms", fullname: "Millisecond" },
   { name: "Microsecond mu", value: "mu", fullname: "Microsecond" },
