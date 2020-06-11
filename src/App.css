@@ -70,9 +70,7 @@
   text-align: right;
   color: rgba(17, 17, 17, 0.685);
 }
-.result {
-  position: sticky;
-}
+
 .active-result {
   font-size: 28px;
   color: #000;

@@ -190,7 +190,7 @@ class CalculatorSection extends Component {
   };
   reset = () => {
     this.setState({
-      result: ["0"],
+      result: "0",
       expression: ["0"],
     });
   };

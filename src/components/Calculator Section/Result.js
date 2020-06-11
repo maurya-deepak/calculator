@@ -9,7 +9,6 @@ class Result extends Component {
   render() {
     let result = this.props.result;
     let expression = this.props.expression;
-
     const classes = `expression active-result`;
     return (
       <div className="result-container">
