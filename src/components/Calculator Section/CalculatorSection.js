@@ -101,7 +101,7 @@ class CalculatorSection extends Component {
           }
         } else if (current === "0") {
           current = val;
-        } else if(current.length < 15){
+        } else if (current.length < 15) {
           current += val;
         }
         textArray.pop();
@@ -137,7 +137,7 @@ class CalculatorSection extends Component {
     if (checkSigns.test(val) || expression[activeSpan.id] === "0") {
       expression[activeSpan.id] = val;
       this.setState({ expression }, this.calculate);
-    } else if(expression[activeSpan.id].length < 15){
+    } else if (expression[activeSpan.id].length < 15) {
       expression[activeSpan.id] += val;
       this.setState({ expression }, this.calculate);
     }
@@ -237,6 +237,10 @@ class CalculatorSection extends Component {
   };
 
   onSpanClick = (event) => {
+    if (this.state.isEqualClicked) {
+      this.active_exp();
+      this.setState({ isEqualClicked: false });
+    }
     const activeSpan = document.querySelector(".active-exp-span");
     activeSpan && activeSpan.classList.remove("active-exp-span");
     event.target.classList.add("active-exp-span");
