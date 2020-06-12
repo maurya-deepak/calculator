@@ -14,8 +14,12 @@ class CalculatorSection extends Component {
   onClick = (val) => {
     const checkSigns = /(\+|-|\*|\/|%)/i;
     if (val === "=") {
-      this.setState({ isEqualClicked: true });
-      this.active_result();
+      const check =
+        this.state.result === "0" && this.state.expression.join(" ") === "0";
+      if (!check && !this.state.isEqualClicked) {
+        this.setState({ isEqualClicked: true }, this.storePreviousResult);
+        this.active_result();
+      }
     } else if (val === "Ac") {
       this.reset();
     } else if (val === "backspace") {
@@ -85,7 +89,17 @@ class CalculatorSection extends Component {
       }
     }
   };
-
+  storePreviousResult = () => {
+    const prevExp = { exp: this.state.expression, value: this.state.result };
+    if(localStorage.getItem('history')){
+      //localStorage.clear();
+      let expression = JSON.parse(localStorage.getItem('history'));
+      expression.push(prevExp);
+      window.localStorage.setItem("history", JSON.stringify(expression));
+    }else{
+      window.localStorage.setItem("history", JSON.stringify([prevExp]))
+    }
+  };
   handleDigits = (val) => {
     let current;
     let textArray = [...this.state.expression];
@@ -188,6 +202,7 @@ class CalculatorSection extends Component {
     expression.classList.remove("active-result");
     result_element.classList.add("active-result");
   };
+
   reset = () => {
     this.setState({
       result: "0",

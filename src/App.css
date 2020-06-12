@@ -61,12 +61,18 @@
   margin: 0px 15px;
 }
 .prev-result {
-  min-height: 50%;
   text-align: right;
-  border: 1px solid red;
+  font-size: 16px;
+	min-height: 100px;
+  color: rgba(17, 17, 17, 0.685);
+}
+.prev-result > div{
+  padding: 5px 0px;
 }
 .exp-with-result {
-  padding-top: 5px;
+  position: relative;
+  bottom: 0;
+  padding-top: 35px;
   text-align: right;
   color: rgba(17, 17, 17, 0.685);
 }
