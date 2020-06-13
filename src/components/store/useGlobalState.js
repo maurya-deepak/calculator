@@ -37,12 +37,13 @@ const reducer = (state, action) => {
       return { ...state };
 
     case "negativeOfNumber":
-      if (current.id === "1") negativeOfNumber("firstInput", state);
-      else if (current.id === "2") negativeOfNumber("secondInput", state);
+      if (current.id === "1") return negativeOfNumber("firstInput", state);
+      else if (current.id === "2")
+        return negativeOfNumber("secondInput", state);
       return { ...state };
 
     default:
-      return state;
+      return { ...state };
   }
 };
 
@@ -98,9 +99,11 @@ const decimal = (stateName, state) => {
 
 const negativeOfNumber = (stateName, state) => {
   let value = state[stateName];
-  if (value[0] === "-") return { ...state, [stateName]: value.slice(1) };
-  else if (value !== "0") return { ...state, [stateName]: "-" + value };
-  else return { ...state };
+  if (value[0] === "-") {
+    return { ...state, [stateName]: value.slice(1) };
+  } else if (value !== "0") {
+    return { ...state, [stateName]: `-${value}`};
+  }
 };
 
 export default useGlobalState;
