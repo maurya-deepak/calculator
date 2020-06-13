@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import moment from "moment";
-import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBirthdayCake } from "@fortawesome/free-solid-svg-icons";
 import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
