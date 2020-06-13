@@ -104,6 +104,7 @@ const negativeOfNumber = (stateName, state) => {
   } else if (value !== "0") {
     return { ...state, [stateName]: `-${value}`};
   }
+  return {...state};
 };
 
 export default useGlobalState;
