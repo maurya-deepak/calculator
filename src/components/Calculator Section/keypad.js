@@ -66,6 +66,7 @@ const Keypad = (props) => {
           <FontAwesomeIcon icon={faDivide} />
         </button>
       </div>
+
       <div className="flex-row">
         <input
           name="7"
@@ -100,6 +101,7 @@ const Keypad = (props) => {
           <FontAwesomeIcon icon={faTimes} />
         </button>
       </div>
+
       <div className="flex-row">
         <input
           name="4"
@@ -134,6 +136,7 @@ const Keypad = (props) => {
           <FontAwesomeIcon icon={faMinus} />
         </button>
       </div>
+
       <div className="flex-row">
         <input
           name="1"
@@ -168,6 +171,7 @@ const Keypad = (props) => {
           <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
+
       <div className="flex-row">
         <input
           name="0"
@@ -208,6 +212,7 @@ const Keypad = (props) => {
           />
         )}
       </div>
+
     </div>
   );
 };
