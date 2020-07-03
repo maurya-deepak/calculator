@@ -9,7 +9,7 @@ class Result extends Component {
   }
   scroll = (prevExps) => {
     const prevResult = document.querySelector(".prev-result");
-    if (prevExps.length > 0) {
+    if (prevExps && prevExps.length > 0) {
       if (prevResult && !prevResult.classList.contains("prev-result-padd")) {
         prevResult.classList.add("prev-result-padd");
       }
