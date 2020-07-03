@@ -1,36 +1,48 @@
 import React, { Component } from "react";
 
 class Result extends Component {
-  componentDidMount(){
+  componentDidMount() {
     const resultContainer = document.querySelector(".result-container");
-    if(resultContainer){
-    	resultContainer.scrollTop = resultContainer.scrollHeight;
-		}
+    if (resultContainer) {
+      resultContainer.scrollTop = resultContainer.scrollHeight;
+    }
   }
-  scroll = ()=>{
+  scroll = (prevExps) => {
+    const prevResult = document.querySelector(".prev-result");
+    if (prevExps.length > 0) {
+      if (prevResult && !prevResult.classList.contains("prev-result-padd")) {
+        prevResult.classList.add("prev-result-padd");
+      }
+    } else if (
+      prevResult &&
+      prevResult.classList.contains("prev-result-padd")
+    ) {
+      prevResult.classList.remove("prev-result-padd");
+    }
+
     const div = document.querySelector(".result-container");
-     if(div){
-   	 	div.scrollTop = div.scrollHeight;
-   }
-  }
+    if (div) {
+      div.scrollTop = div.scrollHeight;
+    }
+  };
   render() {
     let result = this.props.result;
     let expression = this.props.expression;
-    let prevExpressions = JSON.parse(localStorage.getItem('history'));
-    this.scroll();
+    let prevExpressions = JSON.parse(localStorage.getItem("history"));
+    this.scroll(prevExpressions);
     const classes = `expression active-result`;
     return (
-	
       <div className="result-container">
         <div className="prev-result">
-          {prevExpressions && prevExpressions.map((obj, index) => {
-            return (
-              <div key={index}>
-                <p>{obj.exp}</p>
-                <p>= {obj.value}</p>
-              </div>
-            );
-          })}
+          {prevExpressions &&
+            prevExpressions.map((obj, index) => {
+              return (
+                <div key={index}>
+                  <p>{obj.exp}</p>
+                  <p>= {obj.value}</p>
+                </div>
+              );
+            })}
         </div>
         <div className="exp-with-result">
           <div className={classes}>

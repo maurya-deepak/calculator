@@ -21,7 +21,11 @@ class CalculatorSection extends Component {
         this.active_result();
       }
     } else if (val === "Ac") {
-      this.reset();
+      if (this.state.expression.join("") !== "0") {
+        this.reset();
+      } else {
+        this.deleteHistory();
+      }
     } else if (val === "backspace") {
       if (this.state.isSpanActive) {
         this.handleSpanBackSpace();
@@ -45,15 +49,27 @@ class CalculatorSection extends Component {
           }
         } else {
           if (this.state.isEqualClicked) {
-            let newArr = [this.state.result];
-            newArr.push(val);
-            this.setState(
-              {
-                expression: newArr,
-                isEqualClicked: false,
-              },
-              this.active_exp
-            );
+            if (this.state.result === "Can't divide by 0") {
+              let newArr = ["0", val];
+              this.setState(
+                {
+                  expression: newArr,
+                  result:"0",
+                  isEqualClicked: false,
+                },
+                this.active_exp
+              );
+            } else {
+              let newArr = [this.state.result];
+              newArr.push(val);
+              this.setState(
+                {
+                  expression: newArr,
+                  isEqualClicked: false,
+                },
+                this.active_exp
+              );
+            }
           } else {
             textArray.push(val);
             this.setState({
@@ -91,13 +107,27 @@ class CalculatorSection extends Component {
   };
   storePreviousResult = () => {
     const prevExp = { exp: this.state.expression, value: this.state.result };
-    if(localStorage.getItem('history')){
+    if (localStorage.getItem("history")) {
       //localStorage.clear();
-      let expression = JSON.parse(localStorage.getItem('history'));
+      let expression = JSON.parse(localStorage.getItem("history"));
       expression.push(prevExp);
       window.localStorage.setItem("history", JSON.stringify(expression));
-    }else{
-      window.localStorage.setItem("history", JSON.stringify([prevExp]))
+    } else {
+      window.localStorage.setItem("history", JSON.stringify([prevExp]));
+    }
+  };
+  deleteHistory = () => {
+    if (localStorage.getItem("history")) {
+      let history = JSON.parse(localStorage.getItem("history"));
+      if (history.length > 0) {
+        const { exp, value } = history[history.length - 1];
+        this.setState({
+          expression: exp,
+          result: value,
+        });
+        history.pop();
+        window.localStorage.setItem("history", JSON.stringify(history));
+      }
     }
   };
   handleDigits = (val) => {
@@ -183,8 +213,12 @@ class CalculatorSection extends Component {
       }
       const tocalculate = exp.join(" ");
       let result = String(eval(tocalculate));
-      result =
-        result.length > 15 ? parseFloat(result).toExponential(4) : result;
+      if (result === "Infinity" || result === "NaN") {
+        result = "Can't divide by 0";
+      } else {
+        result =
+          result.length > 15 ? parseFloat(result).toExponential(4) : result;
+      }
       this.setState({ result });
     } catch (e) {
       console.log(e);
@@ -193,21 +227,28 @@ class CalculatorSection extends Component {
   active_exp = () => {
     const expression = document.querySelector(".expression");
     const result_element = document.querySelector(".active-result");
-    expression.classList.add("active-result");
-    result_element.classList.remove("active-result");
+    if (expression !== result_element) {
+      expression.classList.add("active-result");
+      result_element.classList.remove("active-result");
+    }
   };
   active_result = () => {
     const expression = document.querySelector(".active-result");
     const result_element = document.querySelector(".result");
-    expression.classList.remove("active-result");
-    result_element.classList.add("active-result");
+    if (expression !== result_element) {
+      expression.classList.remove("active-result");
+      result_element.classList.add("active-result");
+    }
   };
 
   reset = () => {
-    this.setState({
-      result: "0",
-      expression: ["0"],
-    });
+    this.setState(
+      {
+        result: "0",
+        expression: ["0"],
+      },
+      this.active_exp
+    );
   };
 
   backspace = () => {
