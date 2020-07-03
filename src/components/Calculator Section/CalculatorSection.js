@@ -11,91 +11,106 @@ class CalculatorSection extends Component {
     isOperatorActive: false,
   };
 
-  onClick = (val) => {
-    const checkSigns = /(\+|-|\*|\/|%)/i;
-    if (val === "=") {
-      const check =
-        this.state.result === "0" && this.state.expression.join(" ") === "0";
-      if (!check && !this.state.isEqualClicked) {
-        this.setState({ isEqualClicked: true }, this.storePreviousResult);
-        this.active_result();
-      }
-    } else if (val === "Ac") {
-      if (this.state.expression.join("") !== "0") {
-        this.reset();
+  handleEqual = () => {
+    const check =
+      this.state.result === "0" && this.state.expression.join(" ") === "0";
+    if (!check && !this.state.isEqualClicked) {
+      this.setState({ isEqualClicked: true }, this.storePreviousResult);
+      this.active_result();
+    }
+  };
+
+  handleAllClear = () => {
+    if (this.state.expression.join("") !== "0") {
+      this.reset();
+    } else {
+      this.deleteHistory();
+    }
+  };
+
+  handleBackspace = () => {
+    if (this.state.isSpanActive) {
+      this.handleSpanBackSpace();
+    } else {
+      this.backspace();
+    }
+  };
+
+  handleOperator = (val, checkSigns) => {
+    if (this.state.isOperatorActive || this.state.isSpanActive) {
+      this.handleSpanChanges(val);
+    } else {
+      let textArray = [...this.state.expression];
+      const last_val = textArray[textArray.length - 1];
+      // if last value is any arithmetic operator
+      if (checkSigns.test(last_val)) {
+        this.replaceSign(val, textArray);
       } else {
-        this.deleteHistory();
-      }
-    } else if (val === "backspace") {
-      if (this.state.isSpanActive) {
-        this.handleSpanBackSpace();
-      } else {
-        this.backspace();
-      }
-    } else if (checkSigns.test(val)) {
-      if (this.state.isOperatorActive || this.state.isSpanActive) {
-        this.handleSpanChanges(val);
-      } else {
-        let textArray = [...this.state.expression];
-        const last_val = textArray[textArray.length - 1];
-        if (checkSigns.test(last_val)) {
-          textArray.pop();
+        if (this.state.isEqualClicked) {
+          this.handleEqualActive(val);
+        } else {
           textArray.push(val);
           this.setState({
             expression: textArray,
           });
-          if (this.state.isEqualClicked) {
-            this.setState({ isEqualClicked: false }, this.active_exp);
-          }
-        } else {
-          if (this.state.isEqualClicked) {
-            if (this.state.result === "Can't divide by 0") {
-              let newArr = ["0", val];
-              this.setState(
-                {
-                  expression: newArr,
-                  result:"0",
-                  isEqualClicked: false,
-                },
-                this.active_exp
-              );
-            } else {
-              let newArr = [this.state.result];
-              newArr.push(val);
-              this.setState(
-                {
-                  expression: newArr,
-                  isEqualClicked: false,
-                },
-                this.active_exp
-              );
-            }
-          } else {
-            textArray.push(val);
-            this.setState({
-              expression: textArray,
-            });
-          }
         }
       }
+    }
+  };
+  
+  handleEqualActive = (val) => {
+    if (this.state.result === "Can't divide by 0") {
+      let newArr = ["0", val];
+      this.setState({
+          expression: newArr,
+          result: "0",
+          isEqualClicked: false,
+        },this.active_exp);
+    } else {
+      let newArr = [this.state.result];
+      newArr.push(val);
+      this.setState({
+          expression: newArr,
+          isEqualClicked: false,
+        },this.active_exp);
+    }
+  };
+
+  replaceSign = (val, textArray) => {
+    textArray.pop();
+    textArray.push(val);
+
+    this.setState({
+      expression: textArray,
+    });
+
+    if (this.state.isEqualClicked) {
+      this.setState({ isEqualClicked: false }, this.active_exp);
+    }
+  };
+
+  onClick = (val) => {
+    const checkSigns = /(\+|-|\*|\/|%)/i;
+    if (val === "=") {
+      this.handleEqual();
+    } else if (val === "Ac") {
+      this.handleAllClear();
+    } else if (val === "backspace") {
+      this.handleBackspace();
+    } else if (checkSigns.test(val)) {
+      this.handleOperator(val, checkSigns);
     } else {
       if (this.state.isEqualClicked) {
         if (val === ".") {
-          this.setState(
-            {
+          this.setState({
               expression: ["0."],
-              isEqualClicked: false,
-            },
-            this.calculate
-          );
+              isEqualClicked: false
+            },this.calculate);
         } else {
-          this.setState(
-            {
+          this.setState({
               expression: [val],
-              isEqualClicked: false,
-            },
-            this.calculate
-          );
+              isEqualClicked: false
+            },this.calculate);
         }
         this.active_exp();
       } else {
@@ -105,6 +120,7 @@ class CalculatorSection extends Component {
       }
     }
   };
+
   storePreviousResult = () => {
     const prevExp = { exp: this.state.expression, value: this.state.result };
     if (localStorage.getItem("history")) {
@@ -116,6 +132,7 @@ class CalculatorSection extends Component {
       window.localStorage.setItem("history", JSON.stringify([prevExp]));
     }
   };
+
   deleteHistory = () => {
     if (localStorage.getItem("history")) {
       let history = JSON.parse(localStorage.getItem("history"));
@@ -150,13 +167,10 @@ class CalculatorSection extends Component {
         }
         textArray.pop();
         textArray.push(current);
-        this.setState(
-          {
+        this.setState({
             expression: textArray,
             isEqualClicked: false,
-          },
-          this.calculate
-        );
+          },this.calculate);
       } else {
         const checkSigns = /(\+|-|\*|\/)/i;
         if (val === "." && checkSigns.test(current)) {
@@ -224,6 +238,7 @@ class CalculatorSection extends Component {
       console.log(e);
     }
   };
+
   active_exp = () => {
     const expression = document.querySelector(".expression");
     const result_element = document.querySelector(".active-result");
@@ -232,6 +247,7 @@ class CalculatorSection extends Component {
       result_element.classList.remove("active-result");
     }
   };
+
   active_result = () => {
     const expression = document.querySelector(".active-result");
     const result_element = document.querySelector(".result");
@@ -242,13 +258,10 @@ class CalculatorSection extends Component {
   };
 
   reset = () => {
-    this.setState(
-      {
+    this.setState({
         result: "0",
         expression: ["0"],
-      },
-      this.active_exp
-    );
+      }, this.active_exp);
   };
 
   backspace = () => {
@@ -262,12 +275,9 @@ class CalculatorSection extends Component {
         const newArr = [...exp];
         newArr.pop();
         newArr.push(last.slice(0, -1));
-        this.setState(
-          {
-            expression: newArr,
-          },
-          this.calculate
-        );
+        this.setState({
+            expression: newArr
+          },this.calculate);
       } else if (exp.length === 1 && last.length === 1) {
         this.setState({
           expression: ["0"],
@@ -276,12 +286,9 @@ class CalculatorSection extends Component {
       } else {
         const newArr = [...exp];
         newArr.pop();
-        this.setState(
-          {
+        this.setState({
             expression: newArr,
-          },
-          this.calculate
-        );
+          },this.calculate);
       }
     }
   };

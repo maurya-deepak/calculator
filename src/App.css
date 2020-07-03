@@ -65,10 +65,10 @@ body {
   font-size: 16px;
   color: rgba(17, 17, 17, 0.685);
 }
-.prev-result-padd{
+.prev-result-padd {
   padding-bottom: 30px;
 }
-.prev-result > div{
+.prev-result > div {
   padding: 5px 0px;
 }
 .exp-with-result {
@@ -89,6 +89,7 @@ body {
 }
 .exp-span {
   padding: 3px 3px;
+  line-height: 40px;
 }
 .keypad-container {
   display: flex;
@@ -340,7 +341,7 @@ body {
   font-size: 22px;
 }
 
-.diffrence_date{
+.diffrence_date {
   margin: 60px auto;
 }
 
