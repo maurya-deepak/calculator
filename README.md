@@ -10,7 +10,7 @@ Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 -------------------------------------------------------------------------------------------------------------------------------
-#### This is a basic calculator replica of xiomi phone's calculator.
+#### This is a basic calculator replica of xiaomi phone's calculator.
 It can perform all the basic math operations such as **+** , **-** , __*__ , **/** and **modulo**.  
 It stores history of the basic operations too.  
 Alog with that it includes operation's like calulating **Age**, **Discount**, **Length**, **Percentage**, **Time**, **Numeral System etc.**
