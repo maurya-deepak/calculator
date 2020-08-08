@@ -12,7 +12,11 @@ body {
     min-width: 100%;
     min-height: 100vh;
   }
-  
+  .keypad_section{
+    position: absolute;
+    bottom: 0;
+    padding: 10px 0px;
+  }
 }
 
 @media only screen and (min-device-width: 400px) and (max-device-width: 800px) and (orientation: landscape) {
@@ -22,11 +26,16 @@ body {
   }
 }
 
+.container-body{
+  border:1px solid red;
+  display: flex;
+  justify-content: center;
+}
+
 .main-container {
-  max-width: 340px;
-  margin: 0 auto;
-  display: block;
+  width: 340px;
   background: rgba(255, 255, 255, 0.932);
+  min-height: 612px;
 }
 .nav-container {
   padding: 10px 0px;
@@ -84,6 +93,9 @@ body {
   padding: 3px 3px;
   line-height: 40px;
 }
+
+
+
 .keypad-container {
   position: relative;
   display: flex;
@@ -456,7 +468,4 @@ body {
 .gst-list .current-gst {
   background-color: rgb(255, 85, 0);
   color: #fff;
-
-  /* border-top-left-radius: 10px; */
-  /* border-bottom-left-radius: 10px; */
 }

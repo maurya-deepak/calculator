@@ -51,24 +51,26 @@ class App extends Component {
 
   render() {
     return (
-      <div className="main-container">
-        {this.state.show_nav ? (
-          <Navbar
-            cal={this.cal}
-            finance={this.finance}
-            life={this.life}
-            cal_active={this.state.cal_active}
-            finance_active={this.state.finance_active}
-            life_active={this.state.life_active}
-          />
-        ) : null}
-        {this.state.id === 0 ? <CalculatorSection /> : null}
-        {this.state.id === 1 ? (
-          <Life hideNav={this.hideNav} showNav={this.showNav} />
-        ) : null}
-        {this.state.id === 2 ? (
-          <Finance hideNav={this.hideNav} showNav={this.showNav} />
-        ) : null}
+      <div className="container-body">
+        <div className="main-container">
+          {this.state.show_nav ? (
+            <Navbar
+              cal={this.cal}
+              finance={this.finance}
+              life={this.life}
+              cal_active={this.state.cal_active}
+              finance_active={this.state.finance_active}
+              life_active={this.state.life_active}
+            />
+          ) : null}
+          {this.state.id === 0 ? <CalculatorSection /> : null}
+          {this.state.id === 1 ? (
+            <Life hideNav={this.hideNav} showNav={this.showNav} />
+          ) : null}
+          {this.state.id === 2 ? (
+            <Finance hideNav={this.hideNav} showNav={this.showNav} />
+          ) : null}
+        </div>
       </div>
     );
   }
