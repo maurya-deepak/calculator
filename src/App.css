@@ -10,13 +10,9 @@ body {
 @media only screen and (max-width: 399px) {
   .main-container {
     min-width: 100%;
-    height: 100vh;
-    margin-top: 50px;
+    min-height: 100vh;
   }
-  .keypad-container {
-    position: fixed;
-    bottom: 0;
-  }
+  
 }
 
 @media only screen and (min-device-width: 400px) and (max-device-width: 800px) and (orientation: landscape) {
@@ -25,13 +21,10 @@ body {
     min-height: 100vh;
   }
 }
+
 .main-container {
-  width: 340px;
-  min-height: 630px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  max-width: 340px;
+  margin: 0 auto;
   display: block;
   background: rgba(255, 255, 255, 0.932);
 }
@@ -53,8 +46,8 @@ body {
   color: rgb(255, 38, 0);
 }
 .result-container {
-  height: 230px;
   position: relative;
+  height: 210px;
   overflow-y: scroll;
   word-break: break-all;
   font-size: 22px;
@@ -92,6 +85,7 @@ body {
   line-height: 40px;
 }
 .keypad-container {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -359,11 +353,7 @@ body {
 .basic-keypad-container {
   display: flex;
   flex-direction: column;
-  position: fixed;
-  bottom: 0;
   margin: 5px auto;
-  left: 0;
-  right: 0;
   border-top: 1px solid silver;
 }
 #backspace {
