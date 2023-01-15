@@ -450,6 +450,7 @@ body {
 #fetching-data {
   font-size: 10px;
   color: rgba(17, 17, 16, 0.712);
+  margin-left: 5px;
 }
 #fetching-data span {
   color: rgb(255, 30, 0);
