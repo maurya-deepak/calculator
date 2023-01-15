@@ -177,23 +177,27 @@ const Currency = (props) => {
       const isPresent = checkDataAlreadyPresent(base, convertTo);
       if (!isPresent) {
         setFetching(true);
+        const config = {
+          headers: {
+            'apikey' : 'NSlTyGPA06FzVWrhFHSIJ12Vv8Pgcg5g'
+          },
+        };
+        var link = `https://api.apilayer.com/exchangerates_data/convert?to=${convertTo}&from=${base}&amount=${fromValue}`
         const url =
           `https://api.exchangeratesapi.io/latest?base=` +
           base +
           `&symbols=` +
           convertTo;
         axios
-          .get(url)
+          .get(link, config)
           .then(({ data }) => {
             setFetching(false);
-            const value = data.rates[convertTo];
-            updateCurrencyData(base, convertTo, value);
-
-            const key = (value * fromValue).toFixed(2);
+            const {result} = data;
+            updateCurrencyData(base, convertTo, result);
             globalDispatch({
               type: "setStateTokey",
               current: document.getElementById(setToId),
-              key,
+              result,
             });
           })
           .catch((err) => {
