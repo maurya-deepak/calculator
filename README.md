@@ -4,7 +4,7 @@
 - And it's a PWA so you can download and use it without internet.
 
 ## Available Features
-### Basics
+### Basic Operations
 - It can perform all the basic math operations such as **ADDITION** , **SUBTRACTION** , **MULTIPLICATION** , **DIVISION** and **MODULO**.  
 - It stores **history** of the basic operations too.
 ### Complex Conversions
