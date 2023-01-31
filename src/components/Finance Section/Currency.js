@@ -3,103 +3,11 @@ import HeaderWithBackBtn from "../Reusable/HeaderWithBackBtn";
 import BasicKeypad from "../Reusable/BasicKeypad";
 import Dropdown from "../Reusable/DropdownWithInput";
 import Context from "../store/Context";
-import axios from "axios";
+import { CURRENCY } from "../../constants/currency";
+import { KEY } from "../../constants/keyboard";
+import ExchangeAPI from "../../apis/exchange";
 
 const totalData = {};
-const optionsObj = [
-  {
-    name: "NewZealand Dollars NZD",
-    value: "NZD",
-    fullname: "NewZealand Dollars",
-  },
-  {
-    name: "Australian Dollars AUD",
-    value: "AUD",
-    fullname: "Australian Dollars",
-  },
-  { name: "Euro EUR", value: "EUR", fullname: "Euro" },
-  {
-    name: "Hong Kong Doller HKD",
-    value: "HKD",
-    fullname: "Hong Kong Doller",
-  },
-  {
-    name: "Canadian Dollar CAD",
-    value: "CAD",
-    fullname: "Canadian Dollar",
-  },
-  { name: "Japanese Yen JPY", value: "JPY", fullname: "Japanese Yen" },
-  { name: "Indian Rupee INR", value: "INR", fullname: "Indian Rupee" },
-  {
-    name: "Norwegian Krone NOK",
-    value: "NOK",
-    fullname: "Norwegian Krone",
-  },
-  { name: "Brazil BRL", value: "BRL", fullname: "Brazil" },
-  {
-    name: "Bulgarian Lev BGN",
-    value: "BGN",
-    fullname: "Bulgarian Lev",
-  },
-  { name: "China Yuan CNY", value: "CNY", fullname: "China Yuan" },
-  {
-    name: "Croatian Dinar HRK",
-    value: "HRK",
-    fullname: "Croatian Dinar",
-  },
-  { name: "Czech Koruna CZK", value: "CZK", fullname: "Czech Koruna" },
-  { name: "Danish Krone DKK", value: "DKK", fullname: "Danish Krone" },
-  {
-    name: "Indonesian Rupiah IDR",
-    value: "IDR",
-    fullname: "Indonesian Rupiah",
-  },
-  {
-    name: "Hungarian Forint HUF",
-    value: "HUF",
-    fullname: "Hungarian Forint",
-  },
-  {
-    name: "Icelandic Krona ISK",
-    value: "ISK",
-    fullname: "Icelandic Krona",
-  },
-  {
-    name: "Israel New Shekel ILS",
-    value: "ILS",
-    fullname: "Israel New Shekel",
-  },
-  { name: "Swiss Franc CHF", value: "CHF", fullname: "Swiss Franc" },
-  {
-    name: "Malaysian Ringgit MYR",
-    value: "MYR",
-    fullname: "Malaysian Ringgit",
-  },
-  { name: "Poland Zloty PLN", value: "PLN", fullname: "Poland Zloty" },
-  {
-    name: "Russian Ruble RUB",
-    value: "RUB",
-    fullname: "Russian Ruble",
-  },
-  {
-    name: "South Africa Rand ZAR",
-    value: "ZAR",
-    fullname: "South Africa Rand",
-  },
-  {
-    name: "Swedish Krona SEK",
-    value: "SEK",
-    fullname: "Swedish Krona",
-  },
-  { name: "Thai Baht THB", value: "THB", fullname: "Thai Baht" },
-  { name: "Turkish Lira TRY", value: "TRY", fullname: "Turkish Lira" },
-  {
-    name: "British Pound GBP",
-    value: "GBP",
-    fullname: "British Pound",
-  },
-  { name: "US Dollar USD", value: "USD", fullname: "US Dollar" },
-];
 const Currency = (props) => {
   const { globalState, globalDispatch } = useContext(Context);
 
@@ -124,32 +32,32 @@ const Currency = (props) => {
   // change local state when drop-down value is changed
   const selectChange = useCallback(() => {
     setSelected((prev) => !prev);
-  },[setSelected]);
+  }, [setSelected]);
 
   const onClick = useCallback(
     (key) => {
-      if (key === "Ac") {
+      if (key === KEY.RESET.Value) {
         const current = document.querySelector(".current");
         globalDispatch({
-          type: "reset",
+          type: KEY.RESET.Type,
           current,
         });
-      } else if (key === "backspace") {
+      } else if (key === KEY.BACKSPACK.Value) {
         const current = document.querySelector(".current");
         globalDispatch({
-          type: "backspace",
+          type: KEY.BACKSPACK.Type,
           current,
         });
-      } else if (key === ".") {
+      } else if (key === KEY.DECIMAL.Value) {
         const current = document.querySelector(".current");
         globalDispatch({
-          type: "decimal",
+          type: KEY.DECIMAL.Type,
           current,
         });
       } else {
         const current = document.querySelector(".current");
         globalDispatch({
-          type: "number",
+          type: KEY.NUMBER.Type,
           current,
           key,
         });
@@ -173,34 +81,26 @@ const Currency = (props) => {
   };
 
   const getData = useCallback(
-    (base, convertTo, fromValue, setToId) => {
+    async (base, convertTo, fromValue, setToId) => {
       const isPresent = checkDataAlreadyPresent(base, convertTo);
-      if (!isPresent) {
+      if (!isPresent && fromValue > 0) {
         setFetching(true);
-        const url =
-          `https://api.exchangeratesapi.io/latest?base=` +
-          base +
-          `&symbols=` +
-          convertTo;
-        axios
-          .get(url)
-          .then(({ data }) => {
-            setFetching(false);
-            const value = data.rates[convertTo];
-            updateCurrencyData(base, convertTo, value);
-
-            const key = (value * fromValue).toFixed(2);
-            globalDispatch({
-              type: "setStateTokey",
-              current: document.getElementById(setToId),
-              key,
-            });
-          })
-          .catch((err) => {
-            console.log(err);
+        const data = await ExchangeAPI.getExchange({ base, convertTo, fromValue });
+        setFetching(false);
+        if (Object.keys(data).length > 0) {
+          const { result } = data;
+          updateCurrencyData(base, convertTo, result);
+          globalDispatch({
+            type: "setStateTokey",
+            current: document.getElementById(setToId),
+            result,
           });
+        }
       } else {
-        const key = (totalData[base][convertTo] * fromValue).toFixed(2);
+        let key = 0;
+        if (typeof totalData[base] !== "undefined" && typeof totalData[base][convertTo] !== "undefined") {
+          key = (totalData[base][convertTo] * fromValue).toFixed(2);
+        }
         globalDispatch({
           type: "setStateTokey",
           current: document.getElementById(setToId),
@@ -274,7 +174,7 @@ const Currency = (props) => {
           selectChange={selectChange}
           selectId="item1"
           spanId="1"
-          options={optionsObj}
+          options={CURRENCY}
           inputValue={globalState.firstInput}
           classname="current"
           selectedName={selectedFirst}
@@ -284,7 +184,7 @@ const Currency = (props) => {
           selectChange={selectChange}
           selectId="item2"
           spanId="2"
-          options={optionsObj}
+          options={CURRENCY}
           inputValue={globalState.secondInput}
           classname=""
           selectedName={selectedSecond}
@@ -294,7 +194,7 @@ const Currency = (props) => {
           selectChange={selectChange}
           selectId="item3"
           spanId="3"
-          options={optionsObj}
+          options={CURRENCY}
           inputValue={globalState.thirdInput}
           classname=""
           selectedName={selectedThird}
