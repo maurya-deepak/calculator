@@ -1,18 +1,42 @@
-# [Universal Calculator PWA](https://cal-rouge.now.sh/)
-- A tool with all the capabilities, from simple mathematical computations to complex conversions like GST, number systems, digital conversion, date, time, volume, bill splitting, etc.
-- Additionally, it contains a currency conversion tool that makes use of the API for currency exchange.
-- And it's a PWA so you can download and use it without internet.
+# 🧮 Universal Calculator
 
-## Available Features
-### Basic Operations
-- It can perform all the basic math operations such as **ADDITION** , **SUBTRACTION** , **MULTIPLICATION** , **DIVISION** and **MODULO**.  
-- It stores **history** of the basic operations too.
-### Complex Conversions
-- It includes operation's like calculate **Age** or **Date difference**, **Discount**, **Length**, **Percentage**, **Time**, **Numeral System etc.**
-- It also contains **Finance Section** in which you can perform calculation like **Currency conversion** which supports 30 different currencies and the currency rate is fetched from API.
-- It also contains **Bill split** and **GST calculation** features.
+A **Progressive Web App (PWA)** that combines simplicity and power in one place.  
+From **basic arithmetic** to **complex conversions** like GST, currency exchange, and bill splitting — this tool is your **all-in-one calculator**.  
 
-## How to run this project locally
+Since it’s a **PWA**, you can **install it on your device** and use it **offline**, making it always accessible.  
+
+---
+
+## ✨ Features
+
+### 🔢 Basic Operations
+- Perform addition, subtraction, multiplication, division, and modulo  
+- Stores history of basic operations for quick reference  
+
+### 🧩 Complex Conversions
+- Calculate **Age** or **Date difference**  
+- **Discount** calculator  
+- **Length** and **Time** conversions  
+- **Percentage** calculations  
+- **Numeral system conversions** (binary, octal, decimal, hexadecimal, etc.)  
+
+### 💰 Finance Tools
+- **Currency Conversion**  
+  - Supports 30+ currencies  
+  - Live exchange rates fetched via API  
+- **GST Calculator**  
+- **Bill Splitting** for group expenses  
+
+---
+
+## 📱 Why PWA?
+- Works **offline** once installed  
+- **Cross-platform**: desktop, mobile, and tablet  
+- Lightweight, fast, and always up to date  
+
+---
+
+## ⚙️ How to run this project locally
 - Clone the repo and open it in code editor.
 - In root directory run below command to download the required packages:-
 ```
@@ -23,3 +47,16 @@ npm install
 npm start
 ```
 - Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+## 🚀 How to Use
+1. Open the app in your browser  
+2. Install it as a PWA (Add to Home Screen / Install App)  
+3. Start calculating — online or offline!  
+
+---
+
+## 🎥 Demo
+👉 [Click here to watch the demo](https://cal-rouge.vercel.app/)  
+
+
+
