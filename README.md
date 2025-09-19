@@ -55,8 +55,8 @@ npm start
 
 ---
 
-## 🎥 Demo
-👉 [Click here to watch the demo](https://cal-rouge.vercel.app/)  
+## 🎥 Live demo
+👉 [Click here to view the live app](https://cal-rouge.vercel.app/)  
 
 
 
